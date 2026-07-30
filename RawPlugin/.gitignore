@@ -1,0 +1,16 @@
+build/
+*.3gx
+*.elf
+*.map
+*.o
+*.d
+
+# Scaffolding used to extract the blank engine - not part of the shipped repo.
+# (The reference plugin this template was stripped from, plus the source documents
+#  that became README.md. Safe to delete outright once you're happy.)
+_reference/
+CTRComposer-Blank-Template.md
+CTRComposer-Repo-Kickoff.md
+_control/
+dumps/
+screenshots/*.tmp

@@ -1,0 +1,23 @@
+Author: samaBR
+
+Version: # Plugin version - bump this every release
+    Major: 0
+    Minor: 1
+    Revision: 0
+
+Targets:
+    - 0x00125500
+
+Title: MajoraCTRComposer
+
+Summary: MM3D cheats + tools, built on CTRComposer
+
+Description: |
+  CTRComposer: a raw overlay engine for 3DS (no CTRPluginFramework).
+  This build: The Legend of Zelda: Majora's Mask 3D cheats & tools.
+
+Compatibility: Any
+
+MemorySize: 5MiB
+
+UsePrivateMemory: false

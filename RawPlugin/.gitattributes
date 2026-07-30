@@ -1,0 +1,25 @@
+# Normalize text files in the repository (Git stores LF regardless of platform).
+* text=auto
+
+# These MUST stay LF in the working copy, on every platform.
+# GNU make under msys2 chokes on CRLF recipes (a trailing \r ends up in the command),
+# and the CI workflow / shell scripts are read by Linux tools that expect LF.
+Makefile      text eol=lf
+*.mk          text eol=lf
+3ds.ld        text eol=lf
+*.plgInfo     text eol=lf
+*.sh          text eol=lf
+*.yml         text eol=lf
+*.yaml        text eol=lf
+
+# Sources: LF keeps diffs clean and matches the devkitPro toolchain.
+*.c           text eol=lf
+*.h           text eol=lf
+*.s           text eol=lf
+*.py          text eol=lf
+*.md          text eol=lf
+
+# Built artifacts are binary if they ever get committed deliberately.
+*.3gx         binary
+*.elf         binary
+*.bin         binary

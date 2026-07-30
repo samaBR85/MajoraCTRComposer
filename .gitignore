@@ -1,0 +1,28 @@
+# ─────────────────────────────────────────────────────────────
+# MajoraCTRComposer — published: source + docs only.
+# The .3gx and the ready-to-install SD payload ship as a GitHub Release, not in-tree.
+# Everything listed below is excluded from the repo.
+# ─────────────────────────────────────────────────────────────
+
+# Build artifacts
+RawPlugin/build/
+*.o
+*.elf
+*.3gx
+
+# Ready-to-install SD payload (.3gx + guides + lang) -> GitHub Release, not the tree
+CTRComposer/
+
+# Source art: mostly third-party/ripped sheets, and already baked into the source headers
+# (sprites.h, guide.h, topbg.h, botbg.h). Not redistributed loose.
+Assets/
+
+# Belongs to the separate CTRComposer engine repo
+CTRComposer-Blank-Template.md
+CTRComposer-Repo-Kickoff.md
+
+# Dev-only material — not for publishing
+references/
+SaveGames/
+GameGuide/
+dumps/
