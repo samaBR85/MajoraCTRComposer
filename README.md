@@ -22,7 +22,9 @@ Items (ammo), Quest and Misc (including Moon Jump, the first base+offset cheat) 
 1. **Skeleton and boot baseline** — done.
 2. **First verified cheats** — done.
 3. **Rest of the cheat table** — done, minus the minigame code patches (moved to phase 8).
-4. **Art and identity** — in progress. Sprite sheets and a theme are not yet sourced.
+4. **Art and identity** — done. Item/UI sprite sheets (Colbydude, xAct), the "Termina" theme
+   (original art by samaBR), an About-screen logo, and sprite icons throughout HOME, Tools and
+   Settings, all from The Spriters Resource / original art.
 5. **100% Checklist** — auto-fill tractable from the save-file map already built; not started.
 6. **Teleport** — depends on the player-actor pointer (confirmed via Moon Jump) plus MM3D's
    scene/entrance tables; not started.
