@@ -10,6 +10,7 @@
 #include "glyphs.h"
 #include "guide.h"
 #include "themes.h"
+#include "sprites.h"
 
 // Public release version + build counter. Bump the build number EVERY build: the on-screen tag
 // is your confirmation that the .3gx actually on the SD card is the one you just compiled.
@@ -39,7 +40,7 @@
 // this to 1 also writes a marker file at shutdown so you can tell in one run.
 #define EXIT_HANDSHAKE 0
 
-#define PLUGIN_VER "v0.1.0 build 10"   // full string - About screen and pause box (have room)
+#define PLUGIN_VER "v0.1.0 build 11"   // full string - About screen and pause box (have room)
 
 // Name and short tag follow the build flavour automatically, so flipping TOOLS_ONLY is the ONLY
 // edit needed to produce the other binary. Deriving these beat setting them by hand: the local
@@ -49,7 +50,7 @@
 #define PLUGIN_TAG  "T1.0"              // compact tag - cramped menu title bar
 #else
 #define PLUGIN_NAME "MajoraCTRComposer"
-#define PLUGIN_TAG  "b10"
+#define PLUGIN_TAG  "b11"
 #endif
 
 static Handle   thread;
@@ -1795,8 +1796,28 @@ static void DrawScaled(int dx, int dy, int dw, int dh, const u16 *px, int sw, in
 #define SPRK_PIN      0x1F7
 #define SPRK_PORTAL   0x1F8
 
+// Real RGBA4444 sprites (sprites.h), ripped from The Spriters Resource: Item Icons by
+// Colbydude, UI (rupee) by xAct. See Tools/gen_sprites_mm3d.py for exactly which sheet cell
+// each one comes from, and why the non-obvious ones (Fairy, Shield, Notebook) were picked.
+#define MSPR_ARROWS       0x100
+#define MSPR_BOMBS        0x101
+#define MSPR_BOMBCHUS     0x102
+#define MSPR_STICKS       0x103
+#define MSPR_NUTS         0x104
+#define MSPR_BEANS        0x105
+#define MSPR_KEG          0x106
+#define MSPR_SWORD        0x107
+#define MSPR_QUIVER       0x108
+#define MSPR_HEART        0x109
+#define MSPR_MAGIC_FAIRY  0x10A
+#define MSPR_DEFENSE      0x10B
+#define MSPR_ALL_ITEMS    0x10C
+#define MSPR_ALL_MASKS    0x10D
+#define MSPR_BOSS_SONGS   0x10E
+#define MSPR_FAIRY        0x10F
+#define MSPR_RUPEE        0x110
+
 // Which icon illustrates each cheat row (-1 = none, which is fine for most rows).
-// EXAMPLE mapping - repoint these at your own cheats, or just return -1 everywhere.
 static int SpriteKeyForCheat(int ch)
 {
     switch (ch)
@@ -1807,6 +1828,29 @@ static int SpriteKeyForCheat(int ch)
         case CH_MM_TIME_6AM:  return SPRK_SUNRISE;
         case CH_MM_TIME_10AM: return SPRK_DAY;
         case CH_MM_TIME_6PM:  return SPRK_SUNSET;
+        case CH_MM_TIME_SCRUB: return SPRK_CLOCK;
+        case CH_MM_DAY_SCRUB:  return SPRK_DAY;
+
+        case CH_MM_REFILL_HEARTS: case CH_MM_HEARTS_MAX: return MSPR_HEART;
+        case CH_MM_REFILL_MAGIC:  return MSPR_MAGIC_FAIRY;
+        case CH_MM_DEFENSE:       return MSPR_DEFENSE;
+
+        case CH_MM_RUPEES_MAX:     return MSPR_RUPEE;
+        case CH_MM_GILDED_MIRROR:  return MSPR_SWORD;
+        case CH_MM_QUIVER_BOMBBAG: return MSPR_QUIVER;
+
+        case CH_MM_AMMO_ARROWS: return MSPR_ARROWS;
+        case CH_MM_AMMO_BOMBS:  return MSPR_BOMBS;
+        case CH_MM_AMMO_CHUS:   return MSPR_BOMBCHUS;
+        case CH_MM_AMMO_STICKS: return MSPR_STICKS;
+        case CH_MM_AMMO_NUTS:   return MSPR_NUTS;
+        case CH_MM_AMMO_BEANS:  return MSPR_BEANS;
+        case CH_MM_AMMO_KEG:    return MSPR_KEG;
+
+        case CH_MM_ALL_ITEMS:        return MSPR_ALL_ITEMS;
+        case CH_MM_ALL_MASKS:        return MSPR_ALL_MASKS;
+        case CH_MM_ALL_BOSSES_SONGS: return MSPR_BOSS_SONGS;
+        case CH_MM_ALL_FAIRIES:      return MSPR_FAIRY;
     }
     return -1;
 }
@@ -1916,12 +1960,43 @@ static void PortalIcon(int x, int y)
     CDisc(x + 8, y + 8, 1, 210, 244, 255);            // bright core
 }
 
-// ---- size-modifier figures (Giant / Mini / Normal / Paper Link) ----
-// A tiny green-tunic Link silhouette: pointed cap, skin head, triangular tunic, two boots.
-// Centered on x+8, spanning rows [top,bot]; hw = tunic half-width at the hem.
+// ===================== Item sprites (RGBA4444, from sprites.h) =====================
+static const SpriteRef *FindSprite(int key)
+{
+    if (key < 0) return NULL;
+    for (int i = 0; i < NUM_SPRITES; ++i)
+        if (sprites[i].key == key) return &sprites[i];
+    return NULL;
+}
+
+static void DrawSprite(int x, int y, int key, int big)
+{
+    const SpriteRef *s = FindSprite(key);
+    if (!s) return;
+    const u16 *px = big ? s->px42 : s->px16;
+    int n = big ? SPR42 : SPR16;
+    for (int yy = 0; yy < n; ++yy)
+        for (int xx = 0; xx < n; ++xx)
+        {
+            u16 v = px[yy * n + xx];
+            u32 a = (u32)(v & 0xF) * 17;
+            if (!a) continue;
+            int X = x + xx, Y = y + yy;
+            if ((unsigned)X >= TOP_W || (unsigned)Y >= TOP_H) continue;
+            u8 r = (u8)(((v >> 12) & 0xF) * 17);
+            u8 g = (u8)(((v >> 8) & 0xF) * 17);
+            u8 b = (u8)(((v >> 4) & 0xF) * 17);
+            u8 *p = CPix(X, Y);
+            p[0] = (u8)((p[0] * (255 - a) + r * a) / 255);
+            p[1] = (u8)((p[1] * (255 - a) + g * a) / 255);
+            p[2] = (u8)((p[2] * (255 - a) + b * a) / 255);
+        }
+}
+
 static void DrawCheatIcon(int x, int y, int ch)
 {
-    switch (SpriteKeyForCheat(ch))
+    int sk = SpriteKeyForCheat(ch);
+    switch (sk)
     {
         case SPRK_SUNRISE: HalfSunIcon(x, y, 255, 220, 90); return;
         case SPRK_DAY:     DayIcon(x, y);    return;
@@ -1932,8 +2007,8 @@ static void DrawCheatIcon(int x, int y, int ch)
         case SPRK_PIN:     PinIcon(x, y);    return;
         case SPRK_PORTAL:  PortalIcon(x, y); return;
     }
-    // No icon for this row. If you add a real RGBA4444 sprite sheet, blit it here:
-    //   DrawScaled(x, y, 16, 16, yourPixels, srcW, srcH, 0);
+    // >= 0x100: a real RGBA4444 sprite from sprites.h (see MM3D pseudo-ids below).
+    if (sk >= 0) DrawSprite(x, y, sk, 0);
 }
 
 // ===================== Bottom screen =====================
@@ -3356,11 +3431,12 @@ static void ToolAbout(void)
         { "from the CTRComposer template.",         0 },
         { "",                            0 },
 #else
-        { PLUGIN_NAME " Blank Template", 1 },
+        { PLUGIN_NAME,                   1 },
         { PLUGIN_VER,                    0 },
         { "",                            0 },
-        { "Your plugin: Your Name",      1 },
-        { "github.com/you/your-plugin",  0 },
+        { "Majora's Mask 3D cheats + tools",        0 },
+        { "Made by samaBR",              1 },
+        { "github.com/samaBR85/MajoraCTRComposer",  0 },
         { "",                            0 },
 #endif
         { "CTRComposer engine",          1 },
@@ -3376,9 +3452,16 @@ static void ToolAbout(void)
         { "Small font: Linux 6x10 console font",    0 },
         { "",                            0 },
 #if !TOOLS_ONLY
-        { "Add your own credits here - and do",     0 },
-        { "credit anyone whose address maps,",      0 },
-        { "art or save data you build on.",         0 },
+        { "MM3D cheat table credits",    1 },
+        { "Cheat list: JourneyOver",     0 },
+        { "(CTRPF-AR-CHEAT-CODES)",      0 },
+        { "Save-file mapping: HTW",      0 },
+        { "(HelpTheWretched)",           0 },
+        { "",                            0 },
+        { "Icon credits",                1 },
+        { "Item Icons: Colbydude",       0 },
+        { "UI (rupee): xAct",            0 },
+        { "The Spriters Resource",       0 },
 #endif
     };
     int N = (int)(sizeof(lines) / sizeof(lines[0]));
