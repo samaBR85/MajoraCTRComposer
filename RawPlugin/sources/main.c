@@ -43,7 +43,7 @@
 // this to 1 also writes a marker file at shutdown so you can tell in one run.
 #define EXIT_HANDSHAKE 0
 
-#define PLUGIN_VER "v0.1.0 build 14"   // full string - About screen and pause box (have room)
+#define PLUGIN_VER "v0.1.0 build 15"   // full string - About screen and pause box (have room)
 
 // Name and short tag follow the build flavour automatically, so flipping TOOLS_ONLY is the ONLY
 // edit needed to produce the other binary. Deriving these beat setting them by hand: the local
@@ -53,7 +53,7 @@
 #define PLUGIN_TAG  "T1.0"              // compact tag - cramped menu title bar
 #else
 #define PLUGIN_NAME "MajoraCTRComposer"
-#define PLUGIN_TAG  "b14"
+#define PLUGIN_TAG  "b15"
 #endif
 
 static Handle   thread;
@@ -1838,6 +1838,13 @@ static void DrawScaled(int dx, int dy, int dw, int dh, const u16 *px, int sw, in
 #define MSPR_CAMERA       0x112 // Misc FOLDER icon (Pictograph Box - playful, novelty-flavored)
 #define MSPR_ITEMS_DEED   0x113 // Have all Items cheat (freed up from MSPR_ALL_ITEMS)
 #define MSPR_BOSS_REMAINS 0x114 // All Bosses and Songs cheat (freed up from MSPR_OCARINA)
+#define MSPR_MOONJUMP     0x115 // (tentative ID) Moon Jump - no boot icon on this sheet
+#define MSPR_LENS         0x116 // Lens of Truth - Cheat Search
+#define MSPR_MAP          0x117 // Dungeon Map - RAM Dumper
+#define MSPR_COMPASS      0x118 // Compass - Hex Editor
+#define MSPR_GARO_MASK    0x119 // Garo's Mask - Change Theme
+#define MSPR_SCROLL       0x11A // Trade Quest scroll - Language
+#define MSPR_ABOUT_ICON   0x11B // Majora's Mask HOME icon crop - About
 
 // Which icon illustrates each cheat row (-1 = none, which is fine for most rows).
 static int SpriteKeyForCheat(int ch)
@@ -1873,6 +1880,13 @@ static int SpriteKeyForCheat(int ch)
         case CH_MM_ALL_MASKS:        return MSPR_ALL_MASKS;
         case CH_MM_ALL_BOSSES_SONGS: return MSPR_BOSS_REMAINS;
         case CH_MM_ALL_FAIRIES:      return MSPR_FAIRY;
+
+        case CH_MM_MOONJUMP: return MSPR_MOONJUMP;
+
+        // Settings rows: a mask changes your look, like a theme changes the menu's; a
+        // written scroll for picking a language.
+        case CH_CFG_THEME: return MSPR_GARO_MASK;
+        case CH_CFG_LANG:  return MSPR_SCROLL;
     }
     return -1;
 }
@@ -2276,7 +2290,7 @@ static void CategoryIcon(int folderId, int x, int y)
     switch (folderId)
     {
 #if !TOOLS_ONLY
-        case F_TOOLS:      GridIcon(x, y - 1); break;
+        case F_TOOLS:      DrawSprite(x, y, MSPR_LENS, 0); break;
         case F_TIME:       DrawSprite(x, y, MSPR_OCARINA, 0); break;
         case F_BATTLE:     DrawSprite(x, y, MSPR_SWORD, 0); break;
         case F_INVENTORY:  DrawSprite(x, y, MSPR_WALLET, 0); break;
@@ -2293,10 +2307,10 @@ static void ToolIcon(int tool, int x, int y)
 {
     switch (tool)
     {
-        case T_SEARCH:      MagnifierIcon(x, y); return;
-        case T_RAMDUMP:     DiskIcon(x, y);      return;
-        case T_HEXEDIT:     GridIcon(x, y);      return;
-        case T_ABOUT:       InfoIcon(x, y);      return;
+        case T_SEARCH:      DrawSprite(x, y, MSPR_LENS, 0);    return;
+        case T_RAMDUMP:     DrawSprite(x, y, MSPR_MAP, 0);     return;
+        case T_HEXEDIT:     DrawSprite(x, y, MSPR_COMPASS, 0); return;
+        case T_ABOUT:       DrawSprite(x, y, MSPR_ABOUT_ICON, 0); return;
 #if !TOOLS_ONLY
         case T_GAMEGUIDE:   BookIcon(x, y);      return;
         case T_TRACKER:     ChecklistIcon(x, y); return;

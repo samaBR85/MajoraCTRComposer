@@ -39,6 +39,21 @@ MAP = {
     0x112: ('grid', 5, 1),          # Pictograph Box (camera) - playful HOME folder icon for Misc
     0x113: ('grid', 14, 1),         # Trade Quest deed/scroll - playful stand-in for Have all Items
     0x114: ('grid', 31, 0),         # Odolwa's Remains - stand-in for All Bosses and Songs
+    # Tools / Settings icons (engine-level entries, no game address behind them - picked for
+    # thematic fit like everything else "playful": Cheat Search's own aesthetic is a lens,
+    # RAM Dumper "maps" memory, Hex Editor "pinpoints" a byte, a mask changes your look like a
+    # theme changes the menu's, a written scroll represents picking a language).
+    # NOTE: 0x115 is a best-effort ID - the sheet doesn't clearly label this item, it reads as
+    # either the Hookshot or a similar upward-reaching tool. Fix the cell if it turns out wrong.
+    0x115: ('grid', 5, 3),          # (tentative) Hookshot - Moon Jump (no boot icon exists on this sheet)
+    0x116: ('grid', 5, 2),          # Lens of Truth - Cheat Search
+    0x117: ('grid', 35, 2),         # Dungeon Map - RAM Dumper
+    0x118: ('grid', 35, 1),         # Compass - Hex Editor
+    0x119: ('grid', 21, 2),         # Garo's Mask - Change Theme
+    0x11A: ('grid', 14, 2),         # Trade Quest scroll (green) - Language
+    # About icon: not on the 42px item grid - cropped separately (see gen_logo.py's sibling
+    # crop of the same HOME banner sheet) to a pre-made 48x48 PNG.
+    0x11B: ('file', 'Assets/Sprites/mm3d_about_icon.png'),
 }
 
 def to4444(im):
@@ -64,6 +79,8 @@ with open(OUT_PATH, 'w') as f:
         if spec[0] == 'grid':
             _, r, c = spec
             cell = item_sheet.crop((c * CELL, r * CELL, (c + 1) * CELL, (r + 1) * CELL))
+        elif spec[0] == 'file':
+            cell = Image.open(spec[1]).convert('RGBA').resize((CELL, CELL), Image.LANCZOS)
         else:
             _, x0, y0, x1, y1 = spec
             cell = ui_sheet.crop((x0, y0, x1, y1)).resize((CELL, CELL), Image.LANCZOS)

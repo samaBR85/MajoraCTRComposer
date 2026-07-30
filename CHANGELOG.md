@@ -6,7 +6,21 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–14
+## Unreleased · builds 1–15
+
+### More icons: Tools, Settings, Moon Jump (build 15)
+- **Tools folder + its 4 entries** now use sprites instead of generic engine vectors: the
+  folder itself and Cheat Search both use the Lens of Truth, RAM Dumper uses the Dungeon Map
+  (playful - it "maps" memory), Hex Editor uses the Compass (playful - it "pinpoints" a byte),
+  and About uses a cropped Majora's Mask HOME-icon badge (same banner sheet as the logo).
+- **Settings entries**: Change Theme uses Garo's Mask (playful - a mask changes your look, like
+  a theme changes the menu's), Language uses a Trade Quest scroll. The Settings folder icon and
+  the pure config toggles (notifications, autofill, hotkey rebinds) were left on the engine's
+  generic vector icons - no game item maps onto "toggle a boolean" without forcing it.
+- **Moon Jump** finally has an icon. There's no boot/footwear icon on this sheet (MM3D doesn't
+  have swappable footwear the way OoT3D does), so this used the sheet's own best-effort read of
+  an upward/reaching item near the Lens of Truth - flagged as tentative in code, since the
+  sheet doesn't label it and it could turn out to be something else on closer inspection.
 
 First hardware-confirmed cheats. Boots and menu confirmed on real MM3D v1.1.0 hardware at
 build 1; every cheat below was individually confirmed on the same console.
