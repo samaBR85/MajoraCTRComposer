@@ -6,7 +6,38 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–15
+## Unreleased · builds 1–21
+
+Boots and menu confirmed on real MM3D v1.1.0 hardware at build 1; every cheat below was
+individually confirmed on the same console unless noted otherwise.
+
+### Teleport (builds 16–21) — Phase 6
+- **25 warp destinations** across Clock Town, Swamp, Mountain, Great Bay, Ikana and Ranch/Moon.
+  The mechanism is CONFIRMED on hardware (Termina Field individually verified); the other 24
+  reuse the same recipe with entrance indices from `PhlexPlexico/mm3d-practice-tools`' table,
+  not each individually tested.
+- **The path there was a real debugging story.** GlobalContext (the live, not-save game state
+  struct) is **heap-allocated** - its address changes every boot/session. Three attempts
+  (`next_entrance` write, a fuller write matching OoT's own proven recipe, and a completely
+  different mechanism via `ocarina_state`) all did nothing, because each hardcoded an address
+  found in an *earlier* session that had already gone stale by the time it was tested.
+- **The fix**: `0x08363784` — the same stable pointer Moon Jump already uses for the player
+  actor — turned out to point (almost) directly at GlobalContext too. Reading it fresh every
+  call, the same way Moon Jump already does, is what made the warp actually fire.
+- **Also found and fixed a 2-byte transcription error**: the `scene` field's offset was recorded
+  as `0x14A` from an AI-summarized reading of the reference source; cross-checking a Cheat
+  Search-found address against `GCTX_base + 0x148` proved the real offset is `0x148`. That
+  2-byte error had thrown off every previous derived address in the same direction.
+- **Method note**: found via Cheat Search Known Value narrowing on the `scene` field (2 bytes) —
+  first with South Clock Town (`0x6F`) → Termina Field (`0x2D`), which converged to a single
+  candidate but changed address between sessions (proving it wasn't reliable alone); then
+  re-derived via the stable player-actor pointer instead, which is what actually held up.
+
+### Button glyphs (build 19)
+- Swapped the template's procedurally-drawn A/B/X/Y/L/R/D-Pad icons for OcarinaCTRComposer's own
+  (ripped by **manpaint**, The Spriters Resource) - real 3DS button art instead of flat vector
+  shapes. These are generic console button icons, not tied to either game, so reusing the file
+  as-is was a straight drop-in.
 
 ### More icons: Tools, Settings, Moon Jump (build 15)
 - **Tools folder + its 4 entries** now use sprites instead of generic engine vectors: the
@@ -21,9 +52,6 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
   have swappable footwear the way OoT3D does), so this used the sheet's own best-effort read of
   an upward/reaching item near the Lens of Truth - flagged as tentative in code, since the
   sheet doesn't label it and it could turn out to be something else on closer inspection.
-
-First hardware-confirmed cheats. Boots and menu confirmed on real MM3D v1.1.0 hardware at
-build 1; every cheat below was individually confirmed on the same console.
 
 ### Art and identity (builds 11–14) — Phase 4
 - **21 real sprite icons** — Item Icons sheet (Colbydude) and UI sheet (xAct), both from The

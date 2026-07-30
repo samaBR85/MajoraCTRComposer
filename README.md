@@ -14,20 +14,21 @@ Work in progress — see [`RawPlugin/README.md`](RawPlugin/README.md) for build 
 
 This build targets **Majora's Mask 3D, USA, v1.1.0** (Title ID `0004000000125500`). Boots and
 menu confirmed on real hardware. 22 cheats confirmed so far across Time, Battle, Inventory,
-Items (ammo), Quest and Misc (including Moon Jump, the first base+offset cheat) — see
-`CHANGELOG.md` for the full list and known limitations.
+Items (ammo), Quest and Misc (including Moon Jump, the first base+offset cheat), plus a
+25-destination Teleport (mechanism confirmed on hardware) — see `CHANGELOG.md` for the full
+list and known limitations.
 
 ## Roadmap
 
 1. **Skeleton and boot baseline** — done.
 2. **First verified cheats** — done.
 3. **Rest of the cheat table** — done, minus the minigame code patches (moved to phase 8).
-4. **Art and identity** — done. Item/UI sprite sheets (Colbydude, xAct), the "Termina" theme
-   (original art by samaBR), an About-screen logo, and sprite icons throughout HOME, Tools and
-   Settings, all from The Spriters Resource / original art.
+4. **Art and identity** — done. Item/UI sprite sheets (Colbydude, xAct), button glyphs
+   (manpaint), the "Termina" theme (original art by samaBR), an About-screen logo, and sprite
+   icons throughout HOME, Tools and Settings, all from The Spriters Resource / original art.
 5. **100% Checklist** — auto-fill tractable from the save-file map already built; not started.
-6. **Teleport** — depends on the player-actor pointer (confirmed via Moon Jump) plus MM3D's
-   scene/entrance tables; not started.
+6. **Teleport** — done. 25 destinations; the warp mechanism (GlobalContext, heap-allocated,
+   resolved via the same stable pointer Moon Jump uses) is confirmed on hardware.
 7. **Game Guide** — needs an MM3D walkthrough text source; not started.
 8. **Minigame code patches** — instruction-patch cheats (Shooting Galleries, Beaver Swimming,
    Honey & Darling). Highest risk in the plan (RWX + flush, never auto-enabled on boot);
@@ -74,6 +75,7 @@ a plugin for another 3DS game.
 - **Colbydude** — MM3D Item Icons sheet, The Spriters Resource
 - **xAct** — MM3D UI sheet (rupee icon), The Spriters Resource
 - **Hiccup / Cheesy Mac n Cheese** — MM3D HOME banner (About screen logo), The Spriters Resource
+- **manpaint** — 3DS button glyphs (A/B/X/Y/L/R/D-Pad), The Spriters Resource, reused from OcarinaCTRComposer
 - **samaBR** — Termina theme background art (original artwork)
 - **Luma3DS** (plugin loader) — https://github.com/LumaTeam/Luma3DS
 - **3GX plugin loader / 3gxtool** — PabloMK7 — https://github.com/PabloMK7

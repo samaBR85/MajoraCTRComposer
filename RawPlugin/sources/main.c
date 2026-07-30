@@ -43,7 +43,7 @@
 // this to 1 also writes a marker file at shutdown so you can tell in one run.
 #define EXIT_HANDSHAKE 0
 
-#define PLUGIN_VER "v0.1.0 build 15"   // full string - About screen and pause box (have room)
+#define PLUGIN_VER "v0.1.0 build 21"   // full string - About screen and pause box (have room)
 
 // Name and short tag follow the build flavour automatically, so flipping TOOLS_ONLY is the ONLY
 // edit needed to produce the other binary. Deriving these beat setting them by hand: the local
@@ -53,7 +53,7 @@
 #define PLUGIN_TAG  "T1.0"              // compact tag - cramped menu title bar
 #else
 #define PLUGIN_NAME "MajoraCTRComposer"
-#define PLUGIN_TAG  "b15"
+#define PLUGIN_TAG  "b21"
 #endif
 
 static Handle   thread;
@@ -339,6 +339,14 @@ enum {
     CH_MM_ALL_ITEMS, CH_MM_ALL_MASKS, CH_MM_ALL_BOSSES_SONGS, CH_MM_ALL_FAIRIES,
     // ---- MM3D: Misc ----
     CH_MM_MOONJUMP,
+    // ---- MM3D: Teleport (CONFIRMED on hardware - see MM_Warp()) ----
+    CH_TP_SCT, CH_TP_ECT, CH_TP_WCT, CH_TP_NCT, CH_TP_FIELD,
+    CH_TP_SWAMP, CH_TP_DEKUPALACE, CH_TP_WOODFALL, CH_TP_WOODFALL_TEMPLE,
+    CH_TP_MTNVILLAGE_SPR, CH_TP_MTNVILLAGE_WIN, CH_TP_GORONVILLAGE_SPR, CH_TP_GORONVILLAGE_WIN,
+    CH_TP_SNOWHEAD, CH_TP_SNOWHEAD_TEMPLE,
+    CH_TP_GREATBAY, CH_TP_ZORACAPE, CH_TP_ZORAHALL, CH_TP_GREATBAY_TEMPLE,
+    CH_TP_IKANACANYON, CH_TP_STONETOWER, CH_TP_STONETOWER_TEMPLE,
+    CH_TP_ROMANIRANCH, CH_TP_MILKROAD, CH_TP_MOON,
     // ---- Settings rows (not cheats) ----
     CH_CFG_TOAST, CH_CFG_AUTOFILL, CH_CFG_QMKEY, CH_CFG_HK1, CH_CFG_HK2,
     CH_CFG_HKRESET, CH_CFG_THEME, CH_CFG_LANG,
@@ -840,6 +848,23 @@ static u32 ExampleBase(void)
     return R32(EXAMPLE_ADDR_BASE);
 }
 
+// Teleport - CONFIRMED on hardware (MM3D USA v1.1.0). GCTX_BASE_PTR (0x08363784) is the same
+// stable pointer Moon Jump uses; GlobalContext itself is heap-allocated and its address changes
+// every session, so it must be read fresh every call, never cached. `entrance` is one of MM3D's
+// ~120 real entrance indices (see references/ - table sourced from PhlexPlexico/mm3d-practice-
+// tools' source/msys/include/entrances.h). Returns 0 (does nothing) if GCTX isn't readable.
+static int MM_Warp(u16 entrance)
+{
+    u32 gctx = R32(0x08363784);
+    if (!gctx) return 0;
+    W32(0x7761F4, 0);             // SaveData.cutscene_stuff = 0 (clear pending cutscene)
+    W16(gctx + 0xC52E, entrance); // GCTX->next_entrance
+    W8(gctx + 0xC530, 3);         // GCTX transition-type byte
+    W16(0x00789910, entrance);    // CommonData.sub13s[0].entrance_index (respawn mirror)
+    W8(gctx + 0xC529, 0x14);      // GCTX->field_C529 (trigger - writing 0x14 starts the load)
+    return 1;
+}
+
 // One-shot cheats: applied instantly when selected in the menu, then the row flashes.
 // Return 1 if `id` is a one-shot (so the menu knows not to treat it as a toggle).
 // Set g_oneShotMsg to override the "OK" flash text - handy for ADDED/REMOVED toggles.
@@ -904,6 +929,37 @@ static int OneShot(int id)
         case CH_MM_ALL_FAIRIES:
             for (int i = 0; i < 4; ++i) W8(0x7763E8 + i, 0x0F);
             return 1;
+
+        // Teleport - CONFIRMED on hardware (the Termina Field entry below was the exact one
+        // tested and verified). The rest use the same MM_Warp() recipe with entrance indices
+        // from the practice-tools entrance table - not each individually hardware-tested, but
+        // the mechanism itself is proven, so a wrong index should at worst land somewhere
+        // unexpected in the SAME target area, not crash.
+        case CH_TP_SCT:     MM_Warp(0xD890); return 1; // South Clock Town, from owl statue
+        case CH_TP_ECT:     MM_Warp(0xD200); return 1; // East Clock Town, from Termina Field
+        case CH_TP_WCT:     MM_Warp(0xD400); return 1; // West Clock Town, from Termina Field
+        case CH_TP_NCT:     MM_Warp(0xD600); return 1; // North Clock Town, from Termina Field
+        case CH_TP_FIELD:   MM_Warp(0x5460); return 1; // Termina Field, from South Clock Town - CONFIRMED
+        case CH_TP_SWAMP:           MM_Warp(0x0CA0); return 1; // Southern Swamp, from owl statue
+        case CH_TP_DEKUPALACE:      MM_Warp(0x5000); return 1; // Deku Palace, front doorway
+        case CH_TP_WOODFALL:        MM_Warp(0x8640); return 1; // Woodfall, from owl statue
+        case CH_TP_WOODFALL_TEMPLE: MM_Warp(0x3000); return 1; // Woodfall Temple, front room
+        case CH_TP_MTNVILLAGE_SPR:  MM_Warp(0xAE80); return 1; // Mountain Village (Spring), from owl statue
+        case CH_TP_MTNVILLAGE_WIN:  MM_Warp(0x9A80); return 1; // Mountain Village (Winter), from owl statue
+        case CH_TP_GORONVILLAGE_SPR:MM_Warp(0x8A00); return 1; // Goron Village (Spring)
+        case CH_TP_GORONVILLAGE_WIN:MM_Warp(0x9400); return 1; // Goron Village (Winter)
+        case CH_TP_SNOWHEAD:        MM_Warp(0xB230); return 1; // Snowhead, from owl statue
+        case CH_TP_SNOWHEAD_TEMPLE: MM_Warp(0x3C00); return 1; // Snowhead Temple
+        case CH_TP_GREATBAY:        MM_Warp(0x68B0); return 1; // Great Bay Coast, from owl statue
+        case CH_TP_ZORACAPE:        MM_Warp(0x6A60); return 1; // Zora Cape, from owl statue
+        case CH_TP_ZORAHALL:        MM_Warp(0x6000); return 1; // Zora Hall Atrium
+        case CH_TP_GREATBAY_TEMPLE: MM_Warp(0x8C00); return 1; // Great Bay Temple
+        case CH_TP_IKANACANYON:      MM_Warp(0x2040); return 1; // Ikana Canyon, from owl statue
+        case CH_TP_STONETOWER:       MM_Warp(0xAA30); return 1; // Stone Tower, from owl statue
+        case CH_TP_STONETOWER_TEMPLE:MM_Warp(0x2600); return 1; // Stone Tower Temple
+        case CH_TP_ROMANIRANCH: MM_Warp(0x6400); return 1; // Romani Ranch, from Milk Road
+        case CH_TP_MILKROAD:    MM_Warp(0x3E40); return 1; // Milk Road, from owl statue
+        case CH_TP_MOON:        MM_Warp(0xC800); return 1; // The Moon, from Clock Tower rooftop
 
         // Add your one-shots here:
         //   case CH_MY_CHEAT: W16(0x00123456, 0x0064); return 1;
@@ -1086,7 +1142,7 @@ typedef struct { const char *title; const Item *items; int count; } Folder;
 #if TOOLS_ONLY
 enum { F_ROOT, F_SETTINGS, NUM_FOLDERS };
 #else
-enum { F_ROOT, F_TIME, F_BATTLE, F_INVENTORY, F_AMMO, F_QUEST, F_MISC, F_EXAMPLES, F_TOOLS, F_SETTINGS, NUM_FOLDERS };
+enum { F_ROOT, F_TIME, F_BATTLE, F_INVENTORY, F_AMMO, F_QUEST, F_MISC, F_TELEPORT, F_EXAMPLES, F_TOOLS, F_SETTINGS, NUM_FOLDERS };
 #endif
 
 // tool screens. The tools-only build drops the two that are inherently per-game, so their
@@ -1128,6 +1184,7 @@ static const Item rootItems[] = {
     IT_FOLDER("Inventory", F_INVENTORY),
     IT_FOLDER("Quest", F_QUEST),
     IT_FOLDER("Misc.", F_MISC),
+    IT_FOLDER("Teleport", F_TELEPORT),
     IT_FOLDER("Examples", F_EXAMPLES),
     IT_SEP("GUIDES"),
     IT_TOOL_WIDE("Tracker", T_TRACKER, "A general per-item progress tracker: each entry is untouched / auto / checked / cleared. Auto-fill syncs it from game memory. Ships with placeholder rows only - fill in CHK_CATS with your game's collectibles."),
@@ -1240,6 +1297,45 @@ static const Item questItems[] = {
 static const Item miscItems[] = {
     IT_CHEAT("Moon Jump", CH_MM_MOONJUMP, "CONFIRMED on hardware. Hold {L}+{A} to rise into the air, release to fall. Mind the fall distance."),
 };
+
+// MM3D Teleport. CONFIRMED mechanism (see MM_Warp() above) - the Termina Field entry is the
+// exact one hardware-tested; the rest reuse the same confirmed recipe with entrance indices
+// from PhlexPlexico/mm3d-practice-tools' entrance table (source/msys/include/entrances.h),
+// not individually hardware-tested. A wrong index should land you somewhere unexpected within
+// the same target area at worst, not crash - the mechanism itself is proven safe.
+static const Item teleportItems[] = {
+    IT_SEP("CLOCK TOWN"),
+    IT_CHEAT("South Clock Town",  CH_TP_SCT,   "Not individually confirmed. Warps to South Clock Town (from owl statue spawn)."),
+    IT_CHEAT("East Clock Town",   CH_TP_ECT,   "Not individually confirmed. Warps to East Clock Town (from Termina Field spawn)."),
+    IT_CHEAT("West Clock Town",   CH_TP_WCT,   "Not individually confirmed. Warps to West Clock Town (from Termina Field spawn)."),
+    IT_CHEAT("North Clock Town",  CH_TP_NCT,   "Not individually confirmed. Warps to North Clock Town (from Termina Field spawn)."),
+    IT_CHEAT("Termina Field",     CH_TP_FIELD, "CONFIRMED on hardware. Warps to Termina Field (from South Clock Town spawn)."),
+    IT_SEP("SWAMP"),
+    IT_CHEAT("Southern Swamp",    CH_TP_SWAMP,           "Not individually confirmed. From owl statue spawn."),
+    IT_CHEAT("Deku Palace",       CH_TP_DEKUPALACE,      "Not individually confirmed. Front doorway spawn."),
+    IT_CHEAT("Woodfall",          CH_TP_WOODFALL,        "Not individually confirmed. From owl statue spawn."),
+    IT_CHEAT("Woodfall Temple",   CH_TP_WOODFALL_TEMPLE, "Not individually confirmed. Front room spawn."),
+    IT_SEP("MOUNTAIN"),
+    IT_CHEAT("Mountain Village (Spring)", CH_TP_MTNVILLAGE_SPR,   "Not individually confirmed. From owl statue spawn."),
+    IT_CHEAT("Mountain Village (Winter)", CH_TP_MTNVILLAGE_WIN,   "Not individually confirmed. From owl statue spawn."),
+    IT_CHEAT("Goron Village (Spring)",    CH_TP_GORONVILLAGE_SPR, "Not individually confirmed. From Path to Goron Village spawn."),
+    IT_CHEAT("Goron Village (Winter)",    CH_TP_GORONVILLAGE_WIN, "Not individually confirmed. From Path to Goron Village spawn."),
+    IT_CHEAT("Snowhead",          CH_TP_SNOWHEAD,        "Not individually confirmed. From owl statue spawn."),
+    IT_CHEAT("Snowhead Temple",   CH_TP_SNOWHEAD_TEMPLE, "Not individually confirmed. Intro spawn."),
+    IT_SEP("GREAT BAY"),
+    IT_CHEAT("Great Bay Coast",   CH_TP_GREATBAY,        "Not individually confirmed. From owl statue spawn."),
+    IT_CHEAT("Zora Cape",         CH_TP_ZORACAPE,        "Not individually confirmed. From owl statue spawn."),
+    IT_CHEAT("Zora Hall",         CH_TP_ZORAHALL,        "Not individually confirmed. Atrium spawn."),
+    IT_CHEAT("Great Bay Temple",  CH_TP_GREATBAY_TEMPLE, "Not individually confirmed. From Zora Cape spawn."),
+    IT_SEP("IKANA"),
+    IT_CHEAT("Ikana Canyon",       CH_TP_IKANACANYON,       "Not individually confirmed. From owl statue spawn."),
+    IT_CHEAT("Stone Tower",        CH_TP_STONETOWER,        "Not individually confirmed. From owl statue spawn."),
+    IT_CHEAT("Stone Tower Temple", CH_TP_STONETOWER_TEMPLE, "Not individually confirmed. Intro spawn."),
+    IT_SEP("RANCH / MOON"),
+    IT_CHEAT("Romani Ranch", CH_TP_ROMANIRANCH, "Not individually confirmed. From Milk Road spawn."),
+    IT_CHEAT("Milk Road",    CH_TP_MILKROAD,    "Not individually confirmed. From owl statue spawn."),
+    IT_CHEAT("The Moon",     CH_TP_MOON,        "Not individually confirmed. From Clock Tower rooftop spawn."),
+};
 #endif // !TOOLS_ONLY
 
 static const Item settingsItems[] = {
@@ -1277,6 +1373,7 @@ static const Folder folders[NUM_FOLDERS] = {
     { "Items",                ammoItems,     FCOUNT(ammoItems) },
     { "Quest",                questItems,    FCOUNT(questItems) },
     { "Misc.",                miscItems,     FCOUNT(miscItems) },
+    { "Teleport",             teleportItems, FCOUNT(teleportItems) },
     { "Examples",             exampleItems,  FCOUNT(exampleItems) },
     { "Tools",                toolsItems,    FCOUNT(toolsItems) },
     { "Settings",             settingsItems, FCOUNT(settingsItems) },
@@ -2296,6 +2393,7 @@ static void CategoryIcon(int folderId, int x, int y)
         case F_INVENTORY:  DrawSprite(x, y, MSPR_WALLET, 0); break;
         case F_QUEST:      DrawSprite(x, y, MSPR_ALL_ITEMS, 0); break;
         case F_MISC:       DrawSprite(x, y, MSPR_CAMERA, 0); break;
+        case F_TELEPORT:   PortalIcon(x, y - 1); break;
 #endif
         case F_SETTINGS: GearIcon(x, y - 1); break;
         default:         FolderIconSmall(x, y + 1); break;
@@ -3523,6 +3621,7 @@ static void ToolAbout(void)
         { "UI (rupee): xAct",            0 },
         { "Logo: Hiccup / Cheesy Mac",   0 },
         { "  n Cheese",                  0 },
+        { "Buttons: manpaint",           0 },
         { "The Spriters Resource",       0 },
         { "",                            0 },
         { "Termina theme art: samaBR",   1 },
