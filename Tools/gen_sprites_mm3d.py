@@ -29,11 +29,16 @@ MAP = {
                                      # rectangle that doesn't crop into a square icon cleanly)
     0x10B: ('grid', 24, 4),         # Hero's Shield - playful stand-in for Enhanced Defense
                                      # (no dedicated "defense upgrade" icon exists)
-    0x10C: ('grid', 32, 0),         # Bombers' Notebook - playful stand-in for Have all Items
+    0x10C: ('grid', 32, 0),         # Bombers' Notebook - HOME folder icon for Quest
     0x10D: ('grid', 18, 0),         # Bunny Hood - the most recognizable MM3D mask, for Have all Masks
-    0x10E: ('grid', 3, 0),          # Ocarina - for All Bosses and Songs (the "Songs" half)
+    0x10E: ('grid', 3, 0),          # Ocarina - HOME folder icon for Time
     0x10F: ('grid', 35, 3),         # Stray Fairy sprite - for All Stray Fairies
     0x110: ('px', 455, 65, 481, 92),# Red Rupee, cropped from the UI sheet's HUD - Max Rupees
+    # HOME folder icons + reassigned cheat icons (freed up when their sprite moved to a folder)
+    0x111: ('grid', 28, 0),         # Rupee Wallet - HOME folder icon for Inventory
+    0x112: ('grid', 5, 1),          # Pictograph Box (camera) - playful HOME folder icon for Misc
+    0x113: ('grid', 14, 1),         # Trade Quest deed/scroll - playful stand-in for Have all Items
+    0x114: ('grid', 31, 0),         # Odolwa's Remains - stand-in for All Bosses and Songs
 }
 
 def to4444(im):

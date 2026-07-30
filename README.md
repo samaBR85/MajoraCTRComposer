@@ -71,6 +71,7 @@ a plugin for another 3DS game.
 - **PhlexPlexico** — `mm3d-practice-tools`, referenced for struct/field context where used
 - **Colbydude** — MM3D Item Icons sheet, The Spriters Resource
 - **xAct** — MM3D UI sheet (rupee icon), The Spriters Resource
+- **Hiccup / Cheesy Mac n Cheese** — MM3D HOME banner (About screen logo), The Spriters Resource
 - **samaBR** — Termina theme background art (original artwork)
 - **Luma3DS** (plugin loader) — https://github.com/LumaTeam/Luma3DS
 - **3GX plugin loader / 3gxtool** — PabloMK7 — https://github.com/PabloMK7

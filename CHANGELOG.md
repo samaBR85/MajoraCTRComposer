@@ -6,23 +6,29 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–12
+## Unreleased · builds 1–14
 
 First hardware-confirmed cheats. Boots and menu confirmed on real MM3D v1.1.0 hardware at
 build 1; every cheat below was individually confirmed on the same console.
 
-### Art and identity (builds 11–12) — Phase 4
-- **17 real sprite icons** next to cheat rows in Battle, Inventory, Items and Quest — Item
-  Icons sheet (Colbydude) and UI sheet (xAct), both from The Spriters Resource. Cheats with no
-  literal in-game icon got a playful stand-in instead: a bottled Fairy for Refill Magic, the
-  Hero's Shield for Enhanced Defense, the Bombers' Notebook for Have all Items.
-- **"Termina" theme** — a second entry in `THEMES[]`, `parchment`-flagged, using original
-  stained-glass artwork (Majora's Mask, the Moon, the Clock Tower) made by **samaBR** for both
-  the top (320×200) and bottom (280×200) menu windows — sized to match the engine's window
-  dimensions exactly, no scaling needed. The theme's flat `bg` field is set to the artwork's own
-  average color so the engine's auto-contrast picks readable text over the image.
-- Not yet confirmed on hardware whether menu text stays legible over the (fairly dense/colorful)
-  art in every screen — flagged for a hardware check.
+### Art and identity (builds 11–14) — Phase 4
+- **21 real sprite icons** — Item Icons sheet (Colbydude) and UI sheet (xAct), both from The
+  Spriters Resource. 17 next to cheat rows in Battle, Inventory, Items and Quest; 4 more added
+  in build 14 as **HOME folder icons** (Time → Ocarina, Battle → Gilded Sword, Inventory → a
+  Rupee Wallet, Quest → the Bombers' Notebook, Misc → the Pictograph Box). Reassigning the
+  Ocarina and Notebook from cheat rows to folder icons freed up two cheats for new icons: Have
+  all Items now uses a Trade Quest deed/scroll, All Bosses and Songs uses Odolwa's Remains.
+  Cheats with no literal in-game icon kept their playful stand-in (bottled Fairy for Refill
+  Magic, Hero's Shield for Enhanced Defense).
+- **"Termina" theme**, revised in build 14: swapped to the `_02` background variants (top is now
+  the sepia stone-carved version; bottom stays the color stained-glass version), and the text
+  colors now match OcarinaCTRComposer's own "Zelda Classic" theme exactly, so the two sibling
+  plugins read consistently. Original artwork by **samaBR**.
+- **About screen logo** — the MM3D title wordmark, cropped from the "HOME Menu Icons and
+  Banners" sheet (Hiccup / Cheesy Mac n Cheese, The Spriters Resource) with a stray 1px divider
+  line matted out, drawn above the credits list the same way OcarinaCTRComposer does it.
+- Not yet confirmed on hardware whether menu text stays legible over the art in every screen —
+  flagged for a hardware check.
 
 ### Misc / Time Scrub (builds 9–10)
 - **Moon Jump** (hold {L}+{A}) — the first **base+offset** cheat in this plugin: a pointer

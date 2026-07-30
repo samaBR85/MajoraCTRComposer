@@ -13,6 +13,7 @@
 #include "sprites.h"
 #include "topbg.h"
 #include "botbg.h"
+#include "logo.h"
 
 // Public release version + build counter. Bump the build number EVERY build: the on-screen tag
 // is your confirmation that the .3gx actually on the SD card is the one you just compiled.
@@ -42,7 +43,7 @@
 // this to 1 also writes a marker file at shutdown so you can tell in one run.
 #define EXIT_HANDSHAKE 0
 
-#define PLUGIN_VER "v0.1.0 build 13"   // full string - About screen and pause box (have room)
+#define PLUGIN_VER "v0.1.0 build 14"   // full string - About screen and pause box (have room)
 
 // Name and short tag follow the build flavour automatically, so flipping TOOLS_ONLY is the ONLY
 // edit needed to produce the other binary. Deriving these beat setting them by hand: the local
@@ -52,7 +53,7 @@
 #define PLUGIN_TAG  "T1.0"              // compact tag - cramped menu title bar
 #else
 #define PLUGIN_NAME "MajoraCTRComposer"
-#define PLUGIN_TAG  "b13"
+#define PLUGIN_TAG  "b14"
 #endif
 
 static Handle   thread;
@@ -1828,11 +1829,15 @@ static void DrawScaled(int dx, int dy, int dw, int dh, const u16 *px, int sw, in
 #define MSPR_HEART        0x109
 #define MSPR_MAGIC_FAIRY  0x10A
 #define MSPR_DEFENSE      0x10B
-#define MSPR_ALL_ITEMS    0x10C
+#define MSPR_ALL_ITEMS    0x10C // Bombers' Notebook - now the Quest FOLDER icon
 #define MSPR_ALL_MASKS    0x10D
-#define MSPR_BOSS_SONGS   0x10E
+#define MSPR_OCARINA      0x10E // now the Time FOLDER icon
 #define MSPR_FAIRY        0x10F
 #define MSPR_RUPEE        0x110
+#define MSPR_WALLET       0x111 // Inventory FOLDER icon
+#define MSPR_CAMERA       0x112 // Misc FOLDER icon (Pictograph Box - playful, novelty-flavored)
+#define MSPR_ITEMS_DEED   0x113 // Have all Items cheat (freed up from MSPR_ALL_ITEMS)
+#define MSPR_BOSS_REMAINS 0x114 // All Bosses and Songs cheat (freed up from MSPR_OCARINA)
 
 // Which icon illustrates each cheat row (-1 = none, which is fine for most rows).
 static int SpriteKeyForCheat(int ch)
@@ -1864,9 +1869,9 @@ static int SpriteKeyForCheat(int ch)
         case CH_MM_AMMO_BEANS:  return MSPR_BEANS;
         case CH_MM_AMMO_KEG:    return MSPR_KEG;
 
-        case CH_MM_ALL_ITEMS:        return MSPR_ALL_ITEMS;
+        case CH_MM_ALL_ITEMS:        return MSPR_ITEMS_DEED;
         case CH_MM_ALL_MASKS:        return MSPR_ALL_MASKS;
-        case CH_MM_ALL_BOSSES_SONGS: return MSPR_BOSS_SONGS;
+        case CH_MM_ALL_BOSSES_SONGS: return MSPR_BOSS_REMAINS;
         case CH_MM_ALL_FAIRIES:      return MSPR_FAIRY;
     }
     return -1;
@@ -2261,14 +2266,22 @@ static void GearIcon(int x, int y)        // Settings rows
     CFill(x + 1, y + 6, 2, 2, GOLD); CFill(x + 12, y + 6, 2, 2, GOLD);
 }
 
-// Icon for a folder row. The template has no sprite sheet, so most folders fall back to
-// the generic folder icon. Give a folder its own look by adding a case here.
+// Icon for a folder row. HOME-level MM3D folders use real sprites (same "obvious where
+// possible, playful where not" logic as the cheat icons): Time -> Ocarina, Battle -> the
+// Gilded Sword, Inventory -> a Rupee Wallet, Quest -> the Bombers' Notebook (literally MM3D's
+// own quest-tracking item), Misc -> the Pictograph Box (a fun, novelty-flavored camera, for
+// the novelty-cheats folder). Tools/Settings keep their generic engine vector icons.
 static void CategoryIcon(int folderId, int x, int y)
 {
     switch (folderId)
     {
 #if !TOOLS_ONLY
-        case F_TOOLS:    GridIcon(x, y - 1); break;
+        case F_TOOLS:      GridIcon(x, y - 1); break;
+        case F_TIME:       DrawSprite(x, y, MSPR_OCARINA, 0); break;
+        case F_BATTLE:     DrawSprite(x, y, MSPR_SWORD, 0); break;
+        case F_INVENTORY:  DrawSprite(x, y, MSPR_WALLET, 0); break;
+        case F_QUEST:      DrawSprite(x, y, MSPR_ALL_ITEMS, 0); break;
+        case F_MISC:       DrawSprite(x, y, MSPR_CAMERA, 0); break;
 #endif
         case F_SETTINGS: GearIcon(x, y - 1); break;
         default:         FolderIconSmall(x, y + 1); break;
@@ -3494,6 +3507,8 @@ static void ToolAbout(void)
         { "Icon credits",                1 },
         { "Item Icons: Colbydude",       0 },
         { "UI (rupee): xAct",            0 },
+        { "Logo: Hiccup / Cheesy Mac",   0 },
+        { "  n Cheese",                  0 },
         { "The Spriters Resource",       0 },
         { "",                            0 },
         { "Termina theme art: samaBR",   1 },
@@ -3502,7 +3517,11 @@ static void ToolAbout(void)
     };
     int N = (int)(sizeof(lines) / sizeof(lines[0]));
     int x = WIN_X + 16;
+#if TOOLS_ONLY
     int top = WIN_Y + 14;                 // text block starts at the top: no logo image
+#else
+    int top = WIN_Y + 10 + LOGO_H + 10;   // text block starts below the MM3D title logo
+#endif
     int footY = WIN_Y + WIN_H - 16;
     int vis = (footY - top - 4) / 12;      // lines that fit in the scroll area
     int scroll = 0, redraw = 1;
@@ -3512,6 +3531,9 @@ static void ToolAbout(void)
         if (redraw)
         {
             ComposeBackdrop();
+#if !TOOLS_ONLY
+            DrawImg(WIN_X + (WIN_W - LOGO_W) / 2, WIN_Y + 10, logoPx, LOGO_W, LOGO_H);
+#endif
             for (int i = 0; i < vis && scroll + i < N; ++i)
             {
                 const char *s = lines[scroll + i].s;
