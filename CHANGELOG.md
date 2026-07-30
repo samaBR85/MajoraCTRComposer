@@ -6,10 +6,23 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–10
+## Unreleased · builds 1–12
 
 First hardware-confirmed cheats. Boots and menu confirmed on real MM3D v1.1.0 hardware at
 build 1; every cheat below was individually confirmed on the same console.
+
+### Art and identity (builds 11–12) — Phase 4
+- **17 real sprite icons** next to cheat rows in Battle, Inventory, Items and Quest — Item
+  Icons sheet (Colbydude) and UI sheet (xAct), both from The Spriters Resource. Cheats with no
+  literal in-game icon got a playful stand-in instead: a bottled Fairy for Refill Magic, the
+  Hero's Shield for Enhanced Defense, the Bombers' Notebook for Have all Items.
+- **"Termina" theme** — a second entry in `THEMES[]`, `parchment`-flagged, using original
+  stained-glass artwork (Majora's Mask, the Moon, the Clock Tower) made by **samaBR** for both
+  the top (320×200) and bottom (280×200) menu windows — sized to match the engine's window
+  dimensions exactly, no scaling needed. The theme's flat `bg` field is set to the artwork's own
+  average color so the engine's auto-contrast picks readable text over the image.
+- Not yet confirmed on hardware whether menu text stays legible over the (fairly dense/colorful)
+  art in every screen — flagged for a hardware check.
 
 ### Misc / Time Scrub (builds 9–10)
 - **Moon Jump** (hold {L}+{A}) — the first **base+offset** cheat in this plugin: a pointer

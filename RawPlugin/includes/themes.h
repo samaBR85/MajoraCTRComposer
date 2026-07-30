@@ -29,6 +29,10 @@ typedef struct { const char *name; u8 gold[3], ink[3], dim[3], green[3], bg[3]; 
 static const Theme THEMES[] = {
     //  name         gold             ink              dim              green            bg          parchment
     { "Neutral", {230,230,230}, {242,242,242}, {150,150,150}, {200,200,200}, {18,18,20}, 0 },
+    // Majora's Mask stained-glass art, original artwork by samaBR (references/320/,
+    // colorfaded variant). bg is the image's own average color so ThemeBgLight() picks
+    // readable text over it.
+    { "Termina", {230,150,60}, {235,225,205}, {160,140,115}, {130,220,120}, {49,43,37}, 1 },
 };
 #define THEME_COUNT ((int)(sizeof(THEMES)/sizeof(THEMES[0])))
 

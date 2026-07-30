@@ -11,6 +11,8 @@
 #include "guide.h"
 #include "themes.h"
 #include "sprites.h"
+#include "topbg.h"
+#include "botbg.h"
 
 // Public release version + build counter. Bump the build number EVERY build: the on-screen tag
 // is your confirmation that the .3gx actually on the SD card is the one you just compiled.
@@ -40,7 +42,7 @@
 // this to 1 also writes a marker file at shutdown so you can tell in one run.
 #define EXIT_HANDSHAKE 0
 
-#define PLUGIN_VER "v0.1.0 build 11"   // full string - About screen and pause box (have room)
+#define PLUGIN_VER "v0.1.0 build 13"   // full string - About screen and pause box (have room)
 
 // Name and short tag follow the build flavour automatically, so flipping TOOLS_ONLY is the ONLY
 // edit needed to produce the other binary. Deriving these beat setting them by hand: the local
@@ -50,7 +52,7 @@
 #define PLUGIN_TAG  "T1.0"              // compact tag - cramped menu title bar
 #else
 #define PLUGIN_NAME "MajoraCTRComposer"
-#define PLUGIN_TAG  "b11"
+#define PLUGIN_TAG  "b13"
 #endif
 
 static Handle   thread;
@@ -1548,7 +1550,22 @@ static void ComposeBackdrop(void)
 {
     RestoreTopBackdrop(); // full top from the saved backdrop (erases any bleed)
 
-    // if (g_themeParchment) { blit your RGB565 background here; return; }
+    if (g_themeParchment) // Termina: the Majora's Mask stained-glass art (topbg.h)
+    {
+        for (int y = 0; y < WIN_H; ++y)
+        {
+            const u16 *src = &topbg[y * TOPBG_W];
+            u8 *p = CPix(WIN_X, WIN_Y + y);
+            for (int x = 0; x < TOPBG_W; ++x, p += 3)
+            {
+                u16 v = src[x];
+                p[0] = (u8)(((v >> 11) & 31) << 3);
+                p[1] = (u8)(((v >> 5) & 63) << 2);
+                p[2] = (u8)((v & 31) << 3);
+            }
+        }
+        return;
+    }
 
     CFill(WIN_X, WIN_Y, WIN_W, WIN_H, BG);
     CFill(WIN_X, WIN_Y, WIN_W, 2, GOLD); CFill(WIN_X, WIN_Y + WIN_H - 2, WIN_W, 2, GOLD);
@@ -2101,11 +2118,27 @@ static void ComposeBottom(void)
             { p[0] = (u8)(p[0] * 130 / 255); p[1] = (u8)(p[1] * 130 / 255); p[2] = (u8)(p[2] * 130 / 255); }
         }
 
-    // Themed: solid background + accent border. A theme that sets `parchment` would blit a
-    // background image here instead; the template ships no background art.
-    CFill(BWIN_X, BWIN_Y, BWIN_W, BWIN_H, BG);
-    CFill(BWIN_X, BWIN_Y, BWIN_W, 2, GOLD); CFill(BWIN_X, BWIN_Y + BWIN_H - 2, BWIN_W, 2, GOLD);
-    CFill(BWIN_X, BWIN_Y, 2, BWIN_H, GOLD); CFill(BWIN_X + BWIN_W - 2, BWIN_Y, 2, BWIN_H, GOLD);
+    if (g_themeParchment) // Termina: the Majora's Mask stained-glass art (botbg.h)
+    {
+        for (int y = 0; y < BOTBG_H; ++y)
+        {
+            const u16 *src = &botbg[y * BOTBG_W];
+            u8 *p = CPix(BWIN_X, BWIN_Y + y);
+            for (int x = 0; x < BOTBG_W; ++x, p += 3)
+            {
+                u16 v = src[x];
+                p[0] = (u8)(((v >> 11) & 31) << 3);
+                p[1] = (u8)(((v >> 5) & 63) << 2);
+                p[2] = (u8)((v & 31) << 3);
+            }
+        }
+    }
+    else // themed: solid background + accent border
+    {
+        CFill(BWIN_X, BWIN_Y, BWIN_W, BWIN_H, BG);
+        CFill(BWIN_X, BWIN_Y, BWIN_W, 2, GOLD); CFill(BWIN_X, BWIN_Y + BWIN_H - 2, BWIN_W, 2, GOLD);
+        CFill(BWIN_X, BWIN_Y, 2, BWIN_H, GOLD); CFill(BWIN_X + BWIN_W - 2, BWIN_Y, 2, BWIN_H, GOLD);
+    }
 
     int tx = BWIN_X + 18, ty = BWIN_Y + 14;
     CText(tx, ty, PLUGIN_NAME, GOLD, 1);
@@ -3462,6 +3495,9 @@ static void ToolAbout(void)
         { "Item Icons: Colbydude",       0 },
         { "UI (rupee): xAct",            0 },
         { "The Spriters Resource",       0 },
+        { "",                            0 },
+        { "Termina theme art: samaBR",   1 },
+        { "(original artwork)",          0 },
 #endif
     };
     int N = (int)(sizeof(lines) / sizeof(lines[0]));

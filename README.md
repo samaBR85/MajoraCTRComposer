@@ -69,6 +69,9 @@ a plugin for another 3DS game.
 - **JourneyOver** — `CTRPF-AR-CHEAT-CODES`, source of the MM3D cheat list this build ports from
 - **HTW (HelpTheWretched)** — progressive save-file collection used to map save data to RAM
 - **PhlexPlexico** — `mm3d-practice-tools`, referenced for struct/field context where used
+- **Colbydude** — MM3D Item Icons sheet, The Spriters Resource
+- **xAct** — MM3D UI sheet (rupee icon), The Spriters Resource
+- **samaBR** — Termina theme background art (original artwork)
 - **Luma3DS** (plugin loader) — https://github.com/LumaTeam/Luma3DS
 - **3GX plugin loader / 3gxtool** — PabloMK7 — https://github.com/PabloMK7
 
