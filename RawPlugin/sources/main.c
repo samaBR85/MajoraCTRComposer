@@ -43,7 +43,7 @@
 // this to 1 also writes a marker file at shutdown so you can tell in one run.
 #define EXIT_HANDSHAKE 0
 
-#define PLUGIN_VER "v0.1.0 build 26"   // full string - About screen and pause box (have room)
+#define PLUGIN_VER "v0.1.0 build 39"   // full string - About screen and pause box (have room)
 
 // Name and short tag follow the build flavour automatically, so flipping TOOLS_ONLY is the ONLY
 // edit needed to produce the other binary. Deriving these beat setting them by hand: the local
@@ -53,7 +53,7 @@
 #define PLUGIN_TAG  "T1.0"              // compact tag - cramped menu title bar
 #else
 #define PLUGIN_NAME "MajoraCTRComposer"
-#define PLUGIN_TAG  "b26"
+#define PLUGIN_TAG  "b39"
 #endif
 
 static Handle   thread;
@@ -332,17 +332,16 @@ enum {
     CH_MM_REFILL_HEARTS, CH_MM_HEARTS_MAX, CH_MM_REFILL_MAGIC,
     // ---- MM3D: Inventory ----
     CH_MM_RUPEES_MAX, CH_MM_DEFENSE, CH_MM_GILDED_MIRROR, CH_MM_QUIVER_BOMBBAG,
+    CH_BBUTTON_GILDED, CH_BBUTTON_GFSWORD, CH_MM_RAZOR_MIRROR, CH_MM_BANK_FILL,
     // ---- MM3D: Items (ammo max/inf, continuous) ----
     CH_MM_AMMO_ARROWS, CH_MM_AMMO_BOMBS, CH_MM_AMMO_CHUS, CH_MM_AMMO_STICKS,
     CH_MM_AMMO_NUTS, CH_MM_AMMO_BEANS, CH_MM_AMMO_KEG,
     // ---- MM3D: Quest ----
-    CH_MM_ALL_ITEMS, CH_MM_ALL_MASKS, CH_MM_ALL_BOSSES_SONGS, CH_MM_ALL_FAIRIES,
+    CH_MM_ALL_ITEMS, CH_MM_ALL_MASKS, CH_MM_ALL_BOSSES_SONGS, CH_MM_ALL_FAIRIES, CH_TEST_FISHING,
     // ---- MM3D: Misc ----
     CH_MM_MOONJUMP,
-    // ---- MM3D: forms (CONFIRMED - only values 0/1 are safe; 2/3 are broken, 4 crashes) ----
-    CH_PLAY_DEKU, CH_PLAY_FIERCEDEITY,
-    // ---- MM3D: Investigation tests (EXPERIMENTAL, unconfirmed addresses) ----
-    CH_TEST_FISHING,
+    // ---- MM3D: Play as... (CONFIRMED - see the folder comment for what's safe and why) ----
+    CH_PLAY_NORMAL, CH_PLAY_ZORA, CH_PLAY_FIERCEDEITY,
     // ---- Settings rows (not cheats) ----
     CH_CFG_TOAST, CH_CFG_AUTOFILL, CH_CFG_QMKEY, CH_CFG_HK1, CH_CFG_HK2,
     CH_CFG_HKRESET, CH_CFG_THEME, CH_CFG_LANG,
@@ -908,7 +907,19 @@ static int OneShot(int id)
         case CH_MM_REFILL_HEARTS: W16(0x776314, R16(0x776312)); return 1;
         case CH_MM_REFILL_MAGIC:  W8(0x776317, R8(0x77631F) ? 0x60 : 0x30); return 1;
         case CH_MM_GILDED_MIRROR: W8(0x776352, 0x23); return 1;
+        case CH_MM_RAZOR_MIRROR:  W8(0x776352, 0x22); return 1; // same address, the non-gilded upgrade tier
         case CH_MM_QUIVER_BOMBBAG: W16(0x7763CC, 0x201B); return 1;
+
+        // Rupee bank. Not yet confirmed on hardware - address is outside the mapped 0x776xxx
+        // save block, in the same "0x777xxx, no v1.0/v1.1 split" cluster as Fishing Hole Pass
+        // (which IS confirmed), so reasonably likely to be stable rather than heap-based.
+        case CH_MM_BANK_FILL: W16(0x777408, 0x157B); return 1; // 5499, the AR code's own max
+
+        // B Button item (0x77632A). Address is from the original AR code decode, not yet
+        // independently confirmed via Cheat Search. Fierce Deity Mask is deliberately not
+        // offered here - it duplicates Misc's "Play as..." Fierce Deity row.
+        case CH_BBUTTON_GILDED:  W8(0x77632A, 0x4F); return 1;
+        case CH_BBUTTON_GFSWORD: W8(0x77632A, 0x50); return 1;
 
         // MM3D Quest one-shots - decoded from the AR list's loop/conditional opcodes,
         // cross-checked against a real 100% save. Not yet confirmed on hardware.
@@ -934,17 +945,19 @@ static int OneShot(int id)
         // needs to close the menu after warping, like OoT's Teleport does) - see MM_Warp()
         // and the `it->warp >= 0` case near the other BUTTON_A handling.
 
-        // "PLAY AS" field (0x7761FE), CONFIRMED on hardware for exactly these two values.
-        // Values 2/3 leave Link stuck in a broken attack-loop animation (missing a companion
-        // field, probably) and value 4 crashes the game outright - never expose those. Fierce
-        // Deity is the valuable one: the vanilla game restricts that mask to boss arenas only,
-        // this bypasses that restriction entirely.
-        case CH_PLAY_DEKU:        W8(0x7761FE, 0x00); return 1;
-        case CH_PLAY_FIERCEDEITY: W8(0x7761FE, 0x01); return 1;
+        // "PLAY AS" field (0x7761FE). CONFIRMED on hardware the change only takes effect on
+        // your NEXT area transition (door, warp, load), never instantly. Only these 3 values
+        // are exposed - see the Play as... folder comment (miscItems) for what was tried and
+        // ruled out (Goron/Deku Link don't hold; chaining straight off Fierce Deity into
+        // another forced form breaks control).
+        case CH_PLAY_NORMAL:      W8(0x7761FE, 0x04); return 1;
+        case CH_PLAY_ZORA:        W8(0x7761FE, 0x02); return 1;
+        case CH_PLAY_FIERCEDEITY: W8(0x7761FE, 0x00); return 1;
 
-        // EXPERIMENTAL investigation test - address from community AR code lists (GBAtemp,
-        // gamegenie.53lu.com), NOT yet hardware-confirmed by us.
-        case CH_TEST_FISHING: W8(0x7776C0, 0x63); return 1; // "99 Fishing Tickets", value 0x63=99
+        // Fishing Hole Pass. CONFIRMED on hardware - address from a community AR code list
+        // (GBAtemp, gamegenie.53lu.com), which labeled it "Fishing Tickets"; the in-game item
+        // it actually grants is the Fishing Hole Pass (free rod loan), not a ticket count.
+        case CH_TEST_FISHING: W8(0x7776C0, 0x63); return 1;
 
         // Add your one-shots here:
         //   case CH_MY_CHEAT: W16(0x00123456, 0x0064); return 1;
@@ -1083,47 +1096,105 @@ static void ApplyCheats(void)
     }
 }
 
+// Real RGBA4444 sprites (sprites.h), ripped from The Spriters Resource: Item Icons by
+// Colbydude, UI (rupee) by xAct. See Tools/gen_sprites_mm3d.py for exactly which sheet cell
+// each one comes from, and why the non-obvious ones (Fairy, Shield, Notebook) were picked.
+// Defined up here (rather than by SpriteKeyForCheat further down) because the Picker option
+// tables below also reference these.
+#define MSPR_ARROWS       0x100
+#define MSPR_BOMBS        0x101
+#define MSPR_BOMBCHUS     0x102
+#define MSPR_STICKS       0x103
+#define MSPR_NUTS         0x104
+#define MSPR_BEANS        0x105
+#define MSPR_KEG          0x106
+#define MSPR_SWORD        0x107
+#define MSPR_QUIVER       0x108
+#define MSPR_HEART        0x109
+#define MSPR_MAGIC_FAIRY  0x10A
+#define MSPR_DEFENSE      0x10B
+#define MSPR_ALL_ITEMS    0x10C // Bombers' Notebook - now the Quest FOLDER icon
+#define MSPR_ALL_MASKS    0x10D
+#define MSPR_OCARINA      0x10E // now the Time FOLDER icon
+#define MSPR_FAIRY        0x10F
+#define MSPR_RUPEE        0x110
+#define MSPR_WALLET       0x111 // Inventory FOLDER icon
+#define MSPR_CAMERA       0x112 // Misc FOLDER icon (Pictograph Box - playful, novelty-flavored)
+#define MSPR_ITEMS_DEED   0x113 // Have all Items cheat (freed up from MSPR_ALL_ITEMS)
+#define MSPR_BOSS_REMAINS 0x114 // All Bosses and Songs cheat (freed up from MSPR_OCARINA)
+#define MSPR_MOONJUMP     0x115 // (tentative ID) Moon Jump - no boot icon on this sheet
+#define MSPR_LENS         0x116 // Lens of Truth - Cheat Search
+#define MSPR_MAP          0x117 // Dungeon Map - RAM Dumper
+#define MSPR_COMPASS      0x118 // Compass - Hex Editor
+#define MSPR_GARO_MASK    0x119 // Garo's Mask - Change Theme
+#define MSPR_SCROLL       0x11A // Trade Quest scroll - Language
+#define MSPR_ABOUT_ICON   0x11B // Majora's Mask HOME icon crop - About
+#define MSPR_BOTTLE       0x11C // empty Bottle - Bottle #1-7 pickers
+#define MSPR_FISHINGROD   0x11D // Fishing Rod - Fishing Hole Pass
+#define MSPR_GFSWORD      0x11E // Great Fairy's Sword - B Button picker
+// Per-option Bottle picker icons (see gen_sprites_mm3d.py for the sheet-cell notes).
+#define MSPR_B_REDPOTION   0x120
+#define MSPR_B_GREENPOTION 0x121
+#define MSPR_B_BLUEPOTION  0x122
+#define MSPR_B_FAIRY       0x123
+#define MSPR_B_DEKUPRINCESS 0x124
+#define MSPR_B_MILK        0x125
+#define MSPR_B_FISH        0x126
+#define MSPR_B_BUG         0x127
+#define MSPR_B_BIGPOE      0x128
+#define MSPR_B_SPRINGWATER 0x129
+#define MSPR_B_HOTSPRING   0x12A
+#define MSPR_B_GOLDDUST    0x12B
+#define MSPR_B_MUSHROOM    0x12C
+#define MSPR_B_SEAHORSE    0x12D
+#define MSPR_B_CHATEAU     0x12E
+#define MSPR_B_MYSTMILK    0x12F
+#define MSPR_ZORA_MASK     0x130 // Play as... folder
+#define MSPR_FD_MASK       0x131 // Play as... folder
+
 // ===================== Pickers (choose a value from a list) =====================
 // A picker is a menu row that opens a list and writes the chosen value to one address.
 // Good for "which item is in this slot" style cheats where a toggle makes no sense.
-typedef struct { const char *name; u8 val; } PickOpt;
+// `icon` is a sprite key (see MSPR_* above) for the picker screen and the row's live-value icon;
+// -1 means "no sheet art for this one" and the picker falls back to a plain color swatch.
+typedef struct { const char *name; u8 val; int icon; } PickOpt;
 typedef struct { const char *title; const PickOpt *opts; int count; u32 addr; } Picker;
 
 // Bottle contents - the address for each of the 7 slots is CONFIRMED on hardware (already
-// used by Have all Items/Refill Magic-adjacent cheats); the VALUE list is from two independent
-// community AR code compilations (JourneyOver-derived + a GBAtemp/gamegenie EU list) that agree
-// on every value, but writing a non-"Empty" value here has not been individually hardware-tested.
+// used by Have all Items/Refill Magic-adjacent cheats). Values are the real ItemId enum from
+// the zeldaret/mm N64 decompilation (include/z64item.h), not the earlier community AR list -
+// that list had several bottle entries silently off by one or two starting at "Big Poe"
+// (0x1C is actually Blue Fire; Big Poe is 0x1E; the AR list's "Mystery/Mouldy Milk" at 0x26/0x27
+// are really Hylian Loach and Obaba's Drink). Item IDs match 1:1 with our own confirmed B-Button
+// value for Fierce Deity's Mask (0x35, in the same enum), so this table is trusted over the AR
+// list. Writing a non-"Empty" value has not been individually hardware-tested here.
 static const PickOpt bottleOpts[] = {
-    { "Empty",            0x12 },
-    { "Red Potion",       0x13 },
-    { "Green Potion",     0x14 },
-    { "Blue Potion",      0x15 },
-    { "Fairy",            0x16 },
-    { "Deku Princess",    0x17 },
-    { "Milk",             0x18 },
-    { "Fish",             0x1A },
-    { "Bug",              0x1B },
-    { "Big Poe",          0x1C },
-    { "Spring Water",     0x1F },
-    { "Hot Spring Water", 0x20 },
-    { "Gold Dust",        0x21 },
-    { "Magic Mushroom",   0x23 },
-    { "Sea Horse",        0x24 },
-    { "Chateau Romani",   0x25 },
-    { "Mystery Milk",     0x26 },
-    { "Mouldy Milk",      0x27 },
+    { "Empty",            0x12, MSPR_BOTTLE },
+    { "Red Potion",       0x13, MSPR_B_REDPOTION },
+    { "Green Potion",     0x14, MSPR_B_GREENPOTION },
+    { "Blue Potion",      0x15, MSPR_B_BLUEPOTION },
+    { "Fairy",            0x16, MSPR_B_FAIRY },
+    { "Deku Princess",    0x17, MSPR_B_DEKUPRINCESS },
+    { "Milk",             0x18, MSPR_B_MILK },
+    { "Milk (Half)",      0x19, MSPR_B_MYSTMILK },
+    { "Fish",             0x1A, MSPR_B_FISH },
+    { "Bug",              0x1B, MSPR_B_BUG },
+    { "Blue Fire",        0x1C, -1 },
+    { "Poe",               0x1D, -1 },
+    { "Big Poe",           0x1E, -1 },
+    { "Spring Water",     0x1F, MSPR_B_SPRINGWATER },
+    { "Hot Spring Water", 0x20, MSPR_B_HOTSPRING },
+    { "Zora Egg",          0x21, -1 },
+    { "Gold Dust",        0x22, MSPR_B_GOLDDUST },
+    { "Magic Mushroom",   0x23, MSPR_B_MUSHROOM },
+    { "Sea Horse",        0x24, MSPR_B_SEAHORSE },
+    { "Chateau Romani",   0x25, MSPR_B_CHATEAU },
+    { "Hylian Loach",      0x26, -1 },
+    { "Obaba's Drink",     0x27, -1 },
 };
 #define NUM_BOTTLE_OPTS (int)(sizeof(bottleOpts)/sizeof(bottleOpts[0]))
 
-// B-button item. Address (0x77632A) is from the original AR code decode (Phase 1/2 save-file
-// analysis), not yet independently confirmed via Cheat Search on hardware.
-static const PickOpt bbuttonOpts[] = {
-    { "Fierce Deity Mask",  0x35 },
-    { "Gilded Sword",       0x4F },
-    { "Great Fairy Sword",  0x50 },
-};
-
-enum { PK_BOTTLE1, PK_BOTTLE2, PK_BOTTLE3, PK_BOTTLE4, PK_BOTTLE5, PK_BOTTLE6, PK_BOTTLE7, PK_BBUTTON, NUM_PICKERS };
+enum { PK_BOTTLE1, PK_BOTTLE2, PK_BOTTLE3, PK_BOTTLE4, PK_BOTTLE5, PK_BOTTLE6, PK_BOTTLE7, NUM_PICKERS };
 static const Picker pickers[NUM_PICKERS] = {
     { "Bottle #1",   bottleOpts,  NUM_BOTTLE_OPTS, 0x776384 },
     { "Bottle #2",   bottleOpts,  NUM_BOTTLE_OPTS, 0x776385 },
@@ -1132,7 +1203,6 @@ static const Picker pickers[NUM_PICKERS] = {
     { "Bottle #5",   bottleOpts,  NUM_BOTTLE_OPTS, 0x776388 },
     { "Bottle #6",   bottleOpts,  NUM_BOTTLE_OPTS, 0x776389 },
     { "Bottle #7",   bottleOpts,  NUM_BOTTLE_OPTS, 0x77638A },
-    { "B Button Item", bbuttonOpts, (int)(sizeof(bbuttonOpts)/sizeof(bbuttonOpts[0])), 0x77632A },
 };
 
 // A picker points at a GAME address, and that address is a placeholder (0) until you fill it
@@ -1203,7 +1273,7 @@ typedef struct { const char *title; const Item *items; int count; } Folder;
 #if TOOLS_ONLY
 enum { F_ROOT, F_SETTINGS, NUM_FOLDERS };
 #else
-enum { F_ROOT, F_TIME, F_BATTLE, F_INVENTORY, F_AMMO, F_QUEST, F_MISC, F_TELEPORT, F_EXAMPLES, F_TOOLS, F_SETTINGS, NUM_FOLDERS };
+enum { F_ROOT, F_TIME, F_BATTLE, F_INVENTORY, F_AMMO, F_BOTTLES, F_QUEST, F_MISC, F_TELEPORT, F_EXAMPLES, F_TOOLS, F_SETTINGS, NUM_FOLDERS };
 #endif
 
 // tool screens. The tools-only build drops the two that are inherently per-game, so their
@@ -1249,9 +1319,8 @@ static const Item rootItems[] = {
     IT_FOLDER("Quest", F_QUEST),
     IT_FOLDER("Misc.", F_MISC),
     IT_FOLDER("Teleport", F_TELEPORT),
-    IT_FOLDER("Examples", F_EXAMPLES),
     IT_SEP("GUIDES"),
-    IT_TOOL_WIDE("Tracker", T_TRACKER, "A general per-item progress tracker: each entry is untouched / auto / checked / cleared. Auto-fill syncs it from game memory. Ships with placeholder rows only - fill in CHK_CATS with your game's collectibles."),
+    IT_TOOL_WIDE("Tracker", T_TRACKER, "A 100% progress tracker: Masks, Stray Fairies and Gear upgrades. Each entry is untouched / auto / checked / cleared. Auto-fill syncs it from game memory - none of it is hardware-confirmed yet, so double-check against your own save before trusting it."),
     IT_TOOL("Game Guide",   T_GAMEGUIDE,   "A scrollable, categorized reader for your game's content. Ships with placeholder pages - replace them, or drop guide/English/game.txt on the SD card."),
     IT_TOOL("Plugin Guide", T_PLUGINGUIDE, "How to use this plugin: the menu, the quick menu, and the Cheat Search / RAM Dumper / Hex Editor tools."),
     IT_SEP("SYSTEM"),
@@ -1324,10 +1393,20 @@ static const Item battleItems[] = {
 // confirmed. USA, v1.1.0 (0004000000125500).
 static const Item inventoryItems[] = {
     IT_CHEAT("Max Rupees (999)", CH_MM_RUPEES_MAX, "CONFIRMED on hardware. Holds your rupee count at 999 while active. Address 0x776318, u16."),
+    IT_CHEAT("Fill Rupee Bank (5499)", CH_MM_BANK_FILL, "Not yet confirmed on hardware. Fills your Rupee Bank balance. Applies once. Address 0x777408, u16 = 0x157B. Outside the mapped save block, but the same address style as the confirmed Fishing Hole Pass (no v1.0/v1.1 split), so likely stable."),
     IT_CHEAT("Gilded Sword + Mirror Shield", CH_MM_GILDED_MIRROR, "CONFIRMED on hardware. Grants the Gilded Sword and Mirror Shield. Applies once. Address 0x776352, u8 = 0x23."),
+    IT_CHEAT("Razor Sword + Mirror Shield", CH_MM_RAZOR_MIRROR, "Not yet confirmed on hardware. Grants the Razor Sword and Mirror Shield - same address as the Gilded Sword cheat, different tier. Applies once. Address 0x776352, u8 = 0x22."),
     IT_CHEAT("Large Quiver + Big Bomb Bag", CH_MM_QUIVER_BOMBBAG, "CONFIRMED on hardware. Grants a quiver/bomb bag upgrade tier (exact sizes unverified - matches the AR code's own value). Applies once. Address 0x7763CC, u16 = 0x201B."),
     IT_FOLDER("Items (Max/Inf ammo)", F_AMMO),
-    IT_SEP("BOTTLES"),
+    IT_FOLDER("Bottles", F_BOTTLES),
+    IT_SEP("B BUTTON ITEM"),
+    IT_CHEAT("Gilded Sword",      CH_BBUTTON_GILDED,  "Not yet confirmed on hardware. Equips the Gilded Sword on the B button. Applies once. Address 0x77632A, u8 = 0x4F."),
+    IT_CHEAT("Great Fairy Sword", CH_BBUTTON_GFSWORD, "Not yet confirmed on hardware. Equips the Great Fairy Sword on the B button. Applies once. Address 0x77632A, u8 = 0x50."),
+};
+
+// Bottle contents get their own 2-column grid folder (same layout as Teleport/HOME) - 7 pickers
+// with real per-content sprites read a lot better as a grid than crammed into Inventory's list.
+static const Item bottlesItems[] = {
     IT_PICKER("Bottle #1", PK_BOTTLE1, "Not yet confirmed on hardware. Sets what Bottle #1 holds. Address 0x776384 is CONFIRMED (already used by Have all Items); the content values are from two independent community AR-code lists that agree, but not hardware-tested here."),
     IT_PICKER("Bottle #2", PK_BOTTLE2, "Not yet confirmed on hardware. Sets what Bottle #2 holds. Address 0x776385 CONFIRMED; content values not individually hardware-tested."),
     IT_PICKER("Bottle #3", PK_BOTTLE3, "Not yet confirmed on hardware. Sets what Bottle #3 holds. Address 0x776386 CONFIRMED; content values not individually hardware-tested."),
@@ -1335,8 +1414,6 @@ static const Item inventoryItems[] = {
     IT_PICKER("Bottle #5", PK_BOTTLE5, "Not yet confirmed on hardware. Sets what Bottle #5 holds. Address 0x776388 CONFIRMED; content values not individually hardware-tested."),
     IT_PICKER("Bottle #6", PK_BOTTLE6, "Not yet confirmed on hardware. Sets what Bottle #6 holds. Address 0x776389 CONFIRMED; content values not individually hardware-tested."),
     IT_PICKER("Bottle #7", PK_BOTTLE7, "Not yet confirmed on hardware. Sets what Bottle #7 holds. Address 0x77638A CONFIRMED; content values not individually hardware-tested."),
-    IT_SEP("EQUIPMENT"),
-    IT_PICKER("B Button Item", PK_BBUTTON, "Not yet confirmed on hardware. Sets which item is equipped on the B button. Address 0x77632A is from the original AR code decode, not yet confirmed via Cheat Search."),
 };
 
 // MM3D ammo max/inf toggles. Addresses and per-slot values are from the AR code list
@@ -1360,18 +1437,26 @@ static const Item questItems[] = {
     IT_CHEAT("Have all Masks", CH_MM_ALL_MASKS, "Not yet confirmed on hardware. Fills all 24 mask slots (0x77636C-0x776383) with the acquisition-order id sequence 0x32-0x49, matching a real 100% save exactly. Applies once."),
     IT_CHEAT("All Bosses and Songs", CH_MM_ALL_BOSSES_SONGS, "Not yet confirmed on hardware. Sets the boss/song bitfields to the values read from a real 100% save (0xCF 0xF7 0xCF) - NOT the AR code's own 0xFF 0xFF 0xFF, which doesn't match any legitimate save. Address 0x7763D0-0x7763D2. Applies once."),
     IT_CHEAT("All Stray Fairies", CH_MM_ALL_FAIRIES, "Not yet confirmed on hardware. Fills all four dungeon stray-fairy bytes (0x7763E8-0x7763EB) - the AR code's own version only fills one. Applies once."),
+    IT_CHEAT("Fishing Hole Pass", CH_TEST_FISHING, "CONFIRMED on hardware. Grants the Fishing Hole Pass (lets you borrow a fishing rod for free at either Fishing Hole). Applies once. Address 0x7776C0, u8 = 0x63."),
 };
 
 // MM3D Misc. Moon Jump was the first base+offset cheat in this plugin - the pointer chain
 // (0x08363784 -> +0x4AC -> player actor) came from the AR code's own decode, never
 // independently re-derived, and it's now CONFIRMED working on hardware.
+// FORMS ("PLAY AS" field, 0x7761FE): CONFIRMED on hardware the change only takes effect on your
+// NEXT area transition (door, warp, load), not instantly. Goron and Deku Link were tried and
+// don't hold (the mask comes off on its own moments after loading), so only these 3 values are
+// offered. RECOMMENDED: pick Normal Link and change areas before switching to a different form,
+// to avoid state left over from the previous one (chaining straight off Fierce Deity into
+// another forced form was seen to break control). Zora and Fierce Deity use their real mask
+// icons (The Spriters Resource, Colbydude's Item Icons sheet); Normal Link has no mask to show,
+// so it keeps the hand-drawn placeholder.
 static const Item miscItems[] = {
     IT_CHEAT("Moon Jump", CH_MM_MOONJUMP, "CONFIRMED on hardware. Hold {L}+{A} to rise into the air, release to fall. Mind the fall distance."),
     IT_SEP("FORMS"),
-    IT_CHEAT("Play as Deku Link", CH_PLAY_DEKU, "CONFIRMED on hardware. Instantly become Deku Link, no mask needed. Applies once. Address 0x7761FE, u8 = 0x00. If you get stuck, changing areas resets it."),
-    IT_CHEAT("Play as Fierce Deity", CH_PLAY_FIERCEDEITY, "CONFIRMED on hardware. Instantly become Fierce Deity, no mask needed AND without the vanilla boss-arena-only restriction. Applies once. Address 0x7761FE, u8 = 0x01. If you get stuck, changing areas resets it."),
-    IT_SEP("INVESTIGATION TESTS"),
-    IT_CHEAT("TEST: Fishing Tickets = 99", CH_TEST_FISHING, "EXPERIMENTAL - untested address (0x7776C0) from a community AR list. Check the Fisherman's Hut/fishing minigame ticket count after using this."),
+    IT_CHEAT("Normal Link",  CH_PLAY_NORMAL,      "CONFIRMED on hardware. Applies once, on your next area transition. Address 0x7761FE, u8 = 0x04."),
+    IT_CHEAT("Zora",         CH_PLAY_ZORA,        "CONFIRMED on hardware. Applies once, on your next area transition. Address 0x7761FE, u8 = 0x02."),
+    IT_CHEAT("Fierce Deity", CH_PLAY_FIERCEDEITY, "CONFIRMED on hardware. Bypasses the vanilla boss-arena-only restriction entirely - fully controllable. Applies once, on your next area transition. Address 0x7761FE, u8 = 0x00."),
 };
 
 // Teleport folder: one row per warps[] entry (label/desc pulled from warps[] at draw time via
@@ -1431,6 +1516,7 @@ static const Folder folders[NUM_FOLDERS] = {
     { "Battle",               battleItems,   FCOUNT(battleItems) },
     { "Inventory",            inventoryItems, FCOUNT(inventoryItems) },
     { "Items",                ammoItems,     FCOUNT(ammoItems) },
+    { "Bottles",              bottlesItems,  FCOUNT(bottlesItems) },
     { "Quest",                questItems,    FCOUNT(questItems) },
     { "Misc.",                miscItems,     FCOUNT(miscItems) },
     { "Teleport",             teleportItems, FCOUNT(teleportItems) },
@@ -1749,6 +1835,16 @@ static void CheckBoxIcon(int x, int y, int on)
     }
 }
 
+// 12x12 placeholder for the main menu's checkbox column on rows that aren't on/off toggles
+// (folders, pickers, tools, teleport rows, one-shot Settings actions...). Same fill as the
+// checkbox's interior but with NO gold border, so it reads as "not a toggle" while still
+// reserving the exact same width - keeps every row's icon/label lined up at the same x
+// regardless of row type. Mirrors the quick menu's BrownBoxS at main-menu scale.
+static void BrownBox(int x, int y)
+{
+    CFillBlend(x, y, 12, 12, 0, 0, 0, 70);
+}
+
 static void FolderIconSmall(int x, int y)
 {
     CFill(x, y + 1, 6, 3, 172, 128, 34);
@@ -1977,38 +2073,7 @@ static void DrawScaled(int dx, int dy, int dw, int dh, const u16 *px, int sw, in
 #define SPRK_RAIN     0x1F5
 #define SPRK_PIN      0x1F7
 #define SPRK_PORTAL   0x1F8
-
-// Real RGBA4444 sprites (sprites.h), ripped from The Spriters Resource: Item Icons by
-// Colbydude, UI (rupee) by xAct. See Tools/gen_sprites_mm3d.py for exactly which sheet cell
-// each one comes from, and why the non-obvious ones (Fairy, Shield, Notebook) were picked.
-#define MSPR_ARROWS       0x100
-#define MSPR_BOMBS        0x101
-#define MSPR_BOMBCHUS     0x102
-#define MSPR_STICKS       0x103
-#define MSPR_NUTS         0x104
-#define MSPR_BEANS        0x105
-#define MSPR_KEG          0x106
-#define MSPR_SWORD        0x107
-#define MSPR_QUIVER       0x108
-#define MSPR_HEART        0x109
-#define MSPR_MAGIC_FAIRY  0x10A
-#define MSPR_DEFENSE      0x10B
-#define MSPR_ALL_ITEMS    0x10C // Bombers' Notebook - now the Quest FOLDER icon
-#define MSPR_ALL_MASKS    0x10D
-#define MSPR_OCARINA      0x10E // now the Time FOLDER icon
-#define MSPR_FAIRY        0x10F
-#define MSPR_RUPEE        0x110
-#define MSPR_WALLET       0x111 // Inventory FOLDER icon
-#define MSPR_CAMERA       0x112 // Misc FOLDER icon (Pictograph Box - playful, novelty-flavored)
-#define MSPR_ITEMS_DEED   0x113 // Have all Items cheat (freed up from MSPR_ALL_ITEMS)
-#define MSPR_BOSS_REMAINS 0x114 // All Bosses and Songs cheat (freed up from MSPR_OCARINA)
-#define MSPR_MOONJUMP     0x115 // (tentative ID) Moon Jump - no boot icon on this sheet
-#define MSPR_LENS         0x116 // Lens of Truth - Cheat Search
-#define MSPR_MAP          0x117 // Dungeon Map - RAM Dumper
-#define MSPR_COMPASS      0x118 // Compass - Hex Editor
-#define MSPR_GARO_MASK    0x119 // Garo's Mask - Change Theme
-#define MSPR_SCROLL       0x11A // Trade Quest scroll - Language
-#define MSPR_ABOUT_ICON   0x11B // Majora's Mask HOME icon crop - About
+#define SPRK_MASK     0x1F9
 
 // Which icon illustrates each cheat row (-1 = none, which is fine for most rows).
 static int SpriteKeyForCheat(int ch)
@@ -2031,6 +2096,9 @@ static int SpriteKeyForCheat(int ch)
         case CH_MM_RUPEES_MAX:     return MSPR_RUPEE;
         case CH_MM_GILDED_MIRROR:  return MSPR_SWORD;
         case CH_MM_QUIVER_BOMBBAG: return MSPR_QUIVER;
+        case CH_BBUTTON_GILDED:    return MSPR_SWORD;
+        case CH_BBUTTON_GFSWORD:   return MSPR_GFSWORD;
+        case CH_MM_BANK_FILL:      return MSPR_RUPEE;
 
         case CH_MM_AMMO_ARROWS: return MSPR_ARROWS;
         case CH_MM_AMMO_BOMBS:  return MSPR_BOMBS;
@@ -2044,8 +2112,13 @@ static int SpriteKeyForCheat(int ch)
         case CH_MM_ALL_MASKS:        return MSPR_ALL_MASKS;
         case CH_MM_ALL_BOSSES_SONGS: return MSPR_BOSS_REMAINS;
         case CH_MM_ALL_FAIRIES:      return MSPR_FAIRY;
+        case CH_TEST_FISHING:        return MSPR_FISHINGROD;
 
         case CH_MM_MOONJUMP: return MSPR_MOONJUMP;
+
+        case CH_PLAY_NORMAL:      return SPRK_MASK; // no mask worn - generic hand-drawn mask icon
+        case CH_PLAY_ZORA:        return MSPR_ZORA_MASK;
+        case CH_PLAY_FIERCEDEITY: return MSPR_FD_MASK;
 
         // Settings rows: a mask changes your look, like a theme changes the menu's; a
         // written scroll for picking a language.
@@ -2159,6 +2232,16 @@ static void PortalIcon(int x, int y)
         }
     CDisc(x + 8, y + 8, 1, 210, 244, 255);            // bright core
 }
+// Play as...: a stylized mask - round face, two eye holes, a mouth line. Hand-drawn rather than
+// pulled from the sprite sheet, since none of the sheet's face cells could be confidently
+// identified as Deku/Goron/Zora/Fierce Deity specifically (see gen_sprites_mm3d.py's notes).
+static void MaskIcon(int x, int y)
+{
+    CDisc(x + 8, y + 8, 6, 214, 122, 40);             // mask body (Termina-orange)
+    CDisc(x + 5, y + 6, 1, 24, 14, 8);                // left eye hole
+    CDisc(x + 11, y + 6, 1, 24, 14, 8);               // right eye hole
+    CFill(x + 6, y + 11, 5, 1, 24, 14, 8);             // mouth line
+}
 
 // ===================== Item sprites (RGBA4444, from sprites.h) =====================
 static const SpriteRef *FindSprite(int key)
@@ -2206,6 +2289,7 @@ static void DrawCheatIcon(int x, int y, int ch)
         case SPRK_RAIN:    RainIcon(x, y);   return;
         case SPRK_PIN:     PinIcon(x, y);    return;
         case SPRK_PORTAL:  PortalIcon(x, y); return;
+        case SPRK_MASK:    MaskIcon(x, y);   return;
     }
     // >= 0x100: a real RGBA4444 sprite from sprites.h (see MM3D pseudo-ids below).
     if (sk >= 0) DrawSprite(x, y, sk, 0);
@@ -2448,7 +2532,8 @@ static void GearIcon(int x, int y)        // Settings rows
 // possible, playful where not" logic as the cheat icons): Time -> Ocarina, Battle -> the
 // Gilded Sword, Inventory -> a Rupee Wallet, Quest -> the Bombers' Notebook (literally MM3D's
 // own quest-tracking item), Misc -> the Pictograph Box (a fun, novelty-flavored camera, for
-// the novelty-cheats folder). Tools/Settings keep their generic engine vector icons.
+// the novelty-cheats folder), Items (ammo) -> the crossed Arrows. Tools/Settings keep their
+// generic engine vector icons.
 static void CategoryIcon(int folderId, int x, int y)
 {
     switch (folderId)
@@ -2461,6 +2546,8 @@ static void CategoryIcon(int folderId, int x, int y)
         case F_QUEST:      DrawSprite(x, y, MSPR_ALL_ITEMS, 0); break;
         case F_MISC:       DrawSprite(x, y, MSPR_CAMERA, 0); break;
         case F_TELEPORT:   PortalIcon(x, y - 1); break;
+        case F_AMMO:       DrawSprite(x, y, MSPR_ARROWS, 0); break;
+        case F_BOTTLES:    DrawSprite(x, y, MSPR_BOTTLE, 0); break;
 #endif
         case F_SETTINGS: GearIcon(x, y - 1); break;
         default:         FolderIconSmall(x, y + 1); break;
@@ -2489,8 +2576,18 @@ static void ToolIcon(int tool, int x, int y)
 //
 // This is the layout-agnostic primitive: it renders ONE row wherever you place it, so the
 // caller decides whether a folder is a list, a 2-column grid, or something else entirely.
-static void DrawMenuItem(const Item *it, int x, int y, int cellW, int selected)
+//
+// `checkboxAlign`: reserve a checkbox-width slot before the icon, like toggle/one-shot cheat
+// rows do, so non-toggle rows (folders, pickers, tools...) line up with them. Only matters when
+// a list MIXES row types (e.g. Inventory: cheat rows next to a "Bottles" folder row) - the
+// 2-column grids (HOME, Bottles, unfiltered Teleport) are always one uniform row type, so they
+// pass 0 here and keep their original tight icon-hugs-the-selector layout.
+static void DrawMenuItem(const Item *it, int x, int y, int cellW, int selected, int checkboxAlign)
 {
+    int iconX = checkboxAlign ? x + 17 : x;           // icon x
+    int lblX  = checkboxAlign ? x + 37 : x + 20;      // label x
+    int padN  = checkboxAlign ? 43 : 26;              // label width padding (no value on the right)
+    int padV  = checkboxAlign ? 49 : 32;              // label width padding (value shown on the right)
     if (IS_SEP(it)) // non-selectable section header (dim label + hairline rule)
     {
         const char *sec = T(it->label);
@@ -2506,83 +2603,99 @@ static void DrawMenuItem(const Item *it, int x, int y, int cellW, int selected)
     }
     if (it->folder >= 0)
     {
-        CategoryIcon(it->folder, x, y);
-        CTextClip(x + 20, y - 1, T(it->label), cellW - 26 - (folderFav[it->folder] ? 12 : 0), INK, 0);
+        if (checkboxAlign) BrownBox(x, y + 1);
+        CategoryIcon(it->folder, iconX, y);
+        CTextClip(lblX, y - 1, T(it->label), cellW - padN - (folderFav[it->folder] ? 12 : 0), INK, 0);
         if (folderFav[it->folder]) StarIcon(x + cellW - 12, y + 3);
     }
     else if (it->warp == -2) // Teleport category filter row (cycles with A)
     {
-        DrawSprite(x, y - 1, MSPR_LENS, 0); // Lens of Truth = filter / inspect
+        if (checkboxAlign) BrownBox(x, y + 1);
+        DrawSprite(iconX, y - 1, MSPR_LENS, 0); // Lens of Truth = filter / inspect
         const char *m = g_tpFilter == 1 ? T("Overworld") : g_tpFilter == 2 ? T("Dungeons") : T("All");
         int cw = CTextWidth(m);
         CText(x + cellW - 6 - cw, y - 1, m, GREEN_ON, 0);
-        CTextClip(x + 20, y - 1, T("Filter"), cellW - 32 - cw, INK, 0);
+        CTextClip(lblX, y - 1, T("Filter"), cellW - padV - cw, INK, 0);
     }
     else if (it->warp >= 0) // teleport destination: map-pin icon + name (from warps[])
     {
-        PinIcon(x, y - 1);
-        CTextClip(x + 20, y - 1, T(warps[it->warp].name), cellW - 26, INK, 0);
+        if (checkboxAlign) BrownBox(x, y + 1);
+        PinIcon(iconX, y - 1);
+        CTextClip(lblX, y - 1, T(warps[it->warp].name), cellW - padN, INK, 0);
     }
     else if (it->picker >= 0)
     {
         const Picker *pk = &pickers[it->picker];
         u8 cur;
-        GridIcon(x, y - 1);
-        if (PickerRead(pk, &cur))
+        int haveCur = PickerRead(pk, &cur), curOpt = -1;
+        if (haveCur)
             for (int k = 0; k < pk->count; ++k)
-                if (pk->opts[k].val == cur)
-                {
-                    int cw = CTextWidth(T(pk->opts[k].name));
-                    CText(x + cellW - 6 - cw, y - 1, T(pk->opts[k].name), GREEN_ON, 0);
-                    CTextClip(x + 20, y - 1, T(it->label), cellW - 32 - cw, INK, 0);
-                    goto pickdone;
-                }
-        CTextClip(x + 20, y - 1, T(it->label), cellW - 26, INK, 0);
-        pickdone:;
+                if (pk->opts[k].val == cur) { curOpt = k; break; }
+
+        if (checkboxAlign) BrownBox(x, y + 1);
+        // Row icon: the CURRENT value's own sprite when we have one (so the row itself shows
+        // what's actually equipped/filled), else the picker's generic fallback.
+        if (curOpt >= 0 && pk->opts[curOpt].icon >= 0) DrawSprite(iconX, y - 1, pk->opts[curOpt].icon, 0);
+        else DrawSprite(iconX, y - 1, MSPR_BOTTLE, 0); // every remaining picker is a Bottle slot
+
+        if (curOpt >= 0)
+        {
+            int cw = CTextWidth(T(pk->opts[curOpt].name));
+            CText(x + cellW - 6 - cw, y - 1, T(pk->opts[curOpt].name), GREEN_ON, 0);
+            CTextClip(lblX, y - 1, T(it->label), cellW - padV - cw, INK, 0);
+        }
+        else
+            CTextClip(lblX, y - 1, T(it->label), cellW - padN, INK, 0);
     }
     else if (it->tool >= 0)
     {
         int fav = toolFav[it->tool], rpad = fav ? 14 : 0;
-        ToolIcon(it->tool, x, y - 1);
-        CTextClip(x + 20, y - 1, T(it->label), cellW - 26 - rpad, GOLD, 0);
+        if (checkboxAlign) BrownBox(x, y + 1);
+        ToolIcon(it->tool, iconX, y - 1);
+        CTextClip(lblX, y - 1, T(it->label), cellW - padN - rpad, GOLD, 0);
         if (fav) StarIcon(x + cellW - 12, y + 3);
     }
     else if (it->cheat == CH_CFG_QMKEY)
     {
-        GearIcon(x, y - 1);
+        if (checkboxAlign) BrownBox(x, y + 1);
+        GearIcon(iconX, y - 1);
         int cw = CTextBtnWidth(qmCombos[qmCombo].name); // button combo: L/R shown as glyphs
         CTextBtn(x + cellW - 6 - cw, y - 1, qmCombos[qmCombo].name, GREEN_ON, 0);
-        CTextClip(x + 20, y - 1, T(it->label), cellW - 32 - cw, INK, 0);
+        CTextClip(lblX, y - 1, T(it->label), cellW - padV - cw, INK, 0);
     }
     else if (it->cheat == CH_CFG_HK1 || it->cheat == CH_CFG_HK2)
     {
-        GearIcon(x, y - 1);
+        if (checkboxAlign) BrownBox(x, y + 1);
+        GearIcon(iconX, y - 1);
         // Show the LIVE binding as a button glyph, so rebinding updates the row instantly.
         const char *g = hotKeys[it->cheat == CH_CFG_HK1 ? hk1 : hk2].glyph;
         int cw = CTextBtnWidth(g);
         CTextBtn(x + cellW - 6 - cw, y - 1, g, GREEN_ON, 0);
-        CTextClip(x + 20, y - 1, T(it->label), cellW - 32 - cw, INK, 0);
+        CTextClip(lblX, y - 1, T(it->label), cellW - padV - cw, INK, 0);
     }
     else if (it->cheat == CH_CFG_HKRESET) // an action row: icon + label, no value/checkbox
     {
-        GearIcon(x, y - 1);
-        CTextClip(x + 20, y - 1, T(it->label), cellW - 26, GOLD, 0);
+        if (checkboxAlign) BrownBox(x, y + 1);
+        GearIcon(iconX, y - 1);
+        CTextClip(lblX, y - 1, T(it->label), cellW - padN, GOLD, 0);
     }
     else if (it->cheat == CH_CFG_THEME)
     {
-        GearIcon(x, y - 1);
+        if (checkboxAlign) BrownBox(x, y + 1);
+        GearIcon(iconX, y - 1);
         int cw = CTextWidth(THEMES[g_themeIdx].name); // theme name: proper noun, not translated
         CText(x + cellW - 6 - cw, y - 1, THEMES[g_themeIdx].name, GREEN_ON, 0);
-        CTextClip(x + 20, y - 1, T(it->label), cellW - 32 - cw, INK, 0);
+        CTextClip(lblX, y - 1, T(it->label), cellW - padV - cw, INK, 0);
     }
     else if (it->cheat == CH_CFG_LANG)
     {
-        GearIcon(x, y - 1);
+        if (checkboxAlign) BrownBox(x, y + 1);
+        GearIcon(iconX, y - 1);
         int cw = CTextWidth(kLangLabels[g_langIdx]); // language name: shown natively, not translated
         // red when this language has no SD file (falls back to English) - an availability cue
         if (g_langAvail[g_langIdx]) CText(x + cellW - 6 - cw, y - 1, kLangLabels[g_langIdx], GREEN_ON, 0);
         else                        CText(x + cellW - 6 - cw, y - 1, kLangLabels[g_langIdx], 225, 60, 45, 0);
-        CTextClip(x + 20, y - 1, T(it->label), cellW - 32 - cw, INK, 0);
+        CTextClip(lblX, y - 1, T(it->label), cellW - padV - cw, INK, 0);
     }
     else if (it->cheat == CH_CFG_TOAST || it->cheat == CH_CFG_AUTOFILL) // settings toggles: no cheat icon
     {
@@ -2702,7 +2815,11 @@ static void ComposeMenu(const Folder *fld, int depth, int cursor, int scroll)
     // a LAYOUT CHOICE, not an engine rule - add folders to this test, or drop the grid entirely
     // and let everything be a list. When a grid folder overflows, `scroll` is a pixel offset and
     // rows are clipped and arrowed.
-    int twoCol = (fld == &folders[F_ROOT] || fld == &folders[F_TELEPORT]);
+    // Teleport only grids when unfiltered: filtering to Overworld/Dungeons leaves most of its
+    // category headers with just one surviving destination each, and a forced 2-col break per
+    // header wasted the other column and forced a lot of scrolling for very little content -
+    // a single full-width column both fixes that and stops long dungeon names from clipping.
+    int twoCol = (fld == &folders[F_ROOT] || (fld == &folders[F_TELEPORT] && g_tpFilter == 0));
     if (twoCol)
     {
         BuildRootLayout(fld);
@@ -2724,9 +2841,9 @@ static void ComposeMenu(const Folder *fld, int depth, int cursor, int scroll)
                 CFill(lx, dy + 6, (WIN_X + WIN_W - 14) - lx, 1, 120, 98, 50); // hairline rule
             }
             else if (g_rlCol[i] == -2) // wide row: full row width, no column offset
-                DrawMenuItem(&fld->items[i], ROW_X, dy, ROW_W - 8, i == cursor);
+                DrawMenuItem(&fld->items[i], ROW_X, dy, ROW_W - 8, i == cursor, 0);
             else
-                DrawMenuItem(&fld->items[i], ROW_X + g_rlCol[i] * colW, dy, colW - 8, i == cursor);
+                DrawMenuItem(&fld->items[i], ROW_X + g_rlCol[i] * colW, dy, colW - 8, i == cursor, 0);
         }
         if (scroll > 0) // up arrow
             for (int a = 0; a < 4; ++a) CFill(WIN_X + WIN_W - 14 - a, ROW_Y0 + 3 + a, 1 + 2 * a, 1, GOLD);
@@ -2738,12 +2855,17 @@ static void ComposeMenu(const Folder *fld, int depth, int cursor, int scroll)
         // scroll is in VISIBLE rows (hidden items compacted away). Identical to raw indexing for
         // folders with nothing hidden, so only the Teleport filter changes behaviour here.
         int folderIdx = (int)(fld - folders);
+        // Only Inventory mixes generic checkbox+icon cheat rows with folder/picker rows - every
+        // other list is one uniform row type (Settings: gear icon or its own checkbox, always at
+        // the same x either way; Quest/Ammo/Misc: cheat rows only; Teleport: pin rows only), so
+        // they keep their original tight layout instead of reserving a checkbox-width slot.
+        int checkboxAlign = (fld == &folders[F_INVENTORY]);
         int vp = 0;
         for (int i = 0; i < fld->count; ++i)
         {
             if (ItemHidden(folderIdx, &fld->items[i])) continue;
             if (vp >= scroll && vp < scroll + MAX_ROWS)
-                DrawMenuItem(&fld->items[i], ROW_X, ROW_Y0 + (vp - scroll) * ROW_H, ROW_W, i == cursor);
+                DrawMenuItem(&fld->items[i], ROW_X, ROW_Y0 + (vp - scroll) * ROW_H, ROW_W, i == cursor, checkboxAlign);
             vp++;
         }
         int vis = vp;
@@ -2842,17 +2964,27 @@ static void InfoBox(const Item *it)
     while (HID_PAD) svcSleepThread(10 * 1000 * 1000);
 }
 
-// Picker list UI (bottle contents, inventory item). Returns after A (write) or B (cancel).
+// Picker grid UI (bottle contents, inventory item, forms). 2 columns, a real sprite/icon per
+// option instead of a color swatch, no big value-preview card - just the list, like every other
+// menu screen in the plugin. Returns after A (write) or B (cancel).
 static void PickerRun(const Picker *pk)
 {
-    int cursor = 0, scroll = 0, changed = 1;
+    int cursor = 0, changed = 1;
     u8 cur = 0;
-    // 0 = address not set or not mapped right now. When that happens we still show the list
+    // 0 = address not set or not mapped right now. When that happens we still show the grid
     // (so you can see the options), just with nothing marked as the current value.
     int haveCur = PickerRead(pk, &cur);
     if (haveCur)
         for (int k = 0; k < pk->count; ++k)
             if (pk->opts[k].val == cur) { cursor = k; break; }
+
+    // Bottle (22 options) needs scrolling - 2 cols x MAX_ROWS(9) only fits 18. Everything else
+    // (<= 18 options) never scrolls; `scroll` is a row offset, same convention as the rest of
+    // the menu's list views.
+    int cols = pk->count > 1 ? 2 : 1;
+    int rows = (pk->count + cols - 1) / cols;
+    int colW = ROW_W / cols;
+    int scroll = 0;
 
     u32 prev = HID_PAD;
 
@@ -2860,47 +2992,36 @@ static void PickerRun(const Picker *pk)
     {
         if (changed)
         {
-            if (cursor < scroll)             scroll = cursor;
-            if (cursor >= scroll + MAX_ROWS) scroll = cursor - MAX_ROWS + 1;
+            int curRow = cursor / cols;
+            if (curRow < scroll) scroll = curRow;
+            if (curRow >= scroll + MAX_ROWS) scroll = curRow - MAX_ROWS + 1;
 
             ComposeBackdrop();
             int tw = CTextWidth(T(pk->title));
             CText(WIN_X + 12, WIN_Y + 7, T(pk->title), GOLD, 1);
             CFill(WIN_X + 12, WIN_Y + 24, tw + 6, 1, GOLD);
 
-            int listW = ROW_W - 74; // leave room for the big preview on the right
-            for (int i = scroll; i < pk->count && i < scroll + MAX_ROWS; ++i)
+            for (int i = 0; i < pk->count; ++i)
             {
-                int y = ROW_Y0 + (i - scroll) * ROW_H;
+                int col = i % cols, row = i / cols;
+                if (row < scroll || row >= scroll + MAX_ROWS) continue;
+                int x = ROW_X + col * colW, y = ROW_Y0 + (row - scroll) * ROW_H;
+                int isCur = haveCur && pk->opts[i].val == cur;
                 if (i == cursor)
                 {
-                    CFillBlend(ROW_X - 4, y - 1, listW + 8, ROW_H, 0, 0, 0, 110);
-                    CFill(ROW_X - 4, y - 1, 2, ROW_H, GOLD);
+                    CFillBlend(x - 4, y - 1, colW - 4, ROW_H, 0, 0, 0, 110);
+                    CFill(x - 4, y - 1, 2, ROW_H, GOLD);
                 }
-                // No sprite sheet in the template - a filled swatch stands in for the
-                // per-option icon. Swap in DrawScaled() here once you have real art.
-                const u8 *sw = (haveCur && pk->opts[i].val == cur) ? CGREEN : CDIM;
-                CFill(ROW_X + 2, y + 1, 12, 12, sw[0], sw[1], sw[2]);
-                const u8 *oc = (haveCur && pk->opts[i].val == cur) ? CGREEN : CINK;
-                CTextClip(ROW_X + 20, y - 1, T(pk->opts[i].name), listW - 20, oc[0], oc[1], oc[2], 0);
+                if (pk->opts[i].icon >= 0) DrawSprite(x, y - 1, pk->opts[i].icon, 0);
+                else { const u8 *sw = isCur ? CGREEN : CDIM; CFill(x + 2, y + 1, 12, 12, sw[0], sw[1], sw[2]); }
+                const u8 *oc = isCur ? CGREEN : CINK;
+                CTextClip(x + 20, y - 1, T(pk->opts[i].name), colW - 28, oc[0], oc[1], oc[2], 0);
+                if (isCur) CFill(x + colW - 12, y + 3, 6, 6, CGREEN[0], CGREEN[1], CGREEN[2]); // "currently set" dot
             }
-
-            // Big preview panel for the highlighted option. With real art this is where the
-            // 42px icon goes - DrawScaled() will fit any source size into this 42x42 box:
-            //   DrawScaled(px, py, 42, 42, yourPixels, srcW, srcH, 0);
-            {
-                int px = WIN_X + WIN_W - 68, py = ROW_Y0 + 14;
-                CFillBlend(px - 6, py - 6, 54, 54, 0, 0, 0, 90);
-                CFill(px - 6, py - 6, 54, 1, GOLD); CFill(px - 6, py + 47, 54, 1, GOLD);
-                CFill(px - 6, py - 6, 1, 54, GOLD); CFill(px + 47, py - 6, 1, 54, GOLD);
-                char hexv[8]; siprintf(hexv, "%02X", pk->opts[cursor].val);
-                CText(px + 21 - CTextWidth(hexv) / 2, py + 13, hexv, GOLD, 1);
-            }
-
             if (scroll > 0)
-                for (int i = 0; i < 4; ++i) CFill(WIN_X + WIN_W - 14 - i, ROW_Y0 + 3 + i, 1 + 2 * i, 1, GOLD);
-            if (scroll + MAX_ROWS < pk->count)
-                for (int i = 0; i < 4; ++i) CFill(WIN_X + WIN_W - 14 - i, ROW_Y0 + MAX_ROWS * ROW_H - 4 - i, 1 + 2 * i, 1, GOLD);
+                for (int a = 0; a < 4; ++a) CFill(WIN_X + WIN_W - 14 - a, ROW_Y0 + 3 + a, 1 + 2 * a, 1, GOLD);
+            if (scroll + MAX_ROWS < rows)
+                for (int a = 0; a < 4; ++a) CFill(WIN_X + WIN_W - 14 - a, ROW_Y0 + MAX_ROWS * ROW_H - 4 - a, 1 + 2 * a, 1, GOLD);
 
             CText6Btn(WIN_X + 12, WIN_Y + WIN_H - 16, T("{A} set   {B} cancel"), INK_DIM);
             Present(); Present();
@@ -2910,10 +3031,28 @@ static void PickerRun(const Picker *pk)
         svcSleepThread(16 * 1000 * 1000);
         u32 pad = HID_PAD, down = ARepeat(pad, &prev, &g_arHold);
 
-        if (down & BUTTON_DOWN) { cursor = (cursor + 1 < pk->count) ? cursor + 1 : 0; changed = 1; }
-        if (down & BUTTON_UP)   { cursor = (cursor > 0) ? cursor - 1 : pk->count - 1; changed = 1; }
-        if (down & (BUTTON_RIGHT | BUTTON_R1)) { cursor += MAX_ROWS; if (cursor >= pk->count) cursor = pk->count - 1; changed = 1; } // D-Pad L/R page
-        if (down & (BUTTON_LEFT | BUTTON_L1))  { cursor -= MAX_ROWS; if (cursor < 0) cursor = 0; changed = 1; }
+        if (down & BUTTON_DOWN)
+        {
+            int col = cursor % cols, row = cursor / cols;
+            for (int s = 1; s <= rows; ++s) { int nr = (row + s) % rows, idx = nr * cols + col; if (idx < pk->count) { cursor = idx; break; } }
+            changed = 1;
+        }
+        if (down & BUTTON_UP)
+        {
+            int col = cursor % cols, row = cursor / cols;
+            for (int s = 1; s <= rows; ++s) { int nr = (row - s + rows * 4) % rows, idx = nr * cols + col; if (idx < pk->count) { cursor = idx; break; } }
+            changed = 1;
+        }
+        if (down & (BUTTON_RIGHT | BUTTON_LEFT | BUTTON_R1 | BUTTON_L1))
+        {
+            if (cols > 1)
+            {
+                int col = cursor % cols, row = cursor / cols, nc = 1 - col;
+                int idx = row * cols + nc;
+                if (idx < pk->count) cursor = idx;
+            }
+            changed = 1;
+        }
         if (down & BUTTON_A)
         {
             if (PickerWrite(pk, pk->opts[cursor].val))
@@ -4583,15 +4722,66 @@ typedef struct {
 } ChkItem;
 typedef struct { const char *name; const ChkItem *items; int count; } ChkCat;
 
-static const ChkItem CK_EXAMPLE[] = {
-    // key            task                  hint                                   location   icon        arg  kind        addr  mask
-    { "ex_manual",   "Example: manual only", "Nothing in memory tells us about this one, so you tick it yourself with {A}.", "", CKI_KEYITEM, 0, CK_MANUAL,  0x00000000, 0x00 },
-    { "ex_bit",      "Example: flag bit",    "Auto-detected when a chosen bit is set in a chosen byte. Point addr/mask at your game.", "", CKI_NOTE,    0, CK_BIT,     0x00000000, 0x01 },
-    { "ex_nonzero",  "Example: slot filled", "Auto-detected when a byte is anything other than zero - good for 'is this inventory slot used'.", "", CKI_SKULL, 0, CK_NONZERO, 0x00000000, 0x00 },
+// Masks (24): CONFIRMED address range 0x77636C-0x776383, one byte per mask, each byte holding
+// its own item id (0x32-0x49) when owned, 0xFF when not - see "Have all Masks" and the 100% save
+// cross-check in CHANGELOG. Item ids and names are from the zeldaret/mm N64 decompilation
+// (include/z64item.h's ItemId enum), which also matches our own independently-confirmed B-Button
+// value for Fierce Deity's Mask (0x35) - so this table is trusted over the earlier community AR
+// list. Hints are kept to well-known facts only; anything we weren't confident enough to state
+// precisely is left generic rather than risk a wrong walkthrough step.
+static const ChkItem CK_MASKS[] = {
+    // key                task                     hint                                                                          loc  icon         arg kind        addr      mask
+    { "mask_deku",        "Deku Mask",              "One of the four transformation masks.",                                       "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77636C, 0x32 },
+    { "mask_goron",       "Goron Mask",             "One of the four transformation masks.",                                       "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77636D, 0x33 },
+    { "mask_zora",        "Zora Mask",              "One of the four transformation masks.",                                       "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77636E, 0x34 },
+    { "mask_fierce",      "Fierce Deity's Mask",    "Requires every other mask first.",                                            "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77636F, 0x35 },
+    { "mask_truth",       "Mask of Truth",          "Reward for completing every Bombers' Notebook entry.",                        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776370, 0x36 },
+    { "mask_kafei",       "Kafei's Mask",           "Part of the Anju & Kafei quest.",                                             "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776371, 0x37 },
+    { "mask_allnight",    "All-Night Mask",         "Part of the Romani Ranch quest line.",                                        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776372, 0x38 },
+    { "mask_bunny",       "Bunny Hood",             "Won from a side quest reward.",                                               "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776373, 0x39 },
+    { "mask_keaton",      "Keaton Mask",            "Reward for correctly answering Keaton's riddles.",                            "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776374, 0x3A },
+    { "mask_garo",        "Garo's Mask",            "Reward from a Garo Master in Ikana Canyon.",                                  "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776375, 0x3B },
+    { "mask_romani",      "Romani's Mask",          "Part of the Romani Ranch quest line.",                                        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776376, 0x3C },
+    { "mask_circus",      "Circus Leader's Mask",   "Reward from Gorman for the milk delivery side quest.",                        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776377, 0x3D },
+    { "mask_postman",     "Postman's Hat",          "Reward for helping the Postman.",                                             "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776378, 0x3E },
+    { "mask_couple",      "Couple's Mask",          "Final reward of the Anju & Kafei quest.",                                     "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776379, 0x3F },
+    { "mask_greatfairy",  "Great Fairy's Mask",     "Reward from the Clock Town Great Fairy for collecting Stray Fairies.",        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637A, 0x40 },
+    { "mask_gibdo",       "Gibdo Mask",             "Given by the Gibdos in the Ikana royal crypt.",                               "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637B, 0x41 },
+    { "mask_dongero",     "Don Gero's Mask",        "Reward for gathering the frogs at the Woodfall spring.",                      "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637C, 0x42 },
+    { "mask_kamaro",      "Kamaro's Mask",          "Left behind after learning Kamaro's dance.",                                  "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637D, 0x43 },
+    { "mask_captain",     "Captain's Hat",          "Found inside the Pirates' Fortress.",                                         "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637E, 0x44 },
+    { "mask_stone",       "Stone Mask",             "Makes most enemies and NPCs ignore you.",                                     "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637F, 0x45 },
+    { "mask_bremen",      "Bremen Mask",            "Makes young animals march behind you.",                                       "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776380, 0x46 },
+    { "mask_blast",       "Blast Mask",             "Reward from the West Clock Town bomb shop owner.",                            "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776381, 0x47 },
+    { "mask_scents",      "Mask of Scents",         "Lets you smell nearby hidden things.",                                        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776382, 0x48 },
+    { "mask_giant",       "Giant's Mask",           "Turns Link giant-sized - required for the final boss.",                       "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776383, 0x49 },
+};
+
+// Stray Fairies (4 dungeons): CONFIRMED address range 0x7763E8-0x7763EB, one byte per dungeon
+// holding a 0-15 count (not a bitmask - "All Stray Fairies" fills each with 0x0F = 15). Tracking
+// is per-dungeon (15/15), not per-fairy - the save data doesn't expose which specific fairy.
+static const ChkItem CK_FAIRIES[] = {
+    // key             task                          hint                          loc icon      arg kind        addr      mask
+    { "fairy_woodfall", "Woodfall Stray Fairies",    "All 15 collected in Woodfall Temple.",   "", CKI_SKULL, 0, CK_BYTEEQ, 0x7763E8, 0x0F },
+    { "fairy_snowhead", "Snowhead Stray Fairies",    "All 15 collected in Snowhead Temple.",   "", CKI_SKULL, 0, CK_BYTEEQ, 0x7763E9, 0x0F },
+    { "fairy_greatbay", "Great Bay Stray Fairies",   "All 15 collected in Great Bay Temple.",  "", CKI_SKULL, 0, CK_BYTEEQ, 0x7763EA, 0x0F },
+    { "fairy_ikana",    "Ikana Stray Fairies",       "All 15 collected in Stone Tower Temple.", "", CKI_SKULL, 0, CK_BYTEEQ, 0x7763EB, 0x0F },
+};
+
+// Gear upgrades: all four addresses are already CONFIRMED cheat targets elsewhere in this
+// plugin (Battle/Inventory folders), reused here as auto-detected checklist entries.
+static const ChkItem CK_GEAR[] = {
+    // key           task                       hint                                                loc icon        arg kind        addr      mask
+    { "gear_defense", "Enhanced Defense",       "Halves damage taken.",                              "", CKI_KEYITEM, 0, CK_NONZERO, 0x776320, 0x00 },
+    { "gear_gilded",  "Gilded Sword",           "The final sword upgrade.",                          "", CKI_KEYITEM, 0, CK_BYTEEQ,  0x776352, 0x23 },
+    { "gear_magic",   "Magic Meter",            "Unlocks the magic bar.",                            "", CKI_KEYITEM, 0, CK_NONZERO, 0x77631E, 0x00 },
+    { "gear_dmagic",  "Double Magic",           "Doubles the magic meter's capacity.",               "", CKI_KEYITEM, 0, CK_NONZERO, 0x77631F, 0x00 },
 };
 
 static const ChkCat CHK_CATS[] = {
-    { "Examples", CK_EXAMPLE, (int)(sizeof(CK_EXAMPLE) / sizeof(CK_EXAMPLE[0])) },
+    { "Masks",         CK_MASKS,   (int)(sizeof(CK_MASKS)   / sizeof(CK_MASKS[0])) },
+    { "Stray Fairies", CK_FAIRIES, (int)(sizeof(CK_FAIRIES) / sizeof(CK_FAIRIES[0])) },
+    { "Gear",          CK_GEAR,    (int)(sizeof(CK_GEAR)    / sizeof(CK_GEAR[0])) },
 };
 #define CHK_NCATS  ((int)(sizeof(CHK_CATS) / sizeof(CHK_CATS[0])))
 #define CHK_MAXITEMS 32
@@ -5587,7 +5777,7 @@ static void RunMenu(void)
         const Folder *fld = &folders[folderIdx];
         int changed = 0;
 
-        if (folderIdx == F_ROOT || folderIdx == F_TELEPORT) // grouped 2-column grid
+        if (folderIdx == F_ROOT || (folderIdx == F_TELEPORT && g_tpFilter == 0)) // grouped 2-column grid
         {
             BuildRootLayout(fld);
             if (NavSkip(folderIdx, cursor)) cursor = RootFirstSel(fld);
@@ -5752,7 +5942,7 @@ static void RunMenu(void)
 
         if (flashTicks > 0 && --flashTicks == 0) { flashCheat = -1; changed = 1; }
 
-        if (folderIdx == F_ROOT || folderIdx == F_TELEPORT) // 2-col grid: scroll is a pixel offset that follows the cursor
+        if (folderIdx == F_ROOT || (folderIdx == F_TELEPORT && g_tpFilter == 0)) // 2-col grid: scroll is a pixel offset that follows the cursor
         {
             BuildRootLayout(fld);
             int visBot = WIN_Y + WIN_H - 22, cy = g_rlY[cursor];

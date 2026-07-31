@@ -14,7 +14,7 @@ Work in progress — see [`RawPlugin/README.md`](RawPlugin/README.md) for build 
 
 This build targets **Majora's Mask 3D, USA, v1.1.0** (Title ID `0004000000125500`). Boots and
 menu confirmed on real hardware. 24+ cheats confirmed so far across Time, Battle, Inventory,
-Items (ammo), Quest and Misc (Moon Jump, instant Deku/Fierce Deity forms), plus a
+Items (ammo), Quest and Misc (Moon Jump, Play as... forms), plus a
 25-destination Teleport and item pickers (bottle contents, B button item) — see
 `CHANGELOG.md` for the full list and known limitations.
 
@@ -26,7 +26,9 @@ Items (ammo), Quest and Misc (Moon Jump, instant Deku/Fierce Deity forms), plus 
 4. **Art and identity** — done. Item/UI sprite sheets (Colbydude, xAct), button glyphs
    (manpaint), the "Termina" theme (original art by samaBR), an About-screen logo, and sprite
    icons throughout HOME, Tools and Settings, all from The Spriters Resource / original art.
-5. **100% Checklist** — auto-fill tractable from the save-file map already built; not started.
+5. **100% Checklist** — first pass done: Masks (24), Stray Fairies (4) and Gear (4) auto-fill
+   from the save-file map. Not yet hardware-confirmed. Boss/Song tracking still needs a bit-level
+   Cheat Search pass before it can be added safely.
 6. **Teleport** — done. 25 destinations; the warp mechanism (GlobalContext, heap-allocated,
    resolved via the same stable pointer Moon Jump uses) is confirmed on hardware.
 7. **Game Guide** — needs an MM3D walkthrough text source; not started.

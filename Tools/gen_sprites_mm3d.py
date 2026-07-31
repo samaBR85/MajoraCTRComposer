@@ -54,6 +54,31 @@ MAP = {
     # About icon: not on the 42px item grid - cropped separately (see gen_logo.py's sibling
     # crop of the same HOME banner sheet) to a pre-made 48x48 PNG.
     0x11B: ('file', 'Assets/Sprites/mm3d_about_icon.png'),
+    0x11C: ('grid', 8, 0),           # empty Bottle - Bottle #1-7 pickers
+    0x11D: ('grid', 24, 3),          # Fishing Rod - Fishing Hole Pass
+    0x11E: ('grid', 24, 1),          # Great Fairy's Sword (plain silver blade) - B Button picker
+    # Per-option icons for the Bottle #1-7 picker (Bottles row on the item sheet, r8-11). Content
+    # values (0x12-0x27) come from the AR code list; the row-major sheet order lines up with that
+    # same ascending id order, with a couple of gaps where the sheet has no distinct art (those
+    # ids reuse a neighboring bottle's icon below instead of guessing new art).
+    0x120: ('grid', 8, 1),           # Red Potion
+    0x121: ('grid', 8, 2),           # Green Potion
+    0x122: ('grid', 8, 3),           # Blue Potion
+    0x123: ('grid', 8, 4),           # Fairy
+    0x124: ('grid', 8, 5),           # Deku Princess
+    0x125: ('grid', 9, 0),           # Milk
+    0x126: ('grid', 9, 2),           # Fish
+    0x127: ('grid', 9, 4),           # Bug
+    0x128: ('grid', 9, 5),           # Big Poe
+    0x129: ('grid', 10, 0),          # Spring Water
+    0x12A: ('grid', 10, 1),          # Hot Spring Water
+    0x12B: ('grid', 10, 3),          # Gold Dust
+    0x12C: ('grid', 10, 4),          # Magic Mushroom
+    0x12D: ('grid', 10, 5),          # Sea Horse
+    0x12E: ('grid', 11, 0),          # Chateau Romani
+    0x12F: ('grid', 9, 1),           # Mystery Milk (and reused for Mouldy Milk - no distinct art)
+    0x130: ('grid', 20, 5),          # Zora Mask - Play as... folder
+    0x131: ('grid', 21, 5),          # Fierce Deity's Mask - Play as... folder
 }
 
 def to4444(im):

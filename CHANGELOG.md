@@ -6,19 +6,159 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–26
+## Unreleased · builds 1–39
+
+### Removed Deku Sticks Always On Fire (build 39)
+- Tested on hardware: the write goes through (no crash) but has no visible effect - the stick
+  stays unlit. Either the address is wrong or it doesn't control what the AR list claimed.
+  Removed rather than leave a dead row in the menu; would need a real Cheat Search pass to
+  find the right address before trying again.
+
+
+### Bottles folder back to a vertical list (build 38)
+- The 2-column grid clipped both the bottle label and its content value badly (e.g. "Green
+  Potion" next to "Bottle #5" in a half-width column). Reverted to a plain single-column list,
+  like every other folder besides HOME/unfiltered Teleport - full names, no clipping.
+
 
 Boots and menu confirmed on real MM3D v1.1.0 hardware at build 1; every cheat below was
 individually confirmed on the same console unless noted otherwise.
 
-### Forms, item pickers, Teleport grid fixes (builds 22–26)
-- **Play as Deku Link / Play as Fierce Deity** (Misc) — CONFIRMED. Instant transformation, no
-  mask needed - Fierce Deity in particular bypasses the vanilla game's boss-arena-only
-  restriction entirely. Found via a community "PLAY AS" field (0x7761FE) referenced by two
-  independent AR code lists that didn't label which value meant which form; hardware-testing
-  all 5 documented values found only 0 (Deku) and 1 (Fierce Deity) are safe - 2/3 leave Link
-  stuck in a broken attack-loop animation, and **4 crashes the game outright**. Those three were
-  never shipped in a build the user could reach.
+### 100% Checklist (Phase 5) + a real bug found in the Bottle picker (build 37)
+- **Tracker now tracks real MM3D progress** instead of shipping the template's placeholder
+  "Examples" category: **Masks** (24, one per byte in the confirmed 0x77636C-0x776383 range),
+  **Stray Fairies** (4, one per dungeon, the confirmed 0x7763E8-0x7763EB range), and **Gear**
+  (Enhanced Defense, Gilded Sword, Magic, Double Magic - all four already-confirmed cheat
+  addresses reused as read checks). None of this is individually hardware-confirmed yet (the
+  auto-fill has never been run against a real save), so treat it as a strong first pass, not
+  gospel - Boss/Song tracking is deliberately left out for the same reason (see below).
+  Auto-fill only *reads* memory, never writes, so there's no risk running it.
+- **Found while researching mask ids for the Tracker**: cross-checked our mask/item ids against
+  the real `ItemId` enum in the [zeldaret/mm](https://github.com/zeldaret/mm) N64 decompilation
+  (`include/z64item.h`) - and it matches our own independently-confirmed B-Button value for
+  Fierce Deity's Mask (0x35) exactly, so it's a trustworthy source. It also revealed **the
+  Bottle picker's community-AR-list values were wrong from "Blue Fire" (0x1C) onward** - what we
+  labeled "Big Poe" was actually Blue Fire (real Big Poe is 0x1E, not offered before), and
+  "Mystery Milk"/"Mouldy Milk" (0x26/0x27) don't exist - those ids are really Hylian Loach and
+  Obaba's Drink. **Fixed**: the Bottle picker now has the correct 22 real bottle contents in the
+  right order (added Milk (Half), Blue Fire, Poe, Big Poe, Zora Egg, Hylian Loach, Obaba's Drink;
+  dropped the two fictitious milk variants). The picker screen also gained scrolling, since 22
+  options no longer fit in one un-scrolled page.
+- **Boss/Song tracking not implemented**: the decomp's `QuestItem` enum confirms bosses and
+  songs live as individual bits somewhere in the confirmed 3-byte 0x7763D0-0x7763D2 field, but
+  without knowing the exact bit order (LSB vs MSB, which byte holds which range) a guess could
+  easily mislabel which bit is Odolwa vs which is a song - worth a dedicated Cheat Search pass
+  rather than shipping a guess.
+- **Skipped for now** (same reasoning as build 36's Bomber's Code/Lotto): Heart Container count
+  and the Quiver/Bomb Bag upgrade tier aren't in a simple byte-per-item shape we could add safely
+  in this pass.
+
+### More cheats from the AR list: Rupee Bank, Razor Sword, Deku Sticks on fire (build 36)
+- **Fill Rupee Bank (5499)** (Inventory) - not yet confirmed. Address `0x777408` sits outside the
+  mapped `0x776xxx` save block, but it's the same addressing style (no v1.0/v1.1 split) as the
+  already-confirmed Fishing Hole Pass, so it's reasonably likely stable rather than heap-based.
+- **Razor Sword + Mirror Shield** (Inventory) - not yet confirmed, but reuses the exact address
+  the Gilded Sword cheat already confirmed (`0x776352`), just the other upgrade-tier byte value.
+- **Deku Sticks Always On Fire** (Misc) - not yet confirmed. Fixed, code-adjacent address
+  (`0x087DF99C`), not part of the heap-based save/GCTX structs.
+- **Skipped for now**: Bomber's Code and the three Lotto-day codes from the AR list. Their
+  addresses come in four different copies each (`0x6E22xx`/`0x6E3Cxx`/`0x7775xx`/`0x778Fxx`) that
+  don't fit the confirmed `0x776xxx`+`0x1000` save-block pattern - the same "multiple copies,
+  likely heap-based" shape that made the first three Teleport attempts silently do nothing before
+  the stable GCTX pointer was found. Not worth guessing at without a hardware Cheat Search pass.
+
+### Scoped the row-alignment fix to where it was actually needed (build 35)
+- Build 33's checkbox-width alignment (`BrownBox()`) had been applied everywhere - including
+  HOME, Settings, and Teleport, none of which asked for it and none of which needed it (HOME and
+  Teleport are icon-only rows; Settings' gear-icon and checkbox rows already lined up with each
+  other, since neither ever reserved the extra icon+checkbox combo space to begin with). That
+  pushed every icon 17px right for no reason and put unwanted gaps in front of icons that used to
+  hug the selector. `DrawMenuItem()` now takes an explicit `checkboxAlign` flag instead of always
+  aligning: only **Inventory** passes it as on, since it's the one list that actually mixes
+  generic checkbox+icon cheat rows (Max Rupees, Gilded Sword...) with folder/picker rows (Items,
+  Bottles). Every other screen is back to its original tight layout.
+
+### Un-nested Play as... and B Button Item (build 34)
+- Build 33 had put both of these behind their own sub-folder (matching the Bottles folder
+  pattern) - too much menu-inside-menu for what's just 2-3 rows each. Flattened back out:
+  **Play as...** is a plain "FORMS" section inside Misc again (3 rows: Normal Link, Zora, Fierce
+  Deity, still with build 33's real mask sprites); **B Button Item** is a non-selectable section
+  header inside Inventory, directly above its two rows (Gilded Sword, Great Fairy Sword) - no
+  more opening a picker screen for a 2-item choice, each row just applies directly like any other
+  one-shot cheat.
+
+### Row alignment, Play as.../B Button as their own categories, real Zora/Fierce Deity mask art (build 33)
+- **Every row's icon and label now line up at the same x, regardless of row type.** Toggle/
+  one-shot cheat rows reserve a checkbox-width slot before their icon; folders, pickers, tools,
+  Teleport rows and the one-shot Settings rows didn't, so their labels started 17px to the left
+  of every cheat row's label - visibly uneven columns (seen in the Inventory and Misc screens).
+  Fixed by giving every non-toggle row type a solid black square, no border (a new `BrownBox()`,
+  the main-menu-scale sibling of the quick menu's existing `BrownBoxS()`) in that same slot, so
+  it reads as "not a toggle" while still keeping every label aligned.
+- **"Play as..." is now a folder in Misc**, not a picker: a vertical list of 3 full-name rows
+  (Normal Link, Zora, Fierce Deity - in that order) that each apply directly, rather than opening
+  a separate picker screen. Zora and Fierce Deity now show their real mask icons (The Spriters
+  Resource, Colbydude's Item Icons sheet, rows 20/21 - the same sheet already in the project);
+  Normal Link keeps the hand-drawn mask placeholder since it has no mask to show.
+- **"B Button Item" is now its own folder in Inventory** (matching Bottles' treatment) instead of
+  an inline picker row. Dropped the "Fierce Deity Mask" option from it - it duplicated Misc's
+  Play as... Fierce Deity, and its name didn't fit the picker grid without truncating; Gilded
+  Sword and Great Fairy Sword (both real sprites) now fill the 2-column grid cleanly.
+- **Removed "Examples" from HOME** - it was the template's own placeholder folder, not part of
+  the actual cheat set.
+
+### Picker UI overhaul, Bottles grid, Teleport filter fix, Fishing Hole Pass (builds 31–32)
+- **Picker screen redesigned** (Bottle #1-7, B Button Item, Play as...): removed the big
+  right-side "value preview" card (a hex-value box over generic art - leftover template
+  boilerplate) and replaced the whole screen with a 2-column grid, one real icon per option, a
+  small green dot marking the currently-set value. Every picker now fits on one screen with no
+  scrolling (max option count is 18, and 2 cols x 9 rows = 18 exactly).
+- **Real per-option art for the Bottle picker**: all 18 bottle contents (Red/Green/Blue Potion,
+  Fairy, Deku Princess, Milk, Fish, Bug, Big Poe, Spring/Hot Spring Water, Gold Dust, Magic
+  Mushroom, Sea Horse, Chateau Romani, Mystery/Mouldy Milk) now show their actual bottle icon
+  from the sheet's own Bottles row, not a color swatch. Mystery Milk and Mouldy Milk share one
+  icon (the sheet has no distinct art for those two). The row itself (in the Bottles folder list)
+  now also shows the bottle's CURRENT content icon instead of a fixed generic one.
+- **Bottles is now its own folder** (Inventory -> Bottles), laid out as a 2-column grid like
+  HOME/Teleport, instead of 7 rows crammed into the Inventory list.
+- **Teleport, filtered by Overworld/Dungeons, no longer wastes half the screen**: the 2-column
+  grid forces a full-width break at every category header, and filtering left most categories
+  with only one surviving destination - one item alone in a half-width column, column two wasted,
+  a lot of scrolling for very little content, and long dungeon names clipped to fit that half
+  width even though the other half sat empty. Fixed by only using the 2-col grid for the
+  unfiltered "All" view; Overworld/Dungeons now render as a single full-width column, so every
+  name shows in full and there's no more wasted space.
+- **"Fishing Hole Pass"**: CONFIRMED on hardware (previously listed as an experimental "TEST:
+  Fishing Tickets = 99" test cheat). Renamed and moved from Misc to Quest to match what it
+  actually grants - the free rod loan pass, not a ticket count.
+
+### Icon pass on the newest rows (build 30)
+- **Bottle #1-7 pickers** now show a real sprite (the plain glass Bottle icon, cell `8,0` on the
+  Item Icons sheet) instead of the generic Hex-Editor-style grid icon.
+- **B Button Item picker** now uses the Gilded Sword icon (already in the sheet) as a stand-in -
+  none of the three actual B-button items (Fierce Deity Mask, Gilded Sword, Great Fairy Sword)
+  had all been individually placed on the sheet, so a themed "equip slot" icon was used instead
+  of guessing which face/hilt cell was which.
+- **Play as... picker** gets a new hand-drawn mask icon (round face, two eye holes, a mouth line)
+  rather than a sheet sprite - the sheet's Masks section (rows 18-21) couldn't be confidently
+  matched to Deku/Goron/Zora/Fierce Deity specifically without risking mislabeled art.
+- **Items (Max/Inf ammo) folder** (Inventory) now uses the crossed-Arrows icon as its folder icon,
+  closing the last folder row still on the generic engine vector icon (besides Tools/Settings,
+  which stay generic on purpose).
+
+### Forms, item pickers, Teleport grid fixes (builds 22–29)
+- **Play as... picker** (Misc) — CONFIRMED. Found via a community "PLAY AS" field (0x7761FE)
+  referenced by two independent AR code lists (an EU hold-R code confirms 0x00 = Fierce Deity)
+  that didn't label the other values; took three rounds of hardware testing to land on what
+  actually holds. The change only takes effect on the *next area transition* (door/warp/load),
+  never instantly. Final picker: **Fierce Deity** (0x00, and it bypasses the vanilla game's
+  boss-arena-only restriction entirely), **Zora** (0x02), and **Normal Link** (0x04) to revert.
+  **Goron (0x01) and Deku Link (0x03) are left out** - both were tried fresh (not chained off
+  another form) and the mask "comes off" on its own moments after loading, reverting to Link;
+  whatever those two forms need beyond this one byte isn't covered by it. An earlier round had
+  also seen a broken attack-animation loop when chaining a form request directly off Fierce
+  Deity, but that turned out to be a symptom of the same Goron/Deku issue, not a general
+  Fierce-Deity-transition problem - Zora chains fine.
 - **Bottle #1-7 pickers** (Inventory) — set what each bottle holds (17 options: potions, fairy,
   milk, fish, bug, Big Poe, spring/hot spring water, gold dust, magic mushroom, sea horse,
   Chateau Romani, mystery/mouldy milk). Slot addresses were already confirmed; the content
