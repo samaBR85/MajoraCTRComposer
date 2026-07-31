@@ -6,10 +6,35 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–21
+## Unreleased · builds 1–26
 
 Boots and menu confirmed on real MM3D v1.1.0 hardware at build 1; every cheat below was
 individually confirmed on the same console unless noted otherwise.
+
+### Forms, item pickers, Teleport grid fixes (builds 22–26)
+- **Play as Deku Link / Play as Fierce Deity** (Misc) — CONFIRMED. Instant transformation, no
+  mask needed - Fierce Deity in particular bypasses the vanilla game's boss-arena-only
+  restriction entirely. Found via a community "PLAY AS" field (0x7761FE) referenced by two
+  independent AR code lists that didn't label which value meant which form; hardware-testing
+  all 5 documented values found only 0 (Deku) and 1 (Fierce Deity) are safe - 2/3 leave Link
+  stuck in a broken attack-loop animation, and **4 crashes the game outright**. Those three were
+  never shipped in a build the user could reach.
+- **Bottle #1-7 pickers** (Inventory) — set what each bottle holds (17 options: potions, fairy,
+  milk, fish, bug, Big Poe, spring/hot spring water, gold dust, magic mushroom, sea horse,
+  Chateau Romani, mystery/mouldy milk). Slot addresses were already confirmed; the content
+  values come from two independent community AR-code lists that agree with each other, not
+  individually hardware-tested.
+- **B Button Item picker** (Inventory) — Fierce Deity Mask / Gilded Sword / Great Fairy Sword.
+  Address (0x77632A) was identified back in the Phase 1/2 save-file analysis but never turned
+  into an actual cheat until now.
+- **Teleport grid navigation fix**: the 2-column grid rendering was already generic engine code
+  (shared with HOME), but the actual D-Pad input dispatch was hardcoded to HOME only - Teleport
+  was silently falling back to list-style navigation (Down selected sideways, Left/Right paged).
+  Fixed by extending the same grid-nav dispatch to Teleport.
+- **HOME broke as a side effect of adding the Teleport folder row**: the extra row pushed HOME's
+  content past what fits in one screen, and HOME's scroll was hardcoded to always be 0 (an
+  assumption that Time/Battle/Inventory/Quest/Misc/Examples/Tools/Settings would always fit).
+  Fixed by extending the same pixel-offset scroll-follow logic Teleport uses to HOME too.
 
 ### Teleport (builds 16–21) — Phase 6
 - **25 warp destinations** across Clock Town, Swamp, Mountain, Great Bay, Ikana and Ranch/Moon.

@@ -43,7 +43,7 @@
 // this to 1 also writes a marker file at shutdown so you can tell in one run.
 #define EXIT_HANDSHAKE 0
 
-#define PLUGIN_VER "v0.1.0 build 21"   // full string - About screen and pause box (have room)
+#define PLUGIN_VER "v0.1.0 build 26"   // full string - About screen and pause box (have room)
 
 // Name and short tag follow the build flavour automatically, so flipping TOOLS_ONLY is the ONLY
 // edit needed to produce the other binary. Deriving these beat setting them by hand: the local
@@ -53,7 +53,7 @@
 #define PLUGIN_TAG  "T1.0"              // compact tag - cramped menu title bar
 #else
 #define PLUGIN_NAME "MajoraCTRComposer"
-#define PLUGIN_TAG  "b21"
+#define PLUGIN_TAG  "b26"
 #endif
 
 static Handle   thread;
@@ -339,14 +339,10 @@ enum {
     CH_MM_ALL_ITEMS, CH_MM_ALL_MASKS, CH_MM_ALL_BOSSES_SONGS, CH_MM_ALL_FAIRIES,
     // ---- MM3D: Misc ----
     CH_MM_MOONJUMP,
-    // ---- MM3D: Teleport (CONFIRMED on hardware - see MM_Warp()) ----
-    CH_TP_SCT, CH_TP_ECT, CH_TP_WCT, CH_TP_NCT, CH_TP_FIELD,
-    CH_TP_SWAMP, CH_TP_DEKUPALACE, CH_TP_WOODFALL, CH_TP_WOODFALL_TEMPLE,
-    CH_TP_MTNVILLAGE_SPR, CH_TP_MTNVILLAGE_WIN, CH_TP_GORONVILLAGE_SPR, CH_TP_GORONVILLAGE_WIN,
-    CH_TP_SNOWHEAD, CH_TP_SNOWHEAD_TEMPLE,
-    CH_TP_GREATBAY, CH_TP_ZORACAPE, CH_TP_ZORAHALL, CH_TP_GREATBAY_TEMPLE,
-    CH_TP_IKANACANYON, CH_TP_STONETOWER, CH_TP_STONETOWER_TEMPLE,
-    CH_TP_ROMANIRANCH, CH_TP_MILKROAD, CH_TP_MOON,
+    // ---- MM3D: forms (CONFIRMED - only values 0/1 are safe; 2/3 are broken, 4 crashes) ----
+    CH_PLAY_DEKU, CH_PLAY_FIERCEDEITY,
+    // ---- MM3D: Investigation tests (EXPERIMENTAL, unconfirmed addresses) ----
+    CH_TEST_FISHING,
     // ---- Settings rows (not cheats) ----
     CH_CFG_TOAST, CH_CFG_AUTOFILL, CH_CFG_QMKEY, CH_CFG_HK1, CH_CFG_HK2,
     CH_CFG_HKRESET, CH_CFG_THEME, CH_CFG_LANG,
@@ -857,6 +853,10 @@ static int MM_Warp(u16 entrance)
 {
     u32 gctx = R32(0x08363784);
     if (!gctx) return 0;
+    // entrance==0xFFFF = "reload current scene": read CommonDataSub1.entrance (0x7796F0 =
+    // CommonData_base 0x7761D8 + 0x3518, the confirmed CommonData_base + an UNCONFIRMED
+    // sub-offset from common_data.h). Mirrors OoT's SAVE_ENTRANCE reload pattern.
+    if (entrance == 0xFFFF) entrance = (u16)R32(0x7796F0);
     W32(0x7761F4, 0);             // SaveData.cutscene_stuff = 0 (clear pending cutscene)
     W16(gctx + 0xC52E, entrance); // GCTX->next_entrance
     W8(gctx + 0xC530, 3);         // GCTX transition-type byte
@@ -930,36 +930,21 @@ static int OneShot(int id)
             for (int i = 0; i < 4; ++i) W8(0x7763E8 + i, 0x0F);
             return 1;
 
-        // Teleport - CONFIRMED on hardware (the Termina Field entry below was the exact one
-        // tested and verified). The rest use the same MM_Warp() recipe with entrance indices
-        // from the practice-tools entrance table - not each individually hardware-tested, but
-        // the mechanism itself is proven, so a wrong index should at worst land somewhere
-        // unexpected in the SAME target area, not crash.
-        case CH_TP_SCT:     MM_Warp(0xD890); return 1; // South Clock Town, from owl statue
-        case CH_TP_ECT:     MM_Warp(0xD200); return 1; // East Clock Town, from Termina Field
-        case CH_TP_WCT:     MM_Warp(0xD400); return 1; // West Clock Town, from Termina Field
-        case CH_TP_NCT:     MM_Warp(0xD600); return 1; // North Clock Town, from Termina Field
-        case CH_TP_FIELD:   MM_Warp(0x5460); return 1; // Termina Field, from South Clock Town - CONFIRMED
-        case CH_TP_SWAMP:           MM_Warp(0x0CA0); return 1; // Southern Swamp, from owl statue
-        case CH_TP_DEKUPALACE:      MM_Warp(0x5000); return 1; // Deku Palace, front doorway
-        case CH_TP_WOODFALL:        MM_Warp(0x8640); return 1; // Woodfall, from owl statue
-        case CH_TP_WOODFALL_TEMPLE: MM_Warp(0x3000); return 1; // Woodfall Temple, front room
-        case CH_TP_MTNVILLAGE_SPR:  MM_Warp(0xAE80); return 1; // Mountain Village (Spring), from owl statue
-        case CH_TP_MTNVILLAGE_WIN:  MM_Warp(0x9A80); return 1; // Mountain Village (Winter), from owl statue
-        case CH_TP_GORONVILLAGE_SPR:MM_Warp(0x8A00); return 1; // Goron Village (Spring)
-        case CH_TP_GORONVILLAGE_WIN:MM_Warp(0x9400); return 1; // Goron Village (Winter)
-        case CH_TP_SNOWHEAD:        MM_Warp(0xB230); return 1; // Snowhead, from owl statue
-        case CH_TP_SNOWHEAD_TEMPLE: MM_Warp(0x3C00); return 1; // Snowhead Temple
-        case CH_TP_GREATBAY:        MM_Warp(0x68B0); return 1; // Great Bay Coast, from owl statue
-        case CH_TP_ZORACAPE:        MM_Warp(0x6A60); return 1; // Zora Cape, from owl statue
-        case CH_TP_ZORAHALL:        MM_Warp(0x6000); return 1; // Zora Hall Atrium
-        case CH_TP_GREATBAY_TEMPLE: MM_Warp(0x8C00); return 1; // Great Bay Temple
-        case CH_TP_IKANACANYON:      MM_Warp(0x2040); return 1; // Ikana Canyon, from owl statue
-        case CH_TP_STONETOWER:       MM_Warp(0xAA30); return 1; // Stone Tower, from owl statue
-        case CH_TP_STONETOWER_TEMPLE:MM_Warp(0x2600); return 1; // Stone Tower Temple
-        case CH_TP_ROMANIRANCH: MM_Warp(0x6400); return 1; // Romani Ranch, from Milk Road
-        case CH_TP_MILKROAD:    MM_Warp(0x3E40); return 1; // Milk Road, from owl statue
-        case CH_TP_MOON:        MM_Warp(0xC800); return 1; // The Moon, from Clock Tower rooftop
+        // Teleport activation moved to the dedicated warp handler at the BUTTON_A site (it
+        // needs to close the menu after warping, like OoT's Teleport does) - see MM_Warp()
+        // and the `it->warp >= 0` case near the other BUTTON_A handling.
+
+        // "PLAY AS" field (0x7761FE), CONFIRMED on hardware for exactly these two values.
+        // Values 2/3 leave Link stuck in a broken attack-loop animation (missing a companion
+        // field, probably) and value 4 crashes the game outright - never expose those. Fierce
+        // Deity is the valuable one: the vanilla game restricts that mask to boss arenas only,
+        // this bypasses that restriction entirely.
+        case CH_PLAY_DEKU:        W8(0x7761FE, 0x00); return 1;
+        case CH_PLAY_FIERCEDEITY: W8(0x7761FE, 0x01); return 1;
+
+        // EXPERIMENTAL investigation test - address from community AR code lists (GBAtemp,
+        // gamegenie.53lu.com), NOT yet hardware-confirmed by us.
+        case CH_TEST_FISHING: W8(0x7776C0, 0x63); return 1; // "99 Fishing Tickets", value 0x63=99
 
         // Add your one-shots here:
         //   case CH_MY_CHEAT: W16(0x00123456, 0x0064); return 1;
@@ -1104,15 +1089,50 @@ static void ApplyCheats(void)
 typedef struct { const char *name; u8 val; } PickOpt;
 typedef struct { const char *title; const PickOpt *opts; int count; u32 addr; } Picker;
 
-// EXAMPLE - replace the options and the address with your game's.
-static const PickOpt exampleOpts[] = {
-    { "None",     0x00 }, { "Option A", 0x01 }, { "Option B", 0x02 },
-    { "Option C", 0x03 }, { "Option D", 0x04 },
+// Bottle contents - the address for each of the 7 slots is CONFIRMED on hardware (already
+// used by Have all Items/Refill Magic-adjacent cheats); the VALUE list is from two independent
+// community AR code compilations (JourneyOver-derived + a GBAtemp/gamegenie EU list) that agree
+// on every value, but writing a non-"Empty" value here has not been individually hardware-tested.
+static const PickOpt bottleOpts[] = {
+    { "Empty",            0x12 },
+    { "Red Potion",       0x13 },
+    { "Green Potion",     0x14 },
+    { "Blue Potion",      0x15 },
+    { "Fairy",            0x16 },
+    { "Deku Princess",    0x17 },
+    { "Milk",             0x18 },
+    { "Fish",             0x1A },
+    { "Bug",              0x1B },
+    { "Big Poe",          0x1C },
+    { "Spring Water",     0x1F },
+    { "Hot Spring Water", 0x20 },
+    { "Gold Dust",        0x21 },
+    { "Magic Mushroom",   0x23 },
+    { "Sea Horse",        0x24 },
+    { "Chateau Romani",   0x25 },
+    { "Mystery Milk",     0x26 },
+    { "Mouldy Milk",      0x27 },
+};
+#define NUM_BOTTLE_OPTS (int)(sizeof(bottleOpts)/sizeof(bottleOpts[0]))
+
+// B-button item. Address (0x77632A) is from the original AR code decode (Phase 1/2 save-file
+// analysis), not yet independently confirmed via Cheat Search on hardware.
+static const PickOpt bbuttonOpts[] = {
+    { "Fierce Deity Mask",  0x35 },
+    { "Gilded Sword",       0x4F },
+    { "Great Fairy Sword",  0x50 },
 };
 
-enum { PK_EXAMPLE, NUM_PICKERS };
+enum { PK_BOTTLE1, PK_BOTTLE2, PK_BOTTLE3, PK_BOTTLE4, PK_BOTTLE5, PK_BOTTLE6, PK_BOTTLE7, PK_BBUTTON, NUM_PICKERS };
 static const Picker pickers[NUM_PICKERS] = {
-    { "Example Slot", exampleOpts, (int)(sizeof(exampleOpts)/sizeof(exampleOpts[0])), EXAMPLE_ADDR_DIRECT },
+    { "Bottle #1",   bottleOpts,  NUM_BOTTLE_OPTS, 0x776384 },
+    { "Bottle #2",   bottleOpts,  NUM_BOTTLE_OPTS, 0x776385 },
+    { "Bottle #3",   bottleOpts,  NUM_BOTTLE_OPTS, 0x776386 },
+    { "Bottle #4",   bottleOpts,  NUM_BOTTLE_OPTS, 0x776387 },
+    { "Bottle #5",   bottleOpts,  NUM_BOTTLE_OPTS, 0x776388 },
+    { "Bottle #6",   bottleOpts,  NUM_BOTTLE_OPTS, 0x776389 },
+    { "Bottle #7",   bottleOpts,  NUM_BOTTLE_OPTS, 0x77638A },
+    { "B Button Item", bbuttonOpts, (int)(sizeof(bbuttonOpts)/sizeof(bbuttonOpts[0])), 0x77632A },
 };
 
 // A picker points at a GAME address, and that address is a placeholder (0) until you fill it
@@ -1132,11 +1152,52 @@ static int PickerWrite(const Picker *pk, u8 v)
     return 1;
 }
 
+// Mapped teleport destinations. Entrance indices are MM3D v1.1.0 USA values, sourced from
+// PhlexPlexico/mm3d-practice-tools' source/msys/include/entrances.h. The Teleport mechanism
+// itself is CONFIRMED on hardware (see MM_Warp()); Termina Field (index 4) was the exact entry
+// individually hardware-tested - the rest reuse the same confirmed recipe, not each tested.
+typedef struct { const char *name; u16 entrance; u8 isDungeon; const char *desc; } Warp;
+static const Warp warps[] = {
+    /* 0 */  { "Reload current scene",   0xFFFF, 0, "Reloads the area you're in. The safest warp - use it first to confirm teleport works on your game." },
+    // --- Clock Town (1..5) ---
+    /* 1 */  { "South Clock Town", 0xD890, 0, "Warp to South Clock Town (from owl statue)." },
+    /* 2 */  { "East Clock Town",  0xD200, 0, "Warp to East Clock Town (from Termina Field)." },
+    /* 3 */  { "West Clock Town",  0xD400, 0, "Warp to West Clock Town (from Termina Field)." },
+    /* 4 */  { "North Clock Town", 0xD600, 0, "Warp to North Clock Town (from Termina Field)." },
+    /* 5 */  { "Termina Field",    0x5460, 0, "CONFIRMED on hardware. Warp to Termina Field (from South Clock Town)." },
+    // --- Swamp (6..9) ---
+    /* 6 */  { "Southern Swamp",  0x0CA0, 0, "Warp to Southern Swamp (from owl statue)." },
+    /* 7 */  { "Deku Palace",     0x5000, 0, "Warp to Deku Palace (front doorway)." },
+    /* 8 */  { "Woodfall",        0x8640, 0, "Warp to Woodfall (from owl statue)." },
+    /* 9 */  { "Woodfall Temple", 0x3000, 1, "Warp inside Woodfall Temple (front room)." },
+    // --- Mountain (10..15) ---
+    /* 10 */ { "Mountain Village (Spring)", 0xAE80, 0, "Warp to Mountain Village, Spring (from owl statue)." },
+    /* 11 */ { "Mountain Village (Winter)", 0x9A80, 0, "Warp to Mountain Village, Winter (from owl statue)." },
+    /* 12 */ { "Goron Village (Spring)",    0x8A00, 0, "Warp to Goron Village, Spring." },
+    /* 13 */ { "Goron Village (Winter)",    0x9400, 0, "Warp to Goron Village, Winter." },
+    /* 14 */ { "Snowhead",        0xB230, 0, "Warp to Snowhead (from owl statue)." },
+    /* 15 */ { "Snowhead Temple", 0x3C00, 1, "Warp inside Snowhead Temple." },
+    // --- Great Bay (16..19) ---
+    /* 16 */ { "Great Bay Coast",  0x68B0, 0, "Warp to Great Bay Coast (from owl statue)." },
+    /* 17 */ { "Zora Cape",        0x6A60, 0, "Warp to Zora Cape (from owl statue)." },
+    /* 18 */ { "Zora Hall",        0x6000, 0, "Warp to Zora Hall (atrium)." },
+    /* 19 */ { "Great Bay Temple", 0x8C00, 1, "Warp inside Great Bay Temple." },
+    // --- Ikana (20..22) ---
+    /* 20 */ { "Ikana Canyon",       0x2040, 0, "Warp to Ikana Canyon (from owl statue)." },
+    /* 21 */ { "Stone Tower",        0xAA30, 0, "Warp to Stone Tower (from owl statue)." },
+    /* 22 */ { "Stone Tower Temple", 0x2600, 1, "Warp inside Stone Tower Temple." },
+    // --- Ranch / Moon (23..25) ---
+    /* 23 */ { "Romani Ranch", 0x6400, 0, "Warp to Romani Ranch (from Milk Road)." },
+    /* 24 */ { "Milk Road",    0x3E40, 0, "Warp to Milk Road (from owl statue)." },
+    /* 25 */ { "The Moon",     0xC800, 0, "Warp to The Moon (from Clock Tower rooftop)." },
+};
+#define NUM_WARPS (int)(sizeof(warps)/sizeof(warps[0]))
+
 // ===================== Menu model (folders) =====================
 // A layout-agnostic data model: DrawMenuItem() renders ONE row/cell wherever you put it,
 // so HOME can be a plain scrolling list, a 2-column grid, or anything else. This template
 // uses the 2-column grid for HOME and simple lists everywhere else.
-typedef struct { const char *label; int cheat; int folder; int picker; const char *desc; int tool; u8 wide; } Item;
+typedef struct { const char *label; int cheat; int folder; int picker; const char *desc; int tool; int warp; u8 wide; } Item;
 typedef struct { const char *title; const Item *items; int count; } Folder;
 
 #if TOOLS_ONLY
@@ -1154,12 +1215,15 @@ enum { T_SEARCH, T_RAMDUMP, T_HEXEDIT, T_ABOUT, T_GAMEGUIDE, T_PLUGINGUIDE, T_TR
 #endif
 static void ToolRun(int t); // fwd
 
-#define IT_CHEAT(lbl, ch, d)   { lbl, ch, -1, -1, d, -1, 0 }
-#define IT_FOLDER(lbl, fl)     { lbl, -1, fl, -1, NULL, -1, 0 }
-#define IT_PICKER(lbl, pk, d)  { lbl, -1, -1, pk, d, -1, 0 }
-#define IT_TOOL(lbl, tl, d)    { lbl, -1, -1, -1, d, tl, 0 }
-#define IT_TOOL_WIDE(lbl, tl, d) { lbl, -1, -1, -1, d, tl, 1 } // HOME only: spans both columns, still selectable
-#define IT_SEP(lbl)            { lbl, -2, -1, -1, NULL, -1, 0 } // non-selectable section header
+#define IT_CHEAT(lbl, ch, d)   { lbl, ch, -1, -1, d, -1, -1, 0 }
+#define IT_FOLDER(lbl, fl)     { lbl, -1, fl, -1, NULL, -1, -1, 0 }
+#define IT_PICKER(lbl, pk, d)  { lbl, -1, -1, pk, d, -1, -1, 0 }
+#define IT_TOOL(lbl, tl, d)    { lbl, -1, -1, -1, d, tl, -1, 0 }
+#define IT_TOOL_WIDE(lbl, tl, d) { lbl, -1, -1, -1, d, tl, -1, 1 } // HOME only: spans both columns, still selectable
+#define IT_WARP(lbl, wp, d)    { lbl, -1, -1, -1, d, -1, wp, 0 }  // teleport destination (index into warps[])
+#define IT_WARP_WIDE(lbl, wp, d) { lbl, -1, -1, -1, d, -1, wp, 1 } // full-width teleport row
+#define IT_TPFILTER            { "Filter", -1, -1, -1, NULL, -1, -2, 1 } // Teleport category filter (warp==-2, wide)
+#define IT_SEP(lbl)            { lbl, -2, -1, -1, NULL, -1, -1, 0 } // non-selectable section header
 #define IS_SEP(it)             ((it)->cheat == -2)
 
 #if TOOLS_ONLY
@@ -1225,9 +1289,6 @@ static const Item exampleItems[] = {
              "EXAMPLE - inert until you edit it. Applied once, the moment you press {A}, instead of every frame. Use this for 'give me the item' style cheats. Note it gets a plain box, not a checkbox: it has no on/off state."),
     IT_CHEAT("Example: toggle a bit",  CH_EX_ONESHOT2,
              "EXAMPLE - inert until you edit it. A one-shot that flips a bit and then reads it back, so the flash says ADDED or REMOVED instead of just OK. Good for equipment-style cheats."),
-    IT_SEP("PICKER"),
-    IT_PICKER("Example: pick a value", PK_EXAMPLE,
-              "EXAMPLE - inert until you edit it. Opens a list and writes the value you choose to one address. Because the address is still a placeholder, it will refuse the write and say so rather than poking address zero."),
 };
 
 // MM3D Time cheats. Addresses verified against the offline save-file map (SaveGames/, anchored
@@ -1266,6 +1327,16 @@ static const Item inventoryItems[] = {
     IT_CHEAT("Gilded Sword + Mirror Shield", CH_MM_GILDED_MIRROR, "CONFIRMED on hardware. Grants the Gilded Sword and Mirror Shield. Applies once. Address 0x776352, u8 = 0x23."),
     IT_CHEAT("Large Quiver + Big Bomb Bag", CH_MM_QUIVER_BOMBBAG, "CONFIRMED on hardware. Grants a quiver/bomb bag upgrade tier (exact sizes unverified - matches the AR code's own value). Applies once. Address 0x7763CC, u16 = 0x201B."),
     IT_FOLDER("Items (Max/Inf ammo)", F_AMMO),
+    IT_SEP("BOTTLES"),
+    IT_PICKER("Bottle #1", PK_BOTTLE1, "Not yet confirmed on hardware. Sets what Bottle #1 holds. Address 0x776384 is CONFIRMED (already used by Have all Items); the content values are from two independent community AR-code lists that agree, but not hardware-tested here."),
+    IT_PICKER("Bottle #2", PK_BOTTLE2, "Not yet confirmed on hardware. Sets what Bottle #2 holds. Address 0x776385 CONFIRMED; content values not individually hardware-tested."),
+    IT_PICKER("Bottle #3", PK_BOTTLE3, "Not yet confirmed on hardware. Sets what Bottle #3 holds. Address 0x776386 CONFIRMED; content values not individually hardware-tested."),
+    IT_PICKER("Bottle #4", PK_BOTTLE4, "Not yet confirmed on hardware. Sets what Bottle #4 holds. Address 0x776387 CONFIRMED; content values not individually hardware-tested."),
+    IT_PICKER("Bottle #5", PK_BOTTLE5, "Not yet confirmed on hardware. Sets what Bottle #5 holds. Address 0x776388 CONFIRMED; content values not individually hardware-tested."),
+    IT_PICKER("Bottle #6", PK_BOTTLE6, "Not yet confirmed on hardware. Sets what Bottle #6 holds. Address 0x776389 CONFIRMED; content values not individually hardware-tested."),
+    IT_PICKER("Bottle #7", PK_BOTTLE7, "Not yet confirmed on hardware. Sets what Bottle #7 holds. Address 0x77638A CONFIRMED; content values not individually hardware-tested."),
+    IT_SEP("EQUIPMENT"),
+    IT_PICKER("B Button Item", PK_BBUTTON, "Not yet confirmed on hardware. Sets which item is equipped on the B button. Address 0x77632A is from the original AR code decode, not yet confirmed via Cheat Search."),
 };
 
 // MM3D ammo max/inf toggles. Addresses and per-slot values are from the AR code list
@@ -1296,45 +1367,34 @@ static const Item questItems[] = {
 // independently re-derived, and it's now CONFIRMED working on hardware.
 static const Item miscItems[] = {
     IT_CHEAT("Moon Jump", CH_MM_MOONJUMP, "CONFIRMED on hardware. Hold {L}+{A} to rise into the air, release to fall. Mind the fall distance."),
+    IT_SEP("FORMS"),
+    IT_CHEAT("Play as Deku Link", CH_PLAY_DEKU, "CONFIRMED on hardware. Instantly become Deku Link, no mask needed. Applies once. Address 0x7761FE, u8 = 0x00. If you get stuck, changing areas resets it."),
+    IT_CHEAT("Play as Fierce Deity", CH_PLAY_FIERCEDEITY, "CONFIRMED on hardware. Instantly become Fierce Deity, no mask needed AND without the vanilla boss-arena-only restriction. Applies once. Address 0x7761FE, u8 = 0x01. If you get stuck, changing areas resets it."),
+    IT_SEP("INVESTIGATION TESTS"),
+    IT_CHEAT("TEST: Fishing Tickets = 99", CH_TEST_FISHING, "EXPERIMENTAL - untested address (0x7776C0) from a community AR list. Check the Fisherman's Hut/fishing minigame ticket count after using this."),
 };
 
-// MM3D Teleport. CONFIRMED mechanism (see MM_Warp() above) - the Termina Field entry is the
-// exact one hardware-tested; the rest reuse the same confirmed recipe with entrance indices
-// from PhlexPlexico/mm3d-practice-tools' entrance table (source/msys/include/entrances.h),
-// not individually hardware-tested. A wrong index should land you somewhere unexpected within
-// the same target area at worst, not crash - the mechanism itself is proven safe.
+// Teleport folder: one row per warps[] entry (label/desc pulled from warps[] at draw time via
+// the index in IT_WARP), same architecture as OcarinaCTRComposer's Teleport. Section headers
+// are cosmetic grouping only; the Filter row's All/Overworld/Dungeons split is driven by each
+// warp's `isDungeon` flag, not by which section a row visually sits in.
 static const Item teleportItems[] = {
+    IT_WARP_WIDE(NULL, 0, NULL),   // Reload current scene (full-width, first)
+    IT_TPFILTER,                   // category filter (All / Overworld / Dungeons)
     IT_SEP("CLOCK TOWN"),
-    IT_CHEAT("South Clock Town",  CH_TP_SCT,   "Not individually confirmed. Warps to South Clock Town (from owl statue spawn)."),
-    IT_CHEAT("East Clock Town",   CH_TP_ECT,   "Not individually confirmed. Warps to East Clock Town (from Termina Field spawn)."),
-    IT_CHEAT("West Clock Town",   CH_TP_WCT,   "Not individually confirmed. Warps to West Clock Town (from Termina Field spawn)."),
-    IT_CHEAT("North Clock Town",  CH_TP_NCT,   "Not individually confirmed. Warps to North Clock Town (from Termina Field spawn)."),
-    IT_CHEAT("Termina Field",     CH_TP_FIELD, "CONFIRMED on hardware. Warps to Termina Field (from South Clock Town spawn)."),
+    IT_WARP(NULL, 1, NULL), IT_WARP(NULL, 2, NULL), IT_WARP(NULL, 3, NULL),
+    IT_WARP(NULL, 4, NULL), IT_WARP(NULL, 5, NULL),
     IT_SEP("SWAMP"),
-    IT_CHEAT("Southern Swamp",    CH_TP_SWAMP,           "Not individually confirmed. From owl statue spawn."),
-    IT_CHEAT("Deku Palace",       CH_TP_DEKUPALACE,      "Not individually confirmed. Front doorway spawn."),
-    IT_CHEAT("Woodfall",          CH_TP_WOODFALL,        "Not individually confirmed. From owl statue spawn."),
-    IT_CHEAT("Woodfall Temple",   CH_TP_WOODFALL_TEMPLE, "Not individually confirmed. Front room spawn."),
+    IT_WARP(NULL, 6, NULL), IT_WARP(NULL, 7, NULL), IT_WARP(NULL, 8, NULL), IT_WARP(NULL, 9, NULL),
     IT_SEP("MOUNTAIN"),
-    IT_CHEAT("Mountain Village (Spring)", CH_TP_MTNVILLAGE_SPR,   "Not individually confirmed. From owl statue spawn."),
-    IT_CHEAT("Mountain Village (Winter)", CH_TP_MTNVILLAGE_WIN,   "Not individually confirmed. From owl statue spawn."),
-    IT_CHEAT("Goron Village (Spring)",    CH_TP_GORONVILLAGE_SPR, "Not individually confirmed. From Path to Goron Village spawn."),
-    IT_CHEAT("Goron Village (Winter)",    CH_TP_GORONVILLAGE_WIN, "Not individually confirmed. From Path to Goron Village spawn."),
-    IT_CHEAT("Snowhead",          CH_TP_SNOWHEAD,        "Not individually confirmed. From owl statue spawn."),
-    IT_CHEAT("Snowhead Temple",   CH_TP_SNOWHEAD_TEMPLE, "Not individually confirmed. Intro spawn."),
+    IT_WARP(NULL, 10, NULL), IT_WARP(NULL, 11, NULL), IT_WARP(NULL, 12, NULL),
+    IT_WARP(NULL, 13, NULL), IT_WARP(NULL, 14, NULL), IT_WARP(NULL, 15, NULL),
     IT_SEP("GREAT BAY"),
-    IT_CHEAT("Great Bay Coast",   CH_TP_GREATBAY,        "Not individually confirmed. From owl statue spawn."),
-    IT_CHEAT("Zora Cape",         CH_TP_ZORACAPE,        "Not individually confirmed. From owl statue spawn."),
-    IT_CHEAT("Zora Hall",         CH_TP_ZORAHALL,        "Not individually confirmed. Atrium spawn."),
-    IT_CHEAT("Great Bay Temple",  CH_TP_GREATBAY_TEMPLE, "Not individually confirmed. From Zora Cape spawn."),
+    IT_WARP(NULL, 16, NULL), IT_WARP(NULL, 17, NULL), IT_WARP(NULL, 18, NULL), IT_WARP(NULL, 19, NULL),
     IT_SEP("IKANA"),
-    IT_CHEAT("Ikana Canyon",       CH_TP_IKANACANYON,       "Not individually confirmed. From owl statue spawn."),
-    IT_CHEAT("Stone Tower",        CH_TP_STONETOWER,        "Not individually confirmed. From owl statue spawn."),
-    IT_CHEAT("Stone Tower Temple", CH_TP_STONETOWER_TEMPLE, "Not individually confirmed. Intro spawn."),
+    IT_WARP(NULL, 20, NULL), IT_WARP(NULL, 21, NULL), IT_WARP(NULL, 22, NULL),
     IT_SEP("RANCH / MOON"),
-    IT_CHEAT("Romani Ranch", CH_TP_ROMANIRANCH, "Not individually confirmed. From Milk Road spawn."),
-    IT_CHEAT("Milk Road",    CH_TP_MILKROAD,    "Not individually confirmed. From owl statue spawn."),
-    IT_CHEAT("The Moon",     CH_TP_MOON,        "Not individually confirmed. From Clock Tower rooftop spawn."),
+    IT_WARP(NULL, 23, NULL), IT_WARP(NULL, 24, NULL), IT_WARP(NULL, 25, NULL),
 };
 #endif // !TOOLS_ONLY
 
@@ -1393,10 +1453,17 @@ static const char *kToolKeys[NUM_TOOLS] = {
 #endif
 };
 
-// Hook for hiding rows dynamically (the reference build used it for a category filter).
-// Nothing is hidden in the template; return 1 from here to skip a row in render+nav+scroll.
+static int g_tpFilter = 0; // Teleport category filter: 0=all, 1=overworld, 2=dungeons
+
+// An item is hidden when the Teleport filter excludes its category. Only ever true inside
+// F_TELEPORT; every other folder shows everything, same as the template default.
 static int ItemHidden(int folderIdx, const Item *it)
-{ (void)folderIdx; (void)it; return 0; }
+{
+    if (folderIdx != F_TELEPORT || g_tpFilter == 0) return 0;
+    if (it->warp >= 1) { int dun = warps[it->warp].isDungeon; return (g_tpFilter == 1) ? dun : !dun; }
+    if (IS_SEP(it)) return 0; // keep section headers visible regardless of filter
+    return 0;
+}
 // A row the cursor must skip over: a section header OR a filtered-out item.
 static int NavSkip(int folderIdx, int c)
 { const Folder *f = &folders[folderIdx]; return IS_SEP(&f->items[c]) || ItemHidden(folderIdx, &f->items[c]); }
@@ -2443,6 +2510,19 @@ static void DrawMenuItem(const Item *it, int x, int y, int cellW, int selected)
         CTextClip(x + 20, y - 1, T(it->label), cellW - 26 - (folderFav[it->folder] ? 12 : 0), INK, 0);
         if (folderFav[it->folder]) StarIcon(x + cellW - 12, y + 3);
     }
+    else if (it->warp == -2) // Teleport category filter row (cycles with A)
+    {
+        DrawSprite(x, y - 1, MSPR_LENS, 0); // Lens of Truth = filter / inspect
+        const char *m = g_tpFilter == 1 ? T("Overworld") : g_tpFilter == 2 ? T("Dungeons") : T("All");
+        int cw = CTextWidth(m);
+        CText(x + cellW - 6 - cw, y - 1, m, GREEN_ON, 0);
+        CTextClip(x + 20, y - 1, T("Filter"), cellW - 32 - cw, INK, 0);
+    }
+    else if (it->warp >= 0) // teleport destination: map-pin icon + name (from warps[])
+    {
+        PinIcon(x, y - 1);
+        CTextClip(x + 20, y - 1, T(warps[it->warp].name), cellW - 26, INK, 0);
+    }
     else if (it->picker >= 0)
     {
         const Picker *pk = &pickers[it->picker];
@@ -2622,7 +2702,7 @@ static void ComposeMenu(const Folder *fld, int depth, int cursor, int scroll)
     // a LAYOUT CHOICE, not an engine rule - add folders to this test, or drop the grid entirely
     // and let everything be a list. When a grid folder overflows, `scroll` is a pixel offset and
     // rows are clipped and arrowed.
-    int twoCol = (fld == &folders[F_ROOT]);
+    int twoCol = (fld == &folders[F_ROOT] || fld == &folders[F_TELEPORT]);
     if (twoCol)
     {
         BuildRootLayout(fld);
@@ -2689,8 +2769,9 @@ static int g_resumeTool = -1;
 
 static void InfoBox(const Item *it)
 {
-    const char *ibLabel = HkExpand(it->label, it->cheat);
-    const char *ibDesc  = it->desc;
+    // teleport rows carry their text in warps[]; everything else uses the Item's own label/desc
+    const char *ibLabel = (it->warp >= 0) ? warps[it->warp].name : HkExpand(it->label, it->cheat);
+    const char *ibDesc  = (it->warp >= 0) ? warps[it->warp].desc : it->desc;
     if (!ibDesc) return;
 
     int bw = 264, bx = WIN_X + (WIN_W - bw) / 2;
@@ -5506,7 +5587,7 @@ static void RunMenu(void)
         const Folder *fld = &folders[folderIdx];
         int changed = 0;
 
-        if (folderIdx == F_ROOT) // grouped 2-column grid
+        if (folderIdx == F_ROOT || folderIdx == F_TELEPORT) // grouped 2-column grid
         {
             BuildRootLayout(fld);
             if (NavSkip(folderIdx, cursor)) cursor = RootFirstSel(fld);
@@ -5565,6 +5646,19 @@ static void RunMenu(void)
                 { const Folder *nf = &folders[folderIdx];
                   while (cursor < nf->count && NavSkip(folderIdx, cursor)) cursor++;
                   if (cursor >= nf->count) cursor = 0; }
+                changed = 1;
+            }
+            else if (it->warp == -2) // Teleport filter row: cycle All -> Overworld -> Dungeons
+            { g_tpFilter = (g_tpFilter + 1) % 3; scroll = 0; changed = 1; }
+            else if (it->warp >= 0) // teleport: write the entrance, then resume so the game loads it
+            {
+                if (MM_Warp(warps[it->warp].entrance))
+                {
+                    QueueToastRaw(T(warps[it->warp].name), T(": WARP"));
+                    g_quitToGame = 1; // hand control back so the scene transition runs
+                    break;
+                }
+                QueueToastRaw("Can't warp right now", "");
                 changed = 1;
             }
             else if (it->picker >= 0)
@@ -5640,7 +5734,7 @@ static void RunMenu(void)
         if (down & BUTTON_X)
         {
             const Item *it = &fld->items[cursor];
-            if (it->desc)
+            if (it->desc || it->warp >= 0) // warp rows carry their desc in warps[], not here
             {
                 InfoBox(it);
                 if (g_quitToGame) break; // SELECT dismissed the info box -> to game
@@ -5658,10 +5752,14 @@ static void RunMenu(void)
 
         if (flashTicks > 0 && --flashTicks == 0) { flashCheat = -1; changed = 1; }
 
-        // HOME fits in one grid screen, so it never scrolls. If you add enough rows to overflow
-        // it, treat it like the reference build did: BuildRootLayout(fld), then move `scroll` as
-        // a PIXEL offset that follows g_rlY[cursor] within the visible band.
-        if (folderIdx == F_ROOT) scroll = 0;
+        if (folderIdx == F_ROOT || folderIdx == F_TELEPORT) // 2-col grid: scroll is a pixel offset that follows the cursor
+        {
+            BuildRootLayout(fld);
+            int visBot = WIN_Y + WIN_H - 22, cy = g_rlY[cursor];
+            if (cy - scroll < ROW_Y0)         scroll = cy - ROW_Y0;
+            if (cy + ROW_H - scroll > visBot) scroll = cy + ROW_H - visBot;
+            if (scroll < 0) scroll = 0;
+        }
         else
         {
             int cvp = VisPos(folderIdx, cursor); // scroll tracks the cursor's VISIBLE position

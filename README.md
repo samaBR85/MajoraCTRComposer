@@ -13,10 +13,10 @@ Work in progress — see [`RawPlugin/README.md`](RawPlugin/README.md) for build 
 ## Status
 
 This build targets **Majora's Mask 3D, USA, v1.1.0** (Title ID `0004000000125500`). Boots and
-menu confirmed on real hardware. 22 cheats confirmed so far across Time, Battle, Inventory,
-Items (ammo), Quest and Misc (including Moon Jump, the first base+offset cheat), plus a
-25-destination Teleport (mechanism confirmed on hardware) — see `CHANGELOG.md` for the full
-list and known limitations.
+menu confirmed on real hardware. 24+ cheats confirmed so far across Time, Battle, Inventory,
+Items (ammo), Quest and Misc (Moon Jump, instant Deku/Fierce Deity forms), plus a
+25-destination Teleport and item pickers (bottle contents, B button item) — see
+`CHANGELOG.md` for the full list and known limitations.
 
 ## Roadmap
 
