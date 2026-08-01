@@ -8,6 +8,44 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ## Unreleased · builds 1–45
 
+### Source reorganization: `main.c` split into `plugin/` + `engine/` (no build change)
+
+Followed `references/MIGRACAO-CTRCOMPOSER.md` to bring this fork in line with the CTRComposer
+template's own restructuring. `RawPlugin/sources/main.c` went from **6,680 lines to 257** — now
+just the header includes, `plugin/identity.inc.c`, the ordered chain of `#include`s, and
+`Thread / entry` (`PluginShutdown`/`ThreadMain`/`main`). Everything else moved into 30 files
+under two new directories, each `#include`d back in at the exact point it was cut from:
+
+- **`sources/plugin/`** (8 files) — the game-specific half: cheat IDs/implementations, pickers
+  (bottle contents, warps), menu data tables, cheat icon selection, the 190-item Checklist data
+  (`CHK_MASKS`…`CHK_CATS`), and the MM3D guide text/credits.
+- **`sources/engine/`** (22 files) — the reusable half: platform/render/storage plumbing, the
+  menu model and its renderer, theming, sprites/icons, tools (Cheat Search, RAM Dumper, Hex
+  Editor), the guide reader, the Checklist's generic type/UI machinery, and the menu/quick-menu
+  loops.
+
+Every single cut was a straight `#include`-based move — same translation unit, same token stream
+— verified after each one with `cmp` against a pre-migration baseline `.3gx` and with
+`Tools/fingerprint.sh` (symbol name+size, order-independent). **The final binary is
+byte-identical to what shipped as b45 before this reorganization** (`cmp` passed on the very last
+rebuild too, including for the one section — Game Guide/Plugin Guide, where `PLUGIN_PAGES[]`
+used to appear twice under `#if TOOLS_ONLY`/`#else` — that involved a deliberate reorder). 22
+migration commits, one per cut, each independently buildable and revertible.
+
+Two things worth remembering for next time: a quoted `#include` inside a file that itself lives
+in a subdirectory resolves relative to THAT file's own directory, not to `main.c` — one cut
+briefly broke on this until the nested include's path grew a `../`. And where a single named
+section in the original file actually mixed engine machinery with game data (`Menu model`,
+`Sprites`, `Completion tracker`, the Guide), the migration guide's own table already called for
+splitting it 2-4 ways rather than moving it as one block — followed literally rather than
+improvised.
+
+**Not yet re-tested on hardware after the reorganization** — the byte-identical binary is strong
+evidence nothing changed, but the checklist calls for one real console pass anyway, since a
+duplicated (rather than dropped) `#include` could compile fine while quietly diverging in ways
+`cmp` alone wouldn't distinguish from a legitimate content change (it would not, here — see
+above — but the check is cheap and the discipline is the point).
+
 ### b45 — engine fixes inherited from CTRComposer (`references/CORRECOES-MOTOR.md`)
 
 Four defects that live in the engine itself, not in this plugin's own code, so every CTRComposer
