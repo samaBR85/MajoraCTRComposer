@@ -40,11 +40,8 @@ section in the original file actually mixed engine machinery with game data (`Me
 splitting it 2-4 ways rather than moving it as one block — followed literally rather than
 improvised.
 
-**Not yet re-tested on hardware after the reorganization** — the byte-identical binary is strong
-evidence nothing changed, but the checklist calls for one real console pass anyway, since a
-duplicated (rather than dropped) `#include` could compile fine while quietly diverging in ways
-`cmp` alone wouldn't distinguish from a legitimate content change (it would not, here — see
-above — but the check is cheap and the discipline is the point).
+**Re-tested on hardware after the reorganization — confirmed working normally**, matching the
+byte-identical binary's own evidence that nothing actually changed.
 
 ### b45 — engine fixes inherited from CTRComposer (`references/CORRECOES-MOTOR.md`)
 
