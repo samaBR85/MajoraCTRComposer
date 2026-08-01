@@ -72,39 +72,44 @@ static int PickerWrite(const Picker *pk, u8 v)
 // PhlexPlexico/mm3d-practice-tools' source/msys/include/entrances.h. The Teleport mechanism
 // itself is CONFIRMED on hardware (see MM_Warp()); Termina Field (index 4) was the exact entry
 // individually hardware-tested - the rest reuse the same confirmed recipe, not each tested.
-typedef struct { const char *name; u16 entrance; u8 isDungeon; const char *desc; } Warp;
+// isOwl: one of MM3D's 10 real Owl Statue warp points (user-supplied list, cross-checked against
+// this table). Mountain Village and Goron Village each get TWO rows here (Spring/Winter scene
+// variants of the same physical statue), so 12 rows carry isOwl=1 for 10 real statues. Snowhead's
+// description used to claim "(from owl statue)" too - that was wrong; the real list does not
+// include it, so its owl flag stays 0 and the description was corrected.
+typedef struct { const char *name; u16 entrance; u8 isDungeon; u8 isOwl; const char *desc; } Warp;
 static const Warp warps[] = {
-    /* 0 */  { "Reload current scene",   0xFFFF, 0, "Reloads the area you're in. The safest warp - use it first to confirm teleport works on your game." },
+    /* 0 */  { "Reload current scene",   0xFFFF, 0, 0, "Reloads the area you're in. The safest warp - use it first to confirm teleport works on your game." },
     // --- Clock Town (1..5) ---
-    /* 1 */  { "South Clock Town", 0xD890, 0, "Warp to South Clock Town (from owl statue)." },
-    /* 2 */  { "East Clock Town",  0xD200, 0, "Warp to East Clock Town (from Termina Field)." },
-    /* 3 */  { "West Clock Town",  0xD400, 0, "Warp to West Clock Town (from Termina Field)." },
-    /* 4 */  { "North Clock Town", 0xD600, 0, "Warp to North Clock Town (from Termina Field)." },
-    /* 5 */  { "Termina Field",    0x5460, 0, "CONFIRMED on hardware. Warp to Termina Field (from South Clock Town)." },
+    /* 1 */  { "South Clock Town", 0xD890, 0, 1, "Warp to South Clock Town (from owl statue)." },
+    /* 2 */  { "East Clock Town",  0xD200, 0, 0, "Warp to East Clock Town (from Termina Field)." },
+    /* 3 */  { "West Clock Town",  0xD400, 0, 0, "Warp to West Clock Town (from Termina Field)." },
+    /* 4 */  { "North Clock Town", 0xD600, 0, 0, "Warp to North Clock Town (from Termina Field)." },
+    /* 5 */  { "Termina Field",    0x5460, 0, 0, "CONFIRMED on hardware. Warp to Termina Field (from South Clock Town)." },
     // --- Swamp (6..9) ---
-    /* 6 */  { "Southern Swamp",  0x0CA0, 0, "Warp to Southern Swamp (from owl statue)." },
-    /* 7 */  { "Deku Palace",     0x5000, 0, "Warp to Deku Palace (front doorway)." },
-    /* 8 */  { "Woodfall",        0x8640, 0, "Warp to Woodfall (from owl statue)." },
-    /* 9 */  { "Woodfall Temple", 0x3000, 1, "Warp inside Woodfall Temple (front room)." },
+    /* 6 */  { "Southern Swamp",  0x0CA0, 0, 1, "Warp to Southern Swamp (from owl statue)." },
+    /* 7 */  { "Deku Palace",     0x5000, 0, 0, "Warp to Deku Palace (front doorway)." },
+    /* 8 */  { "Woodfall",        0x8640, 0, 1, "Warp to Woodfall (from owl statue)." },
+    /* 9 */  { "Woodfall Temple", 0x3000, 1, 0, "Warp inside Woodfall Temple (front room)." },
     // --- Mountain (10..15) ---
-    /* 10 */ { "Mountain Village (Spring)", 0xAE80, 0, "Warp to Mountain Village, Spring (from owl statue)." },
-    /* 11 */ { "Mountain Village (Winter)", 0x9A80, 0, "Warp to Mountain Village, Winter (from owl statue)." },
-    /* 12 */ { "Goron Village (Spring)",    0x8A00, 0, "Warp to Goron Village, Spring." },
-    /* 13 */ { "Goron Village (Winter)",    0x9400, 0, "Warp to Goron Village, Winter." },
-    /* 14 */ { "Snowhead",        0xB230, 0, "Warp to Snowhead (from owl statue)." },
-    /* 15 */ { "Snowhead Temple", 0x3C00, 1, "Warp inside Snowhead Temple." },
+    /* 10 */ { "Mountain Village (Spring)", 0xAE80, 0, 1, "Warp to Mountain Village, Spring (from owl statue)." },
+    /* 11 */ { "Mountain Village (Winter)", 0x9A80, 0, 1, "Warp to Mountain Village, Winter (from owl statue)." },
+    /* 12 */ { "Goron Village (Spring)",    0x8A00, 0, 1, "Warp to Goron Village, Spring (from owl statue)." },
+    /* 13 */ { "Goron Village (Winter)",    0x9400, 0, 1, "Warp to Goron Village, Winter (from owl statue)." },
+    /* 14 */ { "Snowhead",        0xB230, 0, 0, "Warp to Snowhead." },
+    /* 15 */ { "Snowhead Temple", 0x3C00, 1, 0, "Warp inside Snowhead Temple." },
     // --- Great Bay (16..19) ---
-    /* 16 */ { "Great Bay Coast",  0x68B0, 0, "Warp to Great Bay Coast (from owl statue)." },
-    /* 17 */ { "Zora Cape",        0x6A60, 0, "Warp to Zora Cape (from owl statue)." },
-    /* 18 */ { "Zora Hall",        0x6000, 0, "Warp to Zora Hall (atrium)." },
-    /* 19 */ { "Great Bay Temple", 0x8C00, 1, "Warp inside Great Bay Temple." },
+    /* 16 */ { "Great Bay Coast",  0x68B0, 0, 1, "Warp to Great Bay Coast (from owl statue)." },
+    /* 17 */ { "Zora Cape",        0x6A60, 0, 1, "Warp to Zora Cape (from owl statue)." },
+    /* 18 */ { "Zora Hall",        0x6000, 0, 0, "Warp to Zora Hall (atrium)." },
+    /* 19 */ { "Great Bay Temple", 0x8C00, 1, 0, "Warp inside Great Bay Temple." },
     // --- Ikana (20..22) ---
-    /* 20 */ { "Ikana Canyon",       0x2040, 0, "Warp to Ikana Canyon (from owl statue)." },
-    /* 21 */ { "Stone Tower",        0xAA30, 0, "Warp to Stone Tower (from owl statue)." },
-    /* 22 */ { "Stone Tower Temple", 0x2600, 1, "Warp inside Stone Tower Temple." },
+    /* 20 */ { "Ikana Canyon",       0x2040, 0, 1, "Warp to Ikana Canyon (from owl statue)." },
+    /* 21 */ { "Stone Tower",        0xAA30, 0, 1, "Warp to Stone Tower (from owl statue)." },
+    /* 22 */ { "Stone Tower Temple", 0x2600, 1, 0, "Warp inside Stone Tower Temple." },
     // --- Ranch / Moon (23..25) ---
-    /* 23 */ { "Romani Ranch", 0x6400, 0, "Warp to Romani Ranch (from Milk Road)." },
-    /* 24 */ { "Milk Road",    0x3E40, 0, "Warp to Milk Road (from owl statue)." },
-    /* 25 */ { "The Moon",     0xC800, 0, "Warp to The Moon (from Clock Tower rooftop)." },
+    /* 23 */ { "Romani Ranch", 0x6400, 0, 0, "Warp to Romani Ranch (from Milk Road)." },
+    /* 24 */ { "Milk Road",    0x3E40, 0, 1, "Warp to Milk Road (from owl statue)." },
+    /* 25 */ { "The Moon",     0xC800, 0, 0, "Warp to The Moon (from Clock Tower rooftop)." },
 };
 #define NUM_WARPS (int)(sizeof(warps)/sizeof(warps[0]))

@@ -313,8 +313,8 @@ static void RunMenu(void)
                   if (cursor >= nf->count) cursor = 0; }
                 changed = 1;
             }
-            else if (it->warp == -2) // Teleport filter row: cycle All -> Overworld -> Dungeons
-            { g_tpFilter = (g_tpFilter + 1) % 3; scroll = 0; changed = 1; }
+            else if (it->warp == -2) // Teleport filter row: cycle All -> Overworld -> Dungeons -> Owl Statues
+            { g_tpFilter = (g_tpFilter + 1) % 4; scroll = 0; changed = 1; }
             else if (it->warp >= 0) // teleport: write the entrance, then resume so the game loads it
             {
                 if (MM_Warp(warps[it->warp].entrance))

@@ -139,7 +139,8 @@ static void DrawMenuItem(const Item *it, int x, int y, int cellW, int selected, 
     {
         if (checkboxAlign) BrownBox(x, y + 1);
         DrawSprite(iconX, y - 1, MSPR_LENS, 0); // Lens of Truth = filter / inspect
-        const char *m = g_tpFilter == 1 ? T("Overworld") : g_tpFilter == 2 ? T("Dungeons") : T("All");
+        const char *m = g_tpFilter == 1 ? T("Overworld") : g_tpFilter == 2 ? T("Dungeons") :
+                         g_tpFilter == 3 ? T("Owl Statues") : T("All");
         int cw = CTextWidth(m);
         CText(x + cellW - 6 - cw, y - 1, m, GREEN_ON, 0);
         CTextClip(lblX, y - 1, T("Filter"), cellW - padV - cw, INK, 0);

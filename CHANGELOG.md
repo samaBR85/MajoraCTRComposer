@@ -6,7 +6,18 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–47
+## Unreleased · builds 1–48
+
+### b48 — Owl Statues filter in Teleport
+- Added a 4th Teleport filter category, cycled by pressing {A} on the filter row: All ->
+  Overworld -> Dungeons -> **Owl Statues**. Matches all 10 real MM3D owl statue warp points
+  (user-supplied list): South Clock Town, Southern Swamp, Woodfall, Mountain Village (both
+  Spring and Winter variants), Goron Village (both variants), Great Bay Coast, Zora Cape, Ikana
+  Canyon, Stone Tower, Milk Road.
+- New `isOwl` flag on the `Warp` struct (`plugin/pickers.inc.c`). While auditing it, Snowhead's
+  description was found to wrongly claim "(from owl statue)" - it's not on the real list, so that
+  claim was removed; Goron Village's description was missing the same claim even though it IS a
+  real owl statue, so that was added.
 
 ### b47 — first Bomber's Notebook event auto-detected and CONFIRMED on hardware
 - The `0x777469` candidate address from the earlier investigation note is real: re-diffed all 65

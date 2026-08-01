@@ -163,11 +163,11 @@ static const Item miscItems[] = {
 
 // Teleport folder: one row per warps[] entry (label/desc pulled from warps[] at draw time via
 // the index in IT_WARP), same architecture as OcarinaCTRComposer's Teleport. Section headers
-// are cosmetic grouping only; the Filter row's All/Overworld/Dungeons split is driven by each
-// warp's `isDungeon` flag, not by which section a row visually sits in.
+// are cosmetic grouping only; the Filter row's All/Overworld/Dungeons/Owl Statues split is driven
+// by each warp's `isDungeon`/`isOwl` flags, not by which section a row visually sits in.
 static const Item teleportItems[] = {
     IT_WARP_WIDE(NULL, 0, NULL),   // Reload current scene (full-width, first)
-    IT_TPFILTER,                   // category filter (All / Overworld / Dungeons)
+    IT_TPFILTER,                   // category filter (All / Overworld / Dungeons / Owl Statues)
     IT_SEP("CLOCK TOWN"),
     IT_WARP(NULL, 1, NULL), IT_WARP(NULL, 2, NULL), IT_WARP(NULL, 3, NULL),
     IT_WARP(NULL, 4, NULL), IT_WARP(NULL, 5, NULL),

@@ -15,14 +15,20 @@ static const char *kToolKeys[NUM_TOOLS] = {
 #endif
 };
 
-static int g_tpFilter = 0; // Teleport category filter: 0=all, 1=overworld, 2=dungeons
+static int g_tpFilter = 0; // Teleport category filter: 0=all, 1=overworld, 2=dungeons, 3=owl statues
 
 // An item is hidden when the Teleport filter excludes its category. Only ever true inside
 // F_TELEPORT; every other folder shows everything, same as the template default.
 static int ItemHidden(int folderIdx, const Item *it)
 {
     if (folderIdx != F_TELEPORT || g_tpFilter == 0) return 0;
-    if (it->warp >= 1) { int dun = warps[it->warp].isDungeon; return (g_tpFilter == 1) ? dun : !dun; }
+    if (it->warp >= 1)
+    {
+        const Warp *w = &warps[it->warp];
+        if (g_tpFilter == 1) return w->isDungeon;   // Overworld: hide dungeons
+        if (g_tpFilter == 2) return !w->isDungeon;  // Dungeons: hide everything else
+        return !w->isOwl;                            // Owl Statues: hide everything else
+    }
     if (IS_SEP(it)) return 0; // keep section headers visible regardless of filter
     return 0;
 }
