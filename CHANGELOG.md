@@ -14,10 +14,11 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
   event, tested the strongest candidate live (load `SaveGames/Saves09/save0.bin`, Hex Editor read
   `0x00` at `0x77746D`, get Epona at Milk Road, re-read `0x10`) - **confirmed**.
 - **"A Race near Milk Road" (`note_16`) is now auto-detected**: `CK_BIT, 0x77746D, 0x10`.
-- A second candidate is strong but NOT hardware-tested yet: bit 55 of the same field (byte
-  `0x77746F`, mask `0x80`) is the only bit that changes between save steps "15-3" and "16-1",
-  whose notes literally say "Frog Choir" - matching `note_47` ("Reunite the Frog Choir") by name.
-  Left manual until confirmed the same way.
+- **Second candidate tested and RULED OUT**: bit 55 (byte `0x77746F`, mask `0x80`) looked strong
+  offline - the only bit changing between save steps "15-3" and "16-1", whose notes say "Frog
+  Choir", matching `note_47` ("Reunite the Frog Choir") by name - but the live test (Hex Editor
+  read `0x59` before AND after completing the quest) showed no change. The name match was
+  coincidental. `note_47` stays manual; do not re-propose this address for it.
 - The other 61 events still have no known bit - most single-bit windows in the corpus contain
   more than one candidate event, so they were not guessed at.
 

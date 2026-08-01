@@ -165,6 +165,12 @@ static const ChkItem CK_SONGS[] = {
 // known bit - most of the field's other single-bit transitions in the save corpus line up with a
 // window containing more than one candidate event, so guessing the rest would risk a wrong mark
 // nobody would notice. Add more as they get confirmed the same way.
+//
+// RULED OUT on hardware: bit 55 (byte 0x77746F, mask 0x80) looked promising offline - the only
+// bit that changes between save steps "15-3" and "16-1", whose notes say "Frog Choir", matching
+// note_47's name exactly - but live-tested it (Hex Editor read 0x59 before AND after completing
+// Reunite the Frog Choir) and the byte never changed. The name match was a coincidence; do not
+// re-propose this one without a different address.
 static const ChkItem CK_NOTEBOOK[] = {
     { "note_01", "A Stay at Stock Pot Inn",       "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
     { "note_02", "Anju's Anguish",                "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
