@@ -107,5 +107,9 @@ $(OUTPUT).3gx : $(OFILES)
 
 -include $(DEPENDS)
 
+# Without this, make treats the .elf as a disposable intermediate and deletes it as soon as
+# it produces the .3gx. Tools/fingerprint.sh needs the .elf to read symbols from.
+.PRECIOUS: %.elf
+
 #---------------------------------------------------------------------------------------
 endif
