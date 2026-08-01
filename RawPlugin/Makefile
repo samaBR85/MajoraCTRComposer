@@ -21,7 +21,12 @@ SOURCES 	:= 	sources
 #---------------------------------------------------------------------------------
 ARCH		:=	-march=armv6k -mlittle-endian -mtune=mpcore -mfloat-abi=hard
 
-CFLAGS		:=	-Os -mword-relocations \
+# -Wno-main: the plugin's entry point is not a hosted main(), so GCC's "return type of 'main'"
+# check does not apply here.
+# -Wno-missing-field-initializers: the Checklist tables (ChkItem) initialise only the leading
+# fields on purpose - the omitted tail is meant to be zero. -Wextra flags every such row.
+CFLAGS		:=	-Os -mword-relocations -Wall -Wextra -Wno-main \
+				-Wno-missing-field-initializers \
 				-fomit-frame-pointer -ffunction-sections -fno-strict-aliasing \
 				$(ARCH)
 

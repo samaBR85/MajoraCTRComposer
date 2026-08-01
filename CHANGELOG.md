@@ -6,7 +6,57 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–44
+## Unreleased · builds 1–45
+
+### b45 — engine fixes inherited from CTRComposer (`references/CORRECOES-MOTOR.md`)
+
+Four defects that live in the engine itself, not in this plugin's own code, so every CTRComposer
+fork has them. All four applied here and **CONFIRMED on hardware in this fork** (b45): the tool
+-> quick menu -> exit path hands the top screen back, the menu backdrop no longer stacks copies
+of the quick-menu panel, held buttons release on their own, and the normal
+`SELECT` / `L+SELECT` paths did not regress.
+
+- **Top screen froze on exit (🔴 breaks usage).** `Present()` flips
+  `REG32(LCD_TOP + LCD_SELECT)` to show our frame and nothing ever flipped it back, so on exit
+  the LCD kept scanning the *plugin's* buffer: the game ran on underneath (bottom screen
+  returned, audio played) while the top stayed frozen on the last menu frame. Only the top breaks
+  because the bottom draws straight into the visible buffer, where restoring pixels is enough.
+  Added `TopTakeOver()` / `TopRelease()` around the register, called from `RunMenu()` and
+  `QuickMenu()`. The quick menu only hands back when it is really returning to the game — if a
+  favorite folder or tool was picked, `RunMenu()` takes over immediately and handing back would
+  cause a one-frame flicker. Repro was narrow (star a *tool*, launch it from the quick menu,
+  exit), which is why it can sit unnoticed in a fork whose favorites are all cheats.
+- **Quick menu got baked in as the menu backdrop.** Coming from the quick menu, `RunMenu()`
+  called `GrabFb()` microseconds after `ResumeGame()` — before the game had drawn anything — so
+  it captured our own panel as the "game frame" and each reopen stacked another copy. Added a
+  `g_qmHandoff` flag; on that path we `RestoreTopBackdrop()` instead of re-grabbing.
+- **Unbounded button waits (🟡 latent).** Four raw `while (HID_PAD ...)` loops (info box exit,
+  About exit, menu entry, quick-menu entry) spun forever on a stuck pad — **with the game
+  paused**, which presents as a dead console. All four now call the engine's existing capped
+  `DrainButtons()` (~2s). `DrainButtons` moved up next to `ARepeat`, since the info box and About
+  sit earlier in the file than the menu and could not see it — which is why they had grown their
+  own uncapped waits in the first place.
+- **Translated text could overflow stack buffers (🟡 latent).** `T()` resolves to a `.txt` on the
+  SD card, so its length is outside the engine's control, yet it was formatted into fixed-size
+  stack buffers with `siprintf`. Converted every call whose format takes a `T(...)` or an
+  author-written label to `sniprintf` with the destination size (`sniprintf`, the integer-only
+  variant, not `snprintf` — the latter would pull the float formatter into the binary).
+  **Beyond the upstream note:** four of these feed their return value straight into
+  `FSFILE_Write` (Favorites.txt, Checklist.txt). `sniprintf` returns the length it *wanted* to
+  write, so a long label would have made the write run off the end of the buffer — those four
+  now clamp the length before using it.
+- **`{D-Pad}` was not a real glyph token.** `GlyphTok()` matches `{DP}` exactly, so the Plugin
+  Guide footer rendered the braces as literal text. Fixed, and the same string was the only
+  footer without `T()` — now translatable too. Audited every `{token}` in the source against the
+  accepted set (`{A} {B} {X} {Y} {L} {R} {DP} {HK}`); no others were wrong.
+- **Warnings turned on.** The Makefile was building without `-Wall -Wextra`. Enabled, now at
+  **zero warnings**, with three deliberate suppressions: `-Wno-main` (the entry point is not a
+  hosted `main`), `-Wno-missing-field-initializers` (the Checklist `ChkItem` tables initialise
+  only leading fields on purpose — the omitted tail is meant to be zero), and `(void)arg` in
+  `ThreadMain`. Four vector tool icons (`MagnifierIcon`, `DiskIcon`, `GridIcon`, `InfoIcon`)
+  turned out to be unreferenced — superseded by real MM3D sprites — and are marked
+  `__attribute__((unused))` rather than deleted, since they are the engine's art-free fallback.
+  `--gc-sections` already keeps them out of the binary.
 
 ### Investigation note: a Bomber's Notebook auto-detect candidate (no code change)
 - Went looking for more auto-detectable save data by diffing all 65 files in `SaveGames/`
