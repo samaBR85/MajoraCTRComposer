@@ -68,18 +68,7 @@
 #include "engine/tracker_ui.inc.c"
 #endif // !TOOLS_ONLY
 
-static void ToolRun(int t)
-{
-    if (t == T_SEARCH) ToolSearch();
-    else if (t == T_RAMDUMP) ToolRamDump();
-    else if (t == T_HEXEDIT) ToolHexEdit();
-    else if (t == T_ABOUT) ToolAbout();
-#if !TOOLS_ONLY
-    else if (t == T_GAMEGUIDE) ToolGameGuide();
-    else if (t == T_TRACKER)   ToolChecklist();
-#endif
-    else if (t == T_PLUGINGUIDE) ToolPluginGuide();
-}
+#include "engine/tool_dispatch.inc.c"
 
 // ===================== Game pause (Luma thread scheduler) =====================
 #define THREADVARS_MAGIC  0x21545624
