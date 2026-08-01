@@ -157,8 +157,14 @@ static const ChkItem CK_SONGS[] = {
 };
 
 // Bomber's Notebook: MM3D overhauled this to 63 trackable events (the N64 original only tracked
-// 20 people). Completing all 63 puts a ribbon on the notebook header. No known save address -
-// all manual.
+// 20 people). Completing all 63 puts a ribbon on the notebook header.
+//
+// One bit CONFIRMED on hardware: an 8-byte bitfield at 0x777469 flips one bit per notebook event
+// (found by diffing all 65 SaveGames/ progressive saves, then verified live - Hex Editor read
+// 0x00 at 0x77746D, got Epona at Milk Road, re-read 0x10). The other 62 events still have no
+// known bit - most of the field's other single-bit transitions in the save corpus line up with a
+// window containing more than one candidate event, so guessing the rest would risk a wrong mark
+// nobody would notice. Add more as they get confirmed the same way.
 static const ChkItem CK_NOTEBOOK[] = {
     { "note_01", "A Stay at Stock Pot Inn",       "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
     { "note_02", "Anju's Anguish",                "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
@@ -175,7 +181,7 @@ static const ChkItem CK_NOTEBOOK[] = {
     { "note_13", "A Melancholy Melody",           "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
     { "note_14", "A Dance with Meaning",          "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
     { "note_15", "Music Moves the Heart",         "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
-    { "note_16", "A Race near Milk Road",         "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_16", "A Race near Milk Road",         "CONFIRMED on hardware: bit 4 of 0x77746D sets when Epona's Song / Epona is obtained after the Milk Road horseback race with Romani.", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_BIT, 0x77746D, 0x10 },
     { "note_17", "Protect Romani's Cows!",        "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
     { "note_18", "Protect the Milk!",             "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
     { "note_19", "Cucco Shack's Cute Chicks",     "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },

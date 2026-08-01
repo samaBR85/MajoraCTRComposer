@@ -6,7 +6,20 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–46
+## Unreleased · builds 1–47
+
+### b47 — first Bomber's Notebook event auto-detected and CONFIRMED on hardware
+- The `0x777469` candidate address from the earlier investigation note is real: re-diffed all 65
+  `SaveGames/` saves for single-bit transitions landing in a window with exactly one identifiable
+  event, tested the strongest candidate live (load `SaveGames/Saves09/save0.bin`, Hex Editor read
+  `0x00` at `0x77746D`, get Epona at Milk Road, re-read `0x10`) - **confirmed**.
+- **"A Race near Milk Road" (`note_16`) is now auto-detected**: `CK_BIT, 0x77746D, 0x10`.
+- A second candidate is strong but NOT hardware-tested yet: bit 55 of the same field (byte
+  `0x77746F`, mask `0x80`) is the only bit that changes between save steps "15-3" and "16-1",
+  whose notes literally say "Frog Choir" - matching `note_47` ("Reunite the Frog Choir") by name.
+  Left manual until confirmed the same way.
+- The other 61 events still have no known bit - most single-bit windows in the corpus contain
+  more than one candidate event, so they were not guessed at.
 
 ### b46 — individual Boss Remains sprites in the 100% Checklist
 - All 4 Bosses (Odolwa, Goht, Gyorg, Twinmold) now show their own real Boss Remains icon instead
