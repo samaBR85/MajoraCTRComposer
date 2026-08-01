@@ -21,15 +21,23 @@ static int g_tpFilter = 0; // Teleport category filter: 0=all, 1=overworld, 2=du
 // F_TELEPORT; every other folder shows everything, same as the template default.
 static int ItemHidden(int folderIdx, const Item *it)
 {
-    if (folderIdx != F_TELEPORT || g_tpFilter == 0) return 0;
+    if (folderIdx != F_TELEPORT) return 0;
+    // The Owl Statues re-ordered block (menu_tables.inc.c) duplicates rows already shown in
+    // their normal geography section, so it must stay hidden under every OTHER filter - showing
+    // it under "All" would list every owl statue twice.
+    if (it->desc == OWL_ORDER_MARK) return g_tpFilter != 3;
+    if (g_tpFilter == 0) return 0;
+    if (g_tpFilter == 3)
+    {
+        if (IS_SEP(it)) return 1;  // flat visiting-order list: no area headers
+        return it->warp >= 1;      // hide the normal (geography-order) warp rows - the block above replaces them
+    }
     if (it->warp >= 1)
     {
         const Warp *w = &warps[it->warp];
-        if (g_tpFilter == 1) return w->isDungeon;   // Overworld: hide dungeons
-        if (g_tpFilter == 2) return !w->isDungeon;  // Dungeons: hide everything else
-        return !w->isOwl;                            // Owl Statues: hide everything else
+        return (g_tpFilter == 1) ? w->isDungeon : !w->isDungeon; // 1=Overworld, 2=Dungeons
     }
-    if (IS_SEP(it)) return 0; // keep section headers visible regardless of filter
+    if (IS_SEP(it)) return 0; // keep section headers visible for Overworld/Dungeons
     return 0;
 }
 // A row the cursor must skip over: a section header OR a filtered-out item.

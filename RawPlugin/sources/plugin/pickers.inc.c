@@ -77,6 +77,11 @@ static int PickerWrite(const Picker *pk, u8 v)
 // variants of the same physical statue), so 12 rows carry isOwl=1 for 10 real statues. Snowhead's
 // description used to claim "(from owl statue)" too - that was wrong; the real list does not
 // include it, so its owl flag stays 0 and the description was corrected.
+//
+// NOT used to drive the Owl Statues Teleport filter directly - that filter needs a specific
+// visiting order the geography-grouped teleportItems[] can't express, so it uses its own ordered
+// row block instead (see OWL_ORDER_MARK in menu_tables.inc.c). isOwl stays here as the
+// documented, checkable source of which warps are real owl statues.
 typedef struct { const char *name; u16 entrance; u8 isDungeon; u8 isOwl; const char *desc; } Warp;
 static const Warp warps[] = {
     /* 0 */  { "Reload current scene",   0xFFFF, 0, 0, "Reloads the area you're in. The safest warp - use it first to confirm teleport works on your game." },

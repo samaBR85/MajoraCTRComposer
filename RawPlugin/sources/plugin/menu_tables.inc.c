@@ -161,10 +161,22 @@ static const Item miscItems[] = {
     IT_CHEAT("Fierce Deity", CH_PLAY_FIERCEDEITY, "CONFIRMED on hardware. Bypasses the vanilla boss-arena-only restriction entirely - fully controllable. Applies once, on your next area transition. Address 0x7761FE, u8 = 0x00."),
 };
 
+// Sentinel identifying the Owl Statues re-ordered rows below, by pointer identity (not content -
+// an empty string is fine). Item.desc is never read for a warp row (label/desc always come from
+// warps[it->warp] instead, see menu_render.inc.c), so it is free to repurpose as a tag here.
+// ItemHidden() uses it to show ONLY this block under the Owl Statues filter and hide it under
+// every other filter (else these entries would appear twice - once here, once in their normal
+// geography section below).
+static const char OWL_ORDER_MARK[] = "";
+
 // Teleport folder: one row per warps[] entry (label/desc pulled from warps[] at draw time via
 // the index in IT_WARP), same architecture as OcarinaCTRComposer's Teleport. Section headers
-// are cosmetic grouping only; the Filter row's All/Overworld/Dungeons/Owl Statues split is driven
-// by each warp's `isDungeon`/`isOwl` flags, not by which section a row visually sits in.
+// are cosmetic grouping only; the Filter row's Overworld/Dungeons split is driven by each warp's
+// `isDungeon` flag, not by which section a row visually sits in. The Owl Statues filter is
+// different: it needs a specific visiting order (South Clock Town, Milk Road, Southern Swamp,
+// Woodfall, Mountain Village, Goron Village, Great Bay Coast, Zora Cape, Ikana Canyon, Stone
+// Tower - user-supplied), not the geography-grouped order the other filters use, so it gets its
+// own duplicate row block at the end instead of reusing the rows above.
 static const Item teleportItems[] = {
     IT_WARP_WIDE(NULL, 0, NULL),   // Reload current scene (full-width, first)
     IT_TPFILTER,                   // category filter (All / Overworld / Dungeons / Owl Statues)
@@ -182,6 +194,19 @@ static const Item teleportItems[] = {
     IT_WARP(NULL, 20, NULL), IT_WARP(NULL, 21, NULL), IT_WARP(NULL, 22, NULL),
     IT_SEP("RANCH / MOON"),
     IT_WARP(NULL, 23, NULL), IT_WARP(NULL, 24, NULL), IT_WARP(NULL, 25, NULL),
+    // ---- Owl Statues visiting order (shown ONLY under that filter - see ItemHidden) ----
+    IT_WARP(NULL, 1,  OWL_ORDER_MARK), // South Clock Town
+    IT_WARP(NULL, 24, OWL_ORDER_MARK), // Milk Road
+    IT_WARP(NULL, 6,  OWL_ORDER_MARK), // Southern Swamp
+    IT_WARP(NULL, 8,  OWL_ORDER_MARK), // Woodfall
+    IT_WARP(NULL, 10, OWL_ORDER_MARK), // Mountain Village (Spring)
+    IT_WARP(NULL, 11, OWL_ORDER_MARK), // Mountain Village (Winter)
+    IT_WARP(NULL, 12, OWL_ORDER_MARK), // Goron Village (Spring)
+    IT_WARP(NULL, 13, OWL_ORDER_MARK), // Goron Village (Winter)
+    IT_WARP(NULL, 16, OWL_ORDER_MARK), // Great Bay Coast
+    IT_WARP(NULL, 17, OWL_ORDER_MARK), // Zora Cape
+    IT_WARP(NULL, 20, OWL_ORDER_MARK), // Ikana Canyon
+    IT_WARP(NULL, 21, OWL_ORDER_MARK), // Stone Tower
 };
 #endif // !TOOLS_ONLY
 

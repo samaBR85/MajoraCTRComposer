@@ -6,7 +6,21 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–48
+## Unreleased · builds 1–49
+
+### b49 — Owl Statues filter now follows the requested visiting order
+- The Owl Statues filter (build 48) listed entries in the same geography-grouped order as
+  Overworld/Dungeons, since it reused the same rows. Now it shows the user-supplied order
+  instead: South Clock Town, Milk Road, Southern Swamp, Woodfall, Mountain Village, Goron
+  Village, Great Bay Coast, Zora Cape, Ikana Canyon, Stone Tower.
+- Implementation: `teleportItems[]` (`plugin/menu_tables.inc.c`) gained a duplicate block of the
+  same 12 `IT_WARP` rows (Mountain Village and Goron Village each keep their Spring/Winter scene
+  variant) laid out in that exact order, tagged via a sentinel pointer (`OWL_ORDER_MARK`) in the
+  otherwise-unused `Item.desc` field (warp rows always pull their real label/desc from `warps[]`
+  at draw time, so `desc` was free to repurpose). `ItemHidden()` (`engine/menu_nav.inc.c`) shows
+  that block ONLY under the Owl Statues filter and hides it everywhere else, so it never
+  duplicates entries under "All". `Warp.isOwl` no longer drives the filter directly - it stays as
+  the documented, checkable source of which warps are real owl statues.
 
 ### b48 — Owl Statues filter in Teleport
 - Added a 4th Teleport filter category, cycled by pressing {A} on the filter row: All ->
