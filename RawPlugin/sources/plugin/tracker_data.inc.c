@@ -61,10 +61,10 @@ static const ChkItem CK_FAIRIES[] = {
 // Still not hardware bit-tested, so flagged accordingly - the byte-level "does this equal
 // 0xCF/0xF7/0xCF" version of this cheat IS confirmed, individual bits within it aren't.
 static const ChkItem CK_BOSSES[] = {
-    { "boss_odolwa",   "Odolwa",   "Woodfall Temple.",   "", CKI_SPRITE, MSPR_BOSS_REMAINS, CK_BIT, 0x7763D0, 0x01 },
-    { "boss_goht",     "Goht",     "Snowhead Temple.",   "", CKI_SPRITE, MSPR_BOSS_REMAINS, CK_BIT, 0x7763D0, 0x02 },
-    { "boss_gyorg",    "Gyorg",    "Great Bay Temple.",  "", CKI_SPRITE, MSPR_BOSS_REMAINS, CK_BIT, 0x7763D0, 0x04 },
-    { "boss_twinmold", "Twinmold", "Stone Tower Temple.", "", CKI_SPRITE, MSPR_BOSS_REMAINS, CK_BIT, 0x7763D0, 0x08 },
+    { "boss_odolwa",   "Odolwa",   "Woodfall Temple.",   "", CKI_SPRITE, MSPR_BOSS_ODOLWA,   CK_BIT, 0x7763D0, 0x01 },
+    { "boss_goht",     "Goht",     "Snowhead Temple.",   "", CKI_SPRITE, MSPR_BOSS_GOHT,     CK_BIT, 0x7763D0, 0x02 },
+    { "boss_gyorg",    "Gyorg",    "Great Bay Temple.",  "", CKI_SPRITE, MSPR_BOSS_GYORG,    CK_BIT, 0x7763D0, 0x04 },
+    { "boss_twinmold", "Twinmold", "Stone Tower Temple.", "", CKI_SPRITE, MSPR_BOSS_TWINMOLD, CK_BIT, 0x7763D0, 0x08 },
 };
 
 // Heart Pieces (52 = 13 extra Heart Containers). No known save address for individual pieces -

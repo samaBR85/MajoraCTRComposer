@@ -6,7 +6,14 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–45
+## Unreleased · builds 1–46
+
+### b46 — individual Boss Remains sprites in the 100% Checklist
+- All 4 Bosses (Odolwa, Goht, Gyorg, Twinmold) now show their own real Boss Remains icon instead
+  of a shared placeholder (`MSPR_BOSS_REMAINS`, "Odolwa's Remains" reused for all four). Sourced
+  from Zelda Wiki (zeldawiki.wiki, cdn.wikimg.net), same provenance as the 22 individual Mask
+  icons. `MSPR_BOSS_REMAINS` itself is unchanged and still used by the "All Bosses and Songs"
+  cheat's own icon.
 
 ### Source reorganization: `main.c` split into `plugin/` + `engine/` (no build change)
 

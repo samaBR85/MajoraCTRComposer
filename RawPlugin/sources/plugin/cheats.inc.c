@@ -359,3 +359,9 @@ static void ApplyCheats(void)
 #define MSPR_MASK_BLAST      0x152
 #define MSPR_MASK_SCENTS     0x153
 #define MSPR_MASK_GIANT      0x154
+// Individual Boss Remains icons (100% Checklist Bosses category) - real per-boss sprites from
+// Zelda Wiki, replacing the shared MSPR_BOSS_REMAINS placeholder.
+#define MSPR_BOSS_ODOLWA     0x155
+#define MSPR_BOSS_GOHT       0x156
+#define MSPR_BOSS_GYORG      0x157
+#define MSPR_BOSS_TWINMOLD   0x158

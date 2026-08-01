@@ -120,6 +120,13 @@ MAP = {
     0x152: ('file', 'Assets/Sprites/masks/blast.png'),
     0x153: ('file', 'Assets/Sprites/masks/scents.png'),
     0x154: ('file', 'Assets/Sprites/masks/giant.png'),
+    # Individual Boss Remains icons for the 100% Checklist (one real sprite per boss instead of
+    # the shared Odolwa's Remains placeholder at 0x114). All 4 from Zelda Wiki (zeldawiki.wiki,
+    # cdn.wikimg.net), native size.
+    0x155: ('file', 'Assets/Sprites/bosses/odolwa.png'),
+    0x156: ('file', 'Assets/Sprites/bosses/goht.png'),
+    0x157: ('file', 'Assets/Sprites/bosses/gyorg.png'),
+    0x158: ('file', 'Assets/Sprites/bosses/twinmold.png'),
     # Deku/Goron/Zora/Fierce Deity's masks are shared with the Misc "Play as..." rows and the
     # Bottle/B Button pickers where applicable - Zora and Fierce Deity already have real sprites
     # (MSPR_ZORA_MASK/MSPR_FD_MASK, from this same sheet); Deku/Goron get their own here since
