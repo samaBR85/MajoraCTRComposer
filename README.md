@@ -78,6 +78,8 @@ a plugin for another 3DS game.
 - **xAct** — MM3D UI sheet (rupee icon), The Spriters Resource
 - **Hiccup / Cheesy Mac n Cheese** — MM3D HOME banner (About screen logo), The Spriters Resource
 - **manpaint** — 3DS button glyphs (A/B/X/Y/L/R/D-Pad), The Spriters Resource, reused from OcarinaCTRComposer
+- **Zelda Wiki (zeldawiki.wiki)** — MM3D Owl Statue icon and 3D-render model, and 22 of the 24 individual Mask icons, used in the 100% Checklist
+- **zeldaret/mm** — the Majora's Mask N64 decompilation project, referenced for item id/name ground truth (matches our own confirmed in-game values)
 - **samaBR** — Termina theme background art (original artwork)
 - **Luma3DS** (plugin loader) — https://github.com/LumaTeam/Luma3DS
 - **3GX plugin loader / 3gxtool** — PabloMK7 — https://github.com/PabloMK7

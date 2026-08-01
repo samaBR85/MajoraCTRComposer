@@ -6,7 +6,119 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–39
+## Unreleased · builds 1–44
+
+### Investigation note: a Bomber's Notebook auto-detect candidate (no code change)
+- Went looking for more auto-detectable save data by diffing all 65 files in `SaveGames/`
+  (progressive saves 1-1 through 22-1) against `SaveGames/MM3D Saves.txt`'s per-step notes,
+  after the zeldaret/mm decompilation turned up a `weekEventReg[100]` array with an individual
+  bit per Bomber's Notebook event on N64 (`include/z64save.h`) - promising, but MM3D expanded
+  the Notebook from N64's ~20 people to 63 events, so the N64 byte/bit layout can't be assumed
+  to carry over directly.
+- Found a strong **candidate address: `0x777469`, 8 bytes**. Unlike most monotonic byte regions
+  in the save data (which flip in a few large batches - consistent with derived/checksum data,
+  not individual events), this one flips at 16 different save-steps across the corpus, and the
+  number of newly-set bits matches the number of newly-listed achievements in the notes exactly
+  at some steps (e.g. step "1-2": 4 new bits for 4 listed achievements; step "2-2": 6 new bits
+  for 6 listed achievements) - not a perfect match at every step, but well beyond coincidence.
+  It's also present, byte-identical, in the save data's known second struct copy (`0x778E53` -
+  the same `+0x1A88` offset already established for the primary/secondary save copy split),
+  which rules out random noise.
+- **Not implemented**: mapping which specific bit is which specific Notebook event needs
+  hardware testing (complete one named event at a time, watch which bit flips via Hex Editor) -
+  deferred at the user's request. The address is documented here so the next session doesn't
+  have to re-derive it.
+
+### Decoded the quest bitfield: Bosses + 11 more auto-detected songs (build 44)
+- Cross-referenced the zeldaret/mm N64 decompilation's `QuestItem` enum (24 entries, indices
+  0x00-0x17) against our own CONFIRMED 3-byte quest field (0x7763D0-0x7763D2). The indices line
+  up exactly with 24 bits across those 3 bytes (byte0=bits 0-7, byte1=8-15, byte2=16-23, LSB
+  first) - decoding the confirmed 100%-save value (`CF F7 CF`) against that layout lines up
+  perfectly for all 4 bosses and 11 of the 13 songs, which is strong (if indirect) evidence the
+  bit order is right.
+- **New "Bosses" category** (Odolwa, Goht, Gyorg, Twinmold), fully auto-detected.
+- **Songs auto-detection jumped from 0/13 to 11/13** - only Inverted Song of Time and Song of
+  Double Time stay manual, since they're just the Song of Time played differently rather than
+  separately-learned songs with their own flag.
+- Not hardware bit-tested (same caveat as everything else added this way) - the byte-level "does
+  this equal 0xCF/0xF7/0xCF" cheat IS confirmed; the individual bits within it are a decode, not
+  a verified read. A few other bits in that field (quiver/bomb bag/heart piece/notebook-related)
+  didn't decode consistently against the 100% save, so those were left alone rather than guessed.
+
+### Individual mask icons, real song colors, bottle sprites instead of swatches (build 43)
+- **All 24 Masks now show their own real icon** instead of one shared Bunny Hood placeholder.
+  22 came from Zelda Wiki's individually-named icon files (e.g. `MM3D_Deku_Mask_Icon.png`),
+  cross-checked visually cell-by-cell against our own sheet. Two of those (Bunny Hood, Keaton
+  Mask) turned out to both redirect to the exact same unrelated icon on the wiki - a wiki data
+  issue, not a game asset - so those two are cropped from our own sheet instead, using the cells
+  we'd already visually identified earlier. This same research also reordered several masks we'd
+  guessed wrong before (e.g. what we thought was Blast Mask is Mask of Truth; the "cow face" we
+  assumed was Bremen Mask is actually Romani's Mask; Bremen Mask is a white bird).
+- **Song note colors** switched from an invented OoT-style area palette to a best-effort match of
+  the real in-game Ocarina Songs screen's actual color badges (yellow, red, blue, purple, green,
+  orange, plus several identical cyan ones) - still not a confirmed per-song mapping (no source
+  individually labels which exact song gets which color the way Masks did), so it's flagged as
+  inferred in the code comment, not asserted as fact.
+- **Bottle checklist entries with no matching content sprite** (Koume's Boat-Cruise, Beaver
+  Brothers race, Madame Aroma's mail) switched from a plain color swatch to an actual bottle
+  sprite picked for a playful/punny fit (a bottled fish for a race in a waterfall cave, a plain
+  bottle for "message in a bottle" mail delivery) - closer to what was asked for than a flat color.
+
+### Real sprites throughout the 100% Checklist (build 42)
+- Added `CKI_SPRITE` (a real sprites.h icon instead of a hand-drawn bitmap) and `CKI_SWATCH` (a
+  plain color-tinted square, for the handful of items nothing on the sheet matches) to the
+  Checklist's icon system, plus an optional `iconArgBig` field so a category can show a different,
+  bigger image in the detail card than in list rows.
+- **Masks** → the Bunny Hood (shared "masks" icon). **Heart Pieces** → the Heart Container.
+  **Stray Fairies** → the Stray Fairy sprite. **Bomber's Notebook** → the Notebook itself, for
+  all 63 entries. **Equipment** → real per-item art (Gilded Sword, Mirror/Hero's Shield, Great
+  Fairy's Sword, all 3 Quiver tiers, all 3 Bomb Bag tiers, both Wallet tiers - Bomb Bag and Quiver
+  tiers came from an unused row on the sheet with 3 size variants each). **Bottles** → the actual
+  bottle-content icon where one exists (Kotake's Red Potion, Chateau Romani, Gold Dust, Fraternal
+  Milk); the 3 with no bottle equivalent (an archery minigame, a race, a mail delivery) get a
+  plain color swatch in a shade that matches the reward's theme instead.
+- **Songs** keep the existing colored-note icon (not a flat sprite) and now use a color per song
+  matched to its area/dungeon (Woodfall/Deku green, Snowhead/Goron red, Great Bay/Zora blue,
+  Ikana purple, Oath to Order gold) - these are thematic choices, not a confirmed in-game color.
+- **Owl Statues** get a real 2-tier treatment: the actual small in-game icon in list rows, and a
+  separate, bigger 3D-render crop in the Checklist's detail card (both from The Spriters
+  Resource / Zelda wiki assets) - the first checklist category to use `iconArgBig`.
+
+### 100% Checklist expanded from 32 to 190 items (build 41)
+- Researched and cross-checked a full MM3D-specific 100% completion list (not the N64 original -
+  several categories differ) across multiple sources. New categories: **Heart Pieces** (52, all
+  manual - no known per-piece save address), **Songs** (13 - MM3D added Song of Storms, one more
+  than N64's 12), **Bomber's Notebook** (63 events - MM3D completely overhauled this from N64's
+  fixed 20-person list), **Owl Statues** (10), **Bottles** (7 acquisition sources - MM3D added a
+  Gorman "Fraternal Milk" sidequest and swapped Koume's archery reward from a Heart Piece to a
+  Bottle), **Equipment** (swords/shields/quiver/bomb bag/wallet tiers - folds in the previous
+  "Gear" category's 4 auto-detected entries plus 11 more manual ones). Corrected **"Circus
+  Leader's Mask" to "Troupe Leader's Mask"** (the MM3D UI's actual name for it) in the Masks list.
+- **Stray Fairies**: added the Clock Town fairy (the 61st, easy to miss - the save data has no
+  address for it so it's manual) and corrected the per-dungeon reward text - MM3D swapped
+  Woodfall's and Snowhead's Great Fairy rewards (Great Spin Attack and Double Magic) from their
+  N64 positions.
+- Everything without a hardware-confirmed save address is `CK_MANUAL` (tick it yourself) rather
+  than guessed at - only Masks, Stray Fairies (per-dungeon) and 4 Equipment entries auto-fill.
+
+### Fixed Masks reading 0/24 against a real 100% save (build 40)
+- **Root cause**: the 24-byte mask array (0x77636C-0x776383) fills in ACQUISITION order, not one
+  fixed slot per mask - the earlier `CK_BYTEEQ`-per-fixed-offset detection only happened to work
+  against the one 100% save used during Phase 1/2 analysis, which coincidentally acquired masks
+  in ascending id order. A real save can have any mask id in any of the 24 slots. Added a new
+  detection kind, `CK_SCANEQ` (does this id appear ANYWHERE in the 24-byte range, not at one
+  fixed offset), and switched all 24 mask entries to it.
+- **Renamed** "Tracker" to "100% Checklist" throughout the menu, and gave it a real sprite icon
+  (the Bombers' Notebook - MM3D's own in-game checklist item) instead of the hand-drawn
+  placeholder vector.
+- **Bottle picker**: added icons for the 6 options that were missing one (Blue Fire, Poe, Big
+  Poe, Zora Egg, Hylian Loach, Obaba's Drink) - Zora Egg gets a new sprite from the sheet: the
+  rest reuse a thematically-close existing icon (a fish for Hylian Loach, the ghostly glow bottle
+  for both Poe types, etc.) since the sheet has no distinct art for them.
+- **Stray Fairies still reading 0/4 against a real 100% save is unresolved** - unlike Masks, this
+  address (0x7763E8-0x7763EB) was never independently cross-checked against an actual save file,
+  only assumed from the AR code's own claim. Needs a Hex Editor check against a real 100% save to
+  confirm whether the address or the expected value (0x0F per dungeon) is wrong.
 
 ### Removed Deku Sticks Always On Fire (build 39)
 - Tested on hardware: the write goes through (no crash) but has no visible effect - the stick

@@ -76,9 +76,54 @@ MAP = {
     0x12C: ('grid', 10, 4),          # Magic Mushroom
     0x12D: ('grid', 10, 5),          # Sea Horse
     0x12E: ('grid', 11, 0),          # Chateau Romani
-    0x12F: ('grid', 9, 1),           # Mystery Milk (and reused for Mouldy Milk - no distinct art)
+    0x12F: ('grid', 9, 1),           # Milk (Half) (also reused for nothing else now - see main.c)
     0x130: ('grid', 20, 5),          # Zora Mask - Play as... folder
     0x131: ('grid', 21, 5),          # Fierce Deity's Mask - Play as... folder
+    0x132: ('grid', 10, 2),          # Zora Egg (playful stand-in - a round glowing orb)
+    # 100% Checklist icons (Heart Pieces category reuses the existing MSPR_HEART, 0x109)
+    0x134: ('grid', 24, 0),          # Razor Sword (playful stand-in - the sheet's 3rd sword cell)
+    0x135: ('grid', 24, 5),          # Hero's Shield (round plain shield - Mirror Shield reuses the existing MSPR_DEFENSE, same cell 24,4)
+    0x136: ('grid', 27, 0),          # Bomb Bag (tier 1)
+    0x137: ('grid', 27, 1),          # Big Bomb Bag (tier 2)
+    0x138: ('grid', 27, 2),          # Biggest Bomb Bag (tier 3)
+    0x139: ('grid', 27, 4),          # Large Quiver (tier 2)
+    0x13A: ('grid', 27, 5),          # Largest Quiver (tier 3)
+    0x13B: ('grid', 28, 1),          # Giant Wallet (tier 2, red-gem pouch)
+    # Owl Statue: a real in-game icon (12x16, The Spriters Resource / Zelda wiki asset) for list
+    # rows, and a separate bigger 3D-render crop for the Checklist's detail card - see the
+    # `iconArgBig` field on ChkItem in main.c for how the two get selected per cell size.
+    0x13C: ('file', 'Assets/Sprites/mm3d_owl_icon.png'),
+    0x13D: ('file', 'Assets/Sprites/mm3d_owl_model.png'),
+    # Individual Mask icons for the 100% Checklist (one real sprite per mask instead of one
+    # shared "masks" icon). 22 of 24 are the real MM3D icon from Zelda Wiki (zeldawiki.wiki,
+    # cdn.wikimg.net) at their native 42x42 - Bunny Hood and Keaton Mask both redirected to an
+    # unrelated shared icon there (a wiki data issue, not a game asset), so those two are cropped
+    # from our own sheet instead (rows 19,2 and 19,0 - see the Masks-section grid analysis).
+    0x140: ('file', 'Assets/Sprites/masks/deku.png'),
+    0x141: ('file', 'Assets/Sprites/masks/goron.png'),
+    0x142: ('file', 'Assets/Sprites/masks/truth.png'),
+    0x143: ('file', 'Assets/Sprites/masks/kafei.png'),
+    0x144: ('file', 'Assets/Sprites/masks/allnight.png'),
+    0x145: ('file', 'Assets/Sprites/masks/bunny.png'),
+    0x146: ('file', 'Assets/Sprites/masks/keaton.png'),
+    0x147: ('file', 'Assets/Sprites/masks/romani.png'),
+    0x148: ('file', 'Assets/Sprites/masks/troupe.png'),
+    0x149: ('file', 'Assets/Sprites/masks/postman.png'),
+    0x14A: ('file', 'Assets/Sprites/masks/couple.png'),
+    0x14B: ('file', 'Assets/Sprites/masks/greatfairy.png'),
+    0x14C: ('file', 'Assets/Sprites/masks/gibdo.png'),
+    0x14D: ('file', 'Assets/Sprites/masks/dongero.png'),
+    0x14E: ('file', 'Assets/Sprites/masks/kamaro.png'),
+    0x14F: ('file', 'Assets/Sprites/masks/captain.png'),
+    0x150: ('file', 'Assets/Sprites/masks/stone.png'),
+    0x151: ('file', 'Assets/Sprites/masks/bremen.png'),
+    0x152: ('file', 'Assets/Sprites/masks/blast.png'),
+    0x153: ('file', 'Assets/Sprites/masks/scents.png'),
+    0x154: ('file', 'Assets/Sprites/masks/giant.png'),
+    # Deku/Goron/Zora/Fierce Deity's masks are shared with the Misc "Play as..." rows and the
+    # Bottle/B Button pickers where applicable - Zora and Fierce Deity already have real sprites
+    # (MSPR_ZORA_MASK/MSPR_FD_MASK, from this same sheet); Deku/Goron get their own here since
+    # nothing else in the plugin needed them yet.
 }
 
 def to4444(im):

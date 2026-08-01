@@ -43,7 +43,7 @@
 // this to 1 also writes a marker file at shutdown so you can tell in one run.
 #define EXIT_HANDSHAKE 0
 
-#define PLUGIN_VER "v0.1.0 build 39"   // full string - About screen and pause box (have room)
+#define PLUGIN_VER "v0.1.0 build 44"   // full string - About screen and pause box (have room)
 
 // Name and short tag follow the build flavour automatically, so flipping TOOLS_ONLY is the ONLY
 // edit needed to produce the other binary. Deriving these beat setting them by hand: the local
@@ -53,7 +53,7 @@
 #define PLUGIN_TAG  "T1.0"              // compact tag - cramped menu title bar
 #else
 #define PLUGIN_NAME "MajoraCTRComposer"
-#define PLUGIN_TAG  "b39"
+#define PLUGIN_TAG  "b44"
 #endif
 
 static Handle   thread;
@@ -1149,8 +1149,43 @@ static void ApplyCheats(void)
 #define MSPR_B_SEAHORSE    0x12D
 #define MSPR_B_CHATEAU     0x12E
 #define MSPR_B_MYSTMILK    0x12F
+#define MSPR_B_ZORAEGG     0x132
 #define MSPR_ZORA_MASK     0x130 // Play as... folder
 #define MSPR_FD_MASK       0x131 // Play as... folder
+// 100% Checklist icons
+#define MSPR_EQ_RAZOR      0x134
+#define MSPR_EQ_HERO       0x135 // Hero's Shield - Mirror Shield reuses MSPR_DEFENSE (same cell)
+#define MSPR_EQ_BOMBBAG1   0x136
+#define MSPR_EQ_BOMBBAG2   0x137
+#define MSPR_EQ_BOMBBAG3   0x138
+#define MSPR_EQ_QUIVER2    0x139
+#define MSPR_EQ_QUIVER3    0x13A
+#define MSPR_EQ_WALLET2    0x13B
+#define MSPR_OWL_ICON      0x13C // list rows
+#define MSPR_OWL_MODEL     0x13D // Checklist detail card only (see iconArgBig)
+// Individual Mask icons (22 of 24 real, from Zelda Wiki; Bunny Hood/Keaton cropped from our own
+// sheet - see gen_sprites_mm3d.py). Zora/Fierce Deity reuse MSPR_ZORA_MASK/MSPR_FD_MASK.
+#define MSPR_MASK_DEKU       0x140
+#define MSPR_MASK_GORON      0x141
+#define MSPR_MASK_TRUTH      0x142
+#define MSPR_MASK_KAFEI      0x143
+#define MSPR_MASK_ALLNIGHT   0x144
+#define MSPR_MASK_BUNNY      0x145
+#define MSPR_MASK_KEATON     0x146
+#define MSPR_MASK_ROMANI     0x147
+#define MSPR_MASK_TROUPE     0x148
+#define MSPR_MASK_POSTMAN    0x149
+#define MSPR_MASK_COUPLE     0x14A
+#define MSPR_MASK_GREATFAIRY 0x14B
+#define MSPR_MASK_GIBDO      0x14C
+#define MSPR_MASK_DONGERO    0x14D
+#define MSPR_MASK_KAMARO     0x14E
+#define MSPR_MASK_CAPTAIN    0x14F
+#define MSPR_MASK_STONE      0x150
+#define MSPR_MASK_BREMEN     0x151
+#define MSPR_MASK_BLAST      0x152
+#define MSPR_MASK_SCENTS     0x153
+#define MSPR_MASK_GIANT      0x154
 
 // ===================== Pickers (choose a value from a list) =====================
 // A picker is a menu row that opens a list and writes the chosen value to one address.
@@ -1179,18 +1214,18 @@ static const PickOpt bottleOpts[] = {
     { "Milk (Half)",      0x19, MSPR_B_MYSTMILK },
     { "Fish",             0x1A, MSPR_B_FISH },
     { "Bug",              0x1B, MSPR_B_BUG },
-    { "Blue Fire",        0x1C, -1 },
-    { "Poe",               0x1D, -1 },
-    { "Big Poe",           0x1E, -1 },
+    { "Blue Fire",        0x1C, MSPR_B_HOTSPRING },   // playful stand-in: no distinct art on the sheet
+    { "Poe",              0x1D, MSPR_B_BIGPOE },      // playful stand-in: shares the sheet's ghostly glow bottle
+    { "Big Poe",          0x1E, MSPR_B_BIGPOE },      // playful stand-in: same as Poe, no distinct art
     { "Spring Water",     0x1F, MSPR_B_SPRINGWATER },
     { "Hot Spring Water", 0x20, MSPR_B_HOTSPRING },
-    { "Zora Egg",          0x21, -1 },
+    { "Zora Egg",         0x21, MSPR_B_ZORAEGG },
     { "Gold Dust",        0x22, MSPR_B_GOLDDUST },
     { "Magic Mushroom",   0x23, MSPR_B_MUSHROOM },
     { "Sea Horse",        0x24, MSPR_B_SEAHORSE },
     { "Chateau Romani",   0x25, MSPR_B_CHATEAU },
-    { "Hylian Loach",      0x26, -1 },
-    { "Obaba's Drink",     0x27, -1 },
+    { "Hylian Loach",     0x26, MSPR_B_FISH },        // playful stand-in: it's a fish too, no distinct art
+    { "Obaba's Drink",    0x27, MSPR_B_CHATEAU },     // playful stand-in: another "bottled drink" icon
 };
 #define NUM_BOTTLE_OPTS (int)(sizeof(bottleOpts)/sizeof(bottleOpts[0]))
 
@@ -1320,7 +1355,7 @@ static const Item rootItems[] = {
     IT_FOLDER("Misc.", F_MISC),
     IT_FOLDER("Teleport", F_TELEPORT),
     IT_SEP("GUIDES"),
-    IT_TOOL_WIDE("Tracker", T_TRACKER, "A 100% progress tracker: Masks, Stray Fairies and Gear upgrades. Each entry is untouched / auto / checked / cleared. Auto-fill syncs it from game memory - none of it is hardware-confirmed yet, so double-check against your own save before trusting it."),
+    IT_TOOL_WIDE("100% Checklist", T_TRACKER, "A 100% progress tracker: Masks, Stray Fairies and Gear upgrades. Each entry is untouched / auto / checked / cleared. Auto-fill syncs it from game memory - none of it is hardware-confirmed yet, so double-check against your own save before trusting it."),
     IT_TOOL("Game Guide",   T_GAMEGUIDE,   "A scrollable, categorized reader for your game's content. Ships with placeholder pages - replace them, or drop guide/English/game.txt on the SD card."),
     IT_TOOL("Plugin Guide", T_PLUGINGUIDE, "How to use this plugin: the menu, the quick menu, and the Cheat Search / RAM Dumper / Hex Editor tools."),
     IT_SEP("SYSTEM"),
@@ -2508,18 +2543,6 @@ static void BookIcon(int x, int y)        // Guides: an open book
         CFill(x + 9, y + 5 + r * 3, 4, 1, BG);
     }
 }
-#if !TOOLS_ONLY
-static void ChecklistIcon(int x, int y)   // Tracker: a ticked list
-{
-    for (int r = 0; r < 3; ++r)
-    {
-        CFill(x + 1, y + 3 + r * 4, 3, 3, GOLD);
-        CFill(x + 6, y + 4 + r * 4, 8, 1, INK_DIM);
-    }
-    CFill(x + 2, y + 4, 1, 1, GREEN_ON);  // tick on the first row
-    CFill(x + 3, y + 5, 1, 1, GREEN_ON);
-}
-#endif
 static void GearIcon(int x, int y)        // Settings rows
 {
     CDisc(x + 7, y + 7, 5, GOLD);
@@ -2565,7 +2588,7 @@ static void ToolIcon(int tool, int x, int y)
         case T_ABOUT:       DrawSprite(x, y, MSPR_ABOUT_ICON, 0); return;
 #if !TOOLS_ONLY
         case T_GAMEGUIDE:   BookIcon(x, y);      return;
-        case T_TRACKER:     ChecklistIcon(x, y); return;
+        case T_TRACKER:     DrawSprite(x, y, MSPR_ALL_ITEMS, 0); return; // Bombers' Notebook - MM3D's own in-game checklist item
 #endif
         case T_PLUGINGUIDE: BookIcon(x, y);      return;
         default:            FolderIconSmall(x, y + 2); return;
@@ -4696,9 +4719,10 @@ static void ToolPluginGuide(void)
 //
 // Detection kinds - all read-only, and all keyed off addresses you supply:
 //   CK_MANUAL  - no memory signal; only you can tick it
-//   CK_BIT     - (R8(addr) & mask) != 0        a flag bit inside a byte
-//   CK_BYTEEQ  - R8(addr) == mask              an exact byte value
-//   CK_NONZERO - R8(addr) != 0                 "the slot is filled"
+//   CK_BIT     - (R8(addr) & mask) != 0            a flag bit inside a byte
+//   CK_BYTEEQ  - R8(addr) == mask                  an exact byte value at a FIXED position
+//   CK_NONZERO - R8(addr) != 0                     "the slot is filled"
+//   CK_SCANEQ  - any R8(addr..addr+scanLen-1) == mask   value appears SOMEWHERE in a range
 // Add your own kind by extending this enum and ChecklistAutoFill() together.
 //
 // >>> THE TABLE BELOW IS EMPTY OF GAME DATA. <<<
@@ -4711,80 +4735,319 @@ static void ToolPluginGuide(void)
 // Progress is persisted KEYED BY THE `key` STRING, not by position, so you can add, remove
 // and reorder items freely without invalidating anyone's saved progress. Never reuse a key
 // for a different item.
-enum { CK_MANUAL = 0, CK_BIT = 1, CK_BYTEEQ = 2, CK_NONZERO = 3 };
-enum { CKI_HEART, CKI_SKULL, CKI_NOTE, CKI_KEYITEM, CKI_NONE };
+enum { CK_MANUAL = 0, CK_BIT = 1, CK_BYTEEQ = 2, CK_NONZERO = 3, CK_SCANEQ = 4 };
+// CKI_SPRITE: iconArg is an MSPR_* key from sprites.h - a real rip, not hand-drawn.
+// CKI_SWATCH: iconArg is a packed RGB565 color (((r>>3)<<11)|((g>>2)<<5)|(b>>3)) - a plain
+// tinted square for items with no matching art on the sheet, in a color close to the name.
+enum { CKI_HEART, CKI_SKULL, CKI_NOTE, CKI_KEYITEM, CKI_NONE, CKI_SPRITE, CKI_SWATCH };
+#define CHKRGB(r,g,b) (u16)((((r)>>3)<<11)|(((g)>>2)<<5)|((b)>>3))
 
 typedef struct {
     const char *key;    // stable save-key, never shown (so item text can be edited freely later)
     const char *task, *hint, *loc; // loc = "" -> no location to reveal
     u8 iconKind; u16 iconArg; u8 kind;
     u32 addr; u8 mask;
+    u8 scanLen;     // CK_SCANEQ only: how many bytes from addr to scan (0/unused for every other kind)
+    u16 iconArgBig; // CKI_SPRITE only, optional: a DIFFERENT sprite key for the detail card (cell
+                     // > 3) than the list rows use - 0 means "same sprite both places" (the norm;
+                     // Owl Statues are the only category that wants a distinct bigger render here)
 } ChkItem;
 typedef struct { const char *name; const ChkItem *items; int count; } ChkCat;
 
-// Masks (24): CONFIRMED address range 0x77636C-0x776383, one byte per mask, each byte holding
-// its own item id (0x32-0x49) when owned, 0xFF when not - see "Have all Masks" and the 100% save
-// cross-check in CHANGELOG. Item ids and names are from the zeldaret/mm N64 decompilation
+// Masks (24): CONFIRMED address range 0x77636C-0x776383, 24 bytes total. IMPORTANT: these are
+// filled in ACQUISITION ORDER, not one fixed slot per mask - the "Have all Masks" cheat and the
+// 100% save cross-check both read 0x32-0x49 ascending only because that save happened to collect
+// them in id order. A real save can have any mask's id in any of the 24 slots. So detection scans
+// the whole 24-byte range for the target id rather than checking a single fixed offset (this bug
+// is exactly why the first version of this Tracker read 0/24 against a real 100% save - fixed by
+// switching to CK_SCANEQ). Item ids/names are from the zeldaret/mm N64 decompilation
 // (include/z64item.h's ItemId enum), which also matches our own independently-confirmed B-Button
 // value for Fierce Deity's Mask (0x35) - so this table is trusted over the earlier community AR
 // list. Hints are kept to well-known facts only; anything we weren't confident enough to state
 // precisely is left generic rather than risk a wrong walkthrough step.
+#define MASKS_BASE 0x77636C
+#define MASKS_LEN  24
 static const ChkItem CK_MASKS[] = {
-    // key                task                     hint                                                                          loc  icon         arg kind        addr      mask
-    { "mask_deku",        "Deku Mask",              "One of the four transformation masks.",                                       "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77636C, 0x32 },
-    { "mask_goron",       "Goron Mask",             "One of the four transformation masks.",                                       "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77636D, 0x33 },
-    { "mask_zora",        "Zora Mask",              "One of the four transformation masks.",                                       "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77636E, 0x34 },
-    { "mask_fierce",      "Fierce Deity's Mask",    "Requires every other mask first.",                                            "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77636F, 0x35 },
-    { "mask_truth",       "Mask of Truth",          "Reward for completing every Bombers' Notebook entry.",                        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776370, 0x36 },
-    { "mask_kafei",       "Kafei's Mask",           "Part of the Anju & Kafei quest.",                                             "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776371, 0x37 },
-    { "mask_allnight",    "All-Night Mask",         "Part of the Romani Ranch quest line.",                                        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776372, 0x38 },
-    { "mask_bunny",       "Bunny Hood",             "Won from a side quest reward.",                                               "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776373, 0x39 },
-    { "mask_keaton",      "Keaton Mask",            "Reward for correctly answering Keaton's riddles.",                            "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776374, 0x3A },
-    { "mask_garo",        "Garo's Mask",            "Reward from a Garo Master in Ikana Canyon.",                                  "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776375, 0x3B },
-    { "mask_romani",      "Romani's Mask",          "Part of the Romani Ranch quest line.",                                        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776376, 0x3C },
-    { "mask_circus",      "Circus Leader's Mask",   "Reward from Gorman for the milk delivery side quest.",                        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776377, 0x3D },
-    { "mask_postman",     "Postman's Hat",          "Reward for helping the Postman.",                                             "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776378, 0x3E },
-    { "mask_couple",      "Couple's Mask",          "Final reward of the Anju & Kafei quest.",                                     "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776379, 0x3F },
-    { "mask_greatfairy",  "Great Fairy's Mask",     "Reward from the Clock Town Great Fairy for collecting Stray Fairies.",        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637A, 0x40 },
-    { "mask_gibdo",       "Gibdo Mask",             "Given by the Gibdos in the Ikana royal crypt.",                               "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637B, 0x41 },
-    { "mask_dongero",     "Don Gero's Mask",        "Reward for gathering the frogs at the Woodfall spring.",                      "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637C, 0x42 },
-    { "mask_kamaro",      "Kamaro's Mask",          "Left behind after learning Kamaro's dance.",                                  "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637D, 0x43 },
-    { "mask_captain",     "Captain's Hat",          "Found inside the Pirates' Fortress.",                                         "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637E, 0x44 },
-    { "mask_stone",       "Stone Mask",             "Makes most enemies and NPCs ignore you.",                                     "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x77637F, 0x45 },
-    { "mask_bremen",      "Bremen Mask",            "Makes young animals march behind you.",                                       "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776380, 0x46 },
-    { "mask_blast",       "Blast Mask",             "Reward from the West Clock Town bomb shop owner.",                            "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776381, 0x47 },
-    { "mask_scents",      "Mask of Scents",         "Lets you smell nearby hidden things.",                                        "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776382, 0x48 },
-    { "mask_giant",       "Giant's Mask",           "Turns Link giant-sized - required for the final boss.",                       "", CKI_KEYITEM, 0, CK_BYTEEQ, 0x776383, 0x49 },
+    // key                task                     hint                                                                          loc  icon         arg kind       addr        mask  scanLen
+    { "mask_deku",        "Deku Mask",              "One of the four transformation masks.",                                       "", CKI_SPRITE, MSPR_MASK_DEKU, CK_SCANEQ, MASKS_BASE, 0x32, MASKS_LEN },
+    { "mask_goron",       "Goron Mask",             "One of the four transformation masks.",                                       "", CKI_SPRITE, MSPR_MASK_GORON, CK_SCANEQ, MASKS_BASE, 0x33, MASKS_LEN },
+    { "mask_zora",        "Zora Mask",              "One of the four transformation masks.",                                       "", CKI_SPRITE, MSPR_ZORA_MASK, CK_SCANEQ, MASKS_BASE, 0x34, MASKS_LEN },
+    { "mask_fierce",      "Fierce Deity's Mask",    "Requires every other mask first.",                                            "", CKI_SPRITE, MSPR_FD_MASK, CK_SCANEQ, MASKS_BASE, 0x35, MASKS_LEN },
+    { "mask_truth",       "Mask of Truth",          "Reward for completing every Bombers' Notebook entry.",                        "", CKI_SPRITE, MSPR_MASK_TRUTH, CK_SCANEQ, MASKS_BASE, 0x36, MASKS_LEN },
+    { "mask_kafei",       "Kafei's Mask",           "Part of the Anju & Kafei quest.",                                             "", CKI_SPRITE, MSPR_MASK_KAFEI, CK_SCANEQ, MASKS_BASE, 0x37, MASKS_LEN },
+    { "mask_allnight",    "All-Night Mask",         "Part of the Romani Ranch quest line.",                                        "", CKI_SPRITE, MSPR_MASK_ALLNIGHT, CK_SCANEQ, MASKS_BASE, 0x38, MASKS_LEN },
+    { "mask_bunny",       "Bunny Hood",             "Won from a side quest reward.",                                               "", CKI_SPRITE, MSPR_MASK_BUNNY, CK_SCANEQ, MASKS_BASE, 0x39, MASKS_LEN },
+    { "mask_keaton",      "Keaton Mask",            "Reward for correctly answering Keaton's riddles.",                            "", CKI_SPRITE, MSPR_MASK_KEATON, CK_SCANEQ, MASKS_BASE, 0x3A, MASKS_LEN },
+    { "mask_garo",        "Garo's Mask",            "Reward from a Garo Master in Ikana Canyon.",                                  "", CKI_SPRITE, MSPR_GARO_MASK, CK_SCANEQ, MASKS_BASE, 0x3B, MASKS_LEN },
+    { "mask_romani",      "Romani's Mask",          "Part of the Romani Ranch quest line.",                                        "", CKI_SPRITE, MSPR_MASK_ROMANI, CK_SCANEQ, MASKS_BASE, 0x3C, MASKS_LEN },
+    { "mask_circus",      "Troupe Leader's Mask",   "Reward from Gorman for the milk delivery side quest (renamed from OoT/N64's Circus Leader's Mask).", "", CKI_SPRITE, MSPR_MASK_TROUPE, CK_SCANEQ, MASKS_BASE, 0x3D, MASKS_LEN },
+    { "mask_postman",     "Postman's Hat",          "Reward for helping the Postman.",                                             "", CKI_SPRITE, MSPR_MASK_POSTMAN, CK_SCANEQ, MASKS_BASE, 0x3E, MASKS_LEN },
+    { "mask_couple",      "Couple's Mask",          "Final reward of the Anju & Kafei quest.",                                     "", CKI_SPRITE, MSPR_MASK_COUPLE, CK_SCANEQ, MASKS_BASE, 0x3F, MASKS_LEN },
+    { "mask_greatfairy",  "Great Fairy's Mask",     "Reward from the Clock Town Great Fairy for collecting Stray Fairies.",        "", CKI_SPRITE, MSPR_MASK_GREATFAIRY, CK_SCANEQ, MASKS_BASE, 0x40, MASKS_LEN },
+    { "mask_gibdo",       "Gibdo Mask",             "Given by the Gibdos in the Ikana royal crypt.",                               "", CKI_SPRITE, MSPR_MASK_GIBDO, CK_SCANEQ, MASKS_BASE, 0x41, MASKS_LEN },
+    { "mask_dongero",     "Don Gero's Mask",        "Reward for gathering the frogs at the Woodfall spring.",                      "", CKI_SPRITE, MSPR_MASK_DONGERO, CK_SCANEQ, MASKS_BASE, 0x42, MASKS_LEN },
+    { "mask_kamaro",      "Kamaro's Mask",          "Left behind after learning Kamaro's dance.",                                  "", CKI_SPRITE, MSPR_MASK_KAMARO, CK_SCANEQ, MASKS_BASE, 0x43, MASKS_LEN },
+    { "mask_captain",     "Captain's Hat",          "Found inside the Pirates' Fortress.",                                         "", CKI_SPRITE, MSPR_MASK_CAPTAIN, CK_SCANEQ, MASKS_BASE, 0x44, MASKS_LEN },
+    { "mask_stone",       "Stone Mask",             "Makes most enemies and NPCs ignore you.",                                     "", CKI_SPRITE, MSPR_MASK_STONE, CK_SCANEQ, MASKS_BASE, 0x45, MASKS_LEN },
+    { "mask_bremen",      "Bremen Mask",            "Makes young animals march behind you.",                                       "", CKI_SPRITE, MSPR_MASK_BREMEN, CK_SCANEQ, MASKS_BASE, 0x46, MASKS_LEN },
+    { "mask_blast",       "Blast Mask",             "Reward from the West Clock Town bomb shop owner.",                            "", CKI_SPRITE, MSPR_MASK_BLAST, CK_SCANEQ, MASKS_BASE, 0x47, MASKS_LEN },
+    { "mask_scents",      "Mask of Scents",         "Lets you smell nearby hidden things.",                                        "", CKI_SPRITE, MSPR_MASK_SCENTS, CK_SCANEQ, MASKS_BASE, 0x48, MASKS_LEN },
+    { "mask_giant",       "Giant's Mask",           "Turns Link giant-sized - required for the final boss.",                       "", CKI_SPRITE, MSPR_MASK_GIANT, CK_SCANEQ, MASKS_BASE, 0x49, MASKS_LEN },
 };
 
 // Stray Fairies (4 dungeons): CONFIRMED address range 0x7763E8-0x7763EB, one byte per dungeon
 // holding a 0-15 count (not a bitmask - "All Stray Fairies" fills each with 0x0F = 15). Tracking
 // is per-dungeon (15/15), not per-fairy - the save data doesn't expose which specific fairy.
 static const ChkItem CK_FAIRIES[] = {
-    // key             task                          hint                          loc icon      arg kind        addr      mask
-    { "fairy_woodfall", "Woodfall Stray Fairies",    "All 15 collected in Woodfall Temple.",   "", CKI_SKULL, 0, CK_BYTEEQ, 0x7763E8, 0x0F },
-    { "fairy_snowhead", "Snowhead Stray Fairies",    "All 15 collected in Snowhead Temple.",   "", CKI_SKULL, 0, CK_BYTEEQ, 0x7763E9, 0x0F },
-    { "fairy_greatbay", "Great Bay Stray Fairies",   "All 15 collected in Great Bay Temple.",  "", CKI_SKULL, 0, CK_BYTEEQ, 0x7763EA, 0x0F },
-    { "fairy_ikana",    "Ikana Stray Fairies",       "All 15 collected in Stone Tower Temple.", "", CKI_SKULL, 0, CK_BYTEEQ, 0x7763EB, 0x0F },
+    // key             task                          hint                                                                    loc icon      arg kind        addr      mask
+    { "fairy_woodfall", "Woodfall Stray Fairies",    "All 15 collected. MM3D reward: Great Spin Attack (swapped from N64's Snowhead).", "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763E8, 0x0F },
+    { "fairy_snowhead", "Snowhead Stray Fairies",    "All 15 collected. MM3D reward: Double Magic Meter (swapped from N64's Woodfall).", "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763E9, 0x0F },
+    { "fairy_greatbay", "Great Bay Stray Fairies",   "All 15 collected. Reward: Enhanced Defense.",                          "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763EA, 0x0F },
+    { "fairy_ikana",    "Stone Tower Stray Fairies", "All 15 collected. Reward: Great Fairy's Sword.",                       "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763EB, 0x0F },
+    { "fairy_clocktown", "Clock Town Stray Fairy",   "The 61st fairy - Laundry Pool by day, Stock Pot Inn area by night. Reward: Great Fairy's Mask.", "", CKI_SPRITE, MSPR_FAIRY, CK_MANUAL, 0, 0 },
 };
 
-// Gear upgrades: all four addresses are already CONFIRMED cheat targets elsewhere in this
-// plugin (Battle/Inventory folders), reused here as auto-detected checklist entries.
-static const ChkItem CK_GEAR[] = {
-    // key           task                       hint                                                loc icon        arg kind        addr      mask
-    { "gear_defense", "Enhanced Defense",       "Halves damage taken.",                              "", CKI_KEYITEM, 0, CK_NONZERO, 0x776320, 0x00 },
-    { "gear_gilded",  "Gilded Sword",           "The final sword upgrade.",                          "", CKI_KEYITEM, 0, CK_BYTEEQ,  0x776352, 0x23 },
-    { "gear_magic",   "Magic Meter",            "Unlocks the magic bar.",                            "", CKI_KEYITEM, 0, CK_NONZERO, 0x77631E, 0x00 },
-    { "gear_dmagic",  "Double Magic",           "Doubles the magic meter's capacity.",               "", CKI_KEYITEM, 0, CK_NONZERO, 0x77631F, 0x00 },
+// Bosses (4): NOT directly save-file confirmed, but decoded by cross-referencing the zeldaret/mm
+// N64 decompilation's `QuestItem` enum (include/z64item.h) against our own CONFIRMED 3-byte
+// quest field (0x7763D0-0x7763D2, already used by the "All Bosses and Songs" cheat). That enum's
+// 24 entries (0x00-0x17) line up exactly with 24 bits across those 3 bytes - byte0=bits 0-7,
+// byte1=bits 8-15, byte2=bits 16-23, LSB first. Decoding the CONFIRMED 100%-save value for that
+// field (0xCF 0xF7 0xCF) against the enum: bits 0-3 (ODOLWA/GOHT/GYORG/TWINMOLD) are all 1, which
+// is exactly what a 100% save should show - strong evidence the bit order/layout guess is right.
+// Still not hardware bit-tested, so flagged accordingly - the byte-level "does this equal
+// 0xCF/0xF7/0xCF" version of this cheat IS confirmed, individual bits within it aren't.
+static const ChkItem CK_BOSSES[] = {
+    { "boss_odolwa",   "Odolwa",   "Woodfall Temple.",   "", CKI_SPRITE, MSPR_BOSS_REMAINS, CK_BIT, 0x7763D0, 0x01 },
+    { "boss_goht",     "Goht",     "Snowhead Temple.",   "", CKI_SPRITE, MSPR_BOSS_REMAINS, CK_BIT, 0x7763D0, 0x02 },
+    { "boss_gyorg",    "Gyorg",    "Great Bay Temple.",  "", CKI_SPRITE, MSPR_BOSS_REMAINS, CK_BIT, 0x7763D0, 0x04 },
+    { "boss_twinmold", "Twinmold", "Stone Tower Temple.", "", CKI_SPRITE, MSPR_BOSS_REMAINS, CK_BIT, 0x7763D0, 0x08 },
+};
+
+// Heart Pieces (52 = 13 extra Heart Containers). No known save address for individual pieces -
+// all manual. MM3D swapped exactly one from the N64 original: Koume's Boat-Cruise Target
+// Shooting (Swamp Tourist Center) now gives a Bottle instead of a Heart Piece, and the Dampe
+// grave-digging game (Ikana Graveyard, Final Night) gives a Heart Piece instead of a Bottle -
+// net count (52) is unchanged, but the LOCATION is, so this list reflects the MM3D placement.
+static const ChkItem CK_HEARTS[] = {
+    // key       task                          hint                                                                 loc icon      arg kind      addr mask
+    { "hp_01", "Deku Flower Deed (South Clock Town)", "Trade the Moon's Tear for the Land Title Deed.",             "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_02", "North Clock Town tree climb",   "Climb the tree using blocks to reach the Bunny Hood platform.",    "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_03", "Swordsman's School",            "Clear the Expert Course, West Clock Town.",                        "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_04", "Deku Scrub Playground",         "Win all 3 days, North Clock Town.",                                "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_05", "Post Office timing game",       "East Clock Town Post Office.",                                     "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_06", "Rosa Sisters dance",            "Dance for them at night wearing Kamaro's Mask, West Clock Town.",  "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_07", "Stock Pot Inn toilet hand",     "Trade the Town Title Deed, Final Night only.",                     "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_08", "Keaton Quiz",                   "Wear Keaton Mask, cut every patch of grass first.",                "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_09", "Mailbox check",                 "Wear the Postman's Hat and check a mailbox.",                     "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_10", "Town Shooting Gallery",         "Perfect run, East Clock Town.",                                    "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_11", "Honey & Darling's",             "Win all 3 days, East Clock Town.",                                 "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_12", "Treasure Chest Shop",           "Win as Goron Link, East Clock Town.",                              "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_13", "Anju's Grandmother, story 1",   "Listen to her first story, wearing the All-Night Mask.",           "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_14", "Anju's Grandmother, story 2",   "Listen to her second story, wearing the All-Night Mask.",          "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_15", "Mayor's Residence meeting",     "Wear the Couple's Mask, end the never-ending meeting.",            "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_16", "Clock Town Bank",               "Deposit 5000 rupees total.",                                       "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_17", "Termina Field grotto",          "Underground hole, Termina Field.",                                 "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_18", "Dodongo grotto",                "Defeat all 3 Dodongos, Termina Field.",                            "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_19", "Business Scrub (Termina Field)", "Buy for 100 rupees near the Astral Observatory.",                 "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_20", "Gossip Stones",                 "Play the right songs at all 4 stones, Termina Field.",             "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_21", "Beehive underwater",            "Bomb the boulder, dive as Zora Link, Termina Field.",              "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_22", "Road to Southern Swamp bats",   "Climb up past the bats and vines.",                                "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_23", "Swamp Deku Flower Deed",        "Trade for the Land Title Deed, Swamp Tourist Center.",             "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_24", "Swamp pictograph contest",      "Photo of the Deku King or Tingle, Swamp Tourist Center.",          "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_25", "Deku Palace maze",              "West Garden maze, Deku Palace.",                                   "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_26", "Woodfall Deku Flower ring",     "Hop the ring of flowers, Woodfall.",                               "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_27", "Swamp Shooting Gallery",        "Perfect run, Road to Southern Swamp.",                             "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_28", "Mountain Deku Flower Deed",     "Trade for the Land Title Deed, Goron Village.",                    "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_29", "Road to Snowhead platforms",    "Invisible/ice platforms - use the Lens of Truth.",                 "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_30", "Underwater chest (Goron Village)", "After Goht is defeated and the river thaws.",                   "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_31", "Frog Choir",                    "Reunite all 5 frogs with Don Gero's Mask, Mountain Village.",      "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_32", "Doggy Racetrack",               "Win 150 rupees in one race, Romani Ranch.",                        "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_33", "Ocean Deku Flower Deed",        "Trade for the Land Title Deed, Zora Hall rooftop area.",           "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_34", "Marine Research Lab tank",      "Feed the tank fish until it grows.",                               "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_35", "Like Like (Zora Cape)",         "Kill it as Zora Link.",                                            "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_36", "Pirates' Fortress switch",      "Hidden switch/chest inside the fortress.",                        "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_37", "Seahorse reunion",              "Reunite the seahorses, Pinnacle Rock.",                            "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_38", "Zora Hall jam session",         "Mikau's diary / join Lulu's band, Evan's song.",                   "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_39", "Beaver Race #2",                "Win the second, faster race, Zora Cape.",                          "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_40", "Great Bay Coast bean ledge",    "Hookshot up to the high ledge, plant a Magic Bean.",               "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_41", "Oceanside Spider House secret", "Fireplace secret room chest.",                                     "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_42", "Fisherman's jumping game",      "Score 20+, after clearing Great Bay Temple.",                      "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_43", "Ikana Deku Flower Deed",        "Trade for the Land Title Deed, Ikana Canyon.",                     "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_44", "Iron Knuckle (Graveyard)",      "Wear the Captain's Hat, Day 1 night, Ikana Graveyard.",            "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_45", "Dampe's grave dig",             "Ikana Graveyard, Final Night only. MM3D: Heart Piece here (was a Bottle in N64).", "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_46", "Poe Sisters",                   "Catch all 4 within the time limit, Beneath the Graveyard.",        "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_47", "Ancient Castle of Ikana roof",  "Rooftop pillar switch.",                                           "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_48", "Secret Shrine",                 "Light Arrow door, defeat all 4 mini-bosses, Ikana Canyon.",        "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_49", "Moon: Deku trial",              "Odolwa's dungeon on the Moon.",                                    "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_50", "Moon: Goron trial",             "Goht's dungeon on the Moon.",                                      "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_51", "Moon: Zora trial",              "Gyorg's dungeon on the Moon.",                                     "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_52", "Moon: Link trial",              "Twinmold's dungeon on the Moon.",                                  "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+};
+
+// Songs (13 in MM3D, one more than N64's 12: Song of Storms is new). 11 of 13 auto-detect via
+// the same bit-decoded 0x7763D0-0x7763D2 field as CK_BOSSES above (see that comment for the
+// decode methodology and confidence caveat) - Inverted Song of Time and Song of Double Time stay
+// manual since they're just the Song of Time played differently, not separately-learned songs
+// with their own flag. Note colors are a best-effort match to the real in-game Ocarina Songs
+// screen's palette (yellow/gold, red, blue, purple, green, orange badges alongside several
+// identical cyan ones) - we could not find a source individually labeling which exact song gets
+// which color (unlike Masks, where Zelda Wiki had a named icon file per mask), so the per-song
+// color assignment is inferred, not confirmed: Sonata of Awakening=yellow, Goron Lullaby=red,
+// New Wave Bossa Nova=blue, Elegy of Emptiness=purple, Oath to Order=green, Song of Storms=
+// orange, everything else (Time, Healing, Soaring, Epona's, Scarecrow's, both Time variants)
+// stays cyan, matching the majority of the real songs screen.
+static const ChkItem CK_SONGS[] = {
+    { "song_01", "Song of Time",             "Clock Tower, recovered from Skull Kid.",                    "", CKI_NOTE, 0, CK_BIT, 0x7763D1, 0x10 },
+    { "song_02", "Song of Healing",          "Clock Tower, from the Happy Mask Salesman.",                "", CKI_NOTE, 0, CK_BIT, 0x7763D1, 0x20 },
+    { "song_03", "Inverted Song of Time",    "Play the Song of Time backwards.",                          "", CKI_NOTE, 0, CK_MANUAL, 0, 0 },
+    { "song_04", "Song of Double Time",      "Play the Song of Time doubled.",                            "", CKI_NOTE, 0, CK_MANUAL, 0, 0 },
+    { "song_05", "Song of Soaring",          "Kaepora Gaebora, Southern Swamp owl statue.",               "", CKI_NOTE, 0, CK_BIT, 0x7763D1, 0x80 },
+    { "song_06", "Sonata of Awakening",      "From the monkey, Deku Palace.",                             "", CKI_NOTE, 6, CK_BIT, 0x7763D0, 0x40 },
+    { "song_07", "Goron Lullaby",            "Goron Elder + the crying baby, Goron Village.",             "", CKI_NOTE, 2, CK_BIT, 0x7763D0, 0x80 },
+    { "song_08", "Epona's Song",             "From Romani, Romani Ranch.",                                "", CKI_NOTE, 0, CK_BIT, 0x7763D1, 0x40 },
+    { "song_09", "New Wave Bossa Nova",      "The Zora Eggs, Marine Research Lab.",                       "", CKI_NOTE, 3, CK_BIT, 0x7763D1, 0x01 },
+    { "song_10", "Elegy of Emptiness",       "Igos du Ikana, Ancient Castle of Ikana.",                   "", CKI_NOTE, 5, CK_BIT, 0x7763D1, 0x02 },
+    { "song_11", "Oath to Order",            "Odolwa's Giant, after clearing Woodfall Temple.",           "", CKI_NOTE, 1, CK_BIT, 0x7763D1, 0x04 },
+    { "song_12", "Scarecrow's Song",         "Teach it to Pierre (Trading Post / Astral Observatory).",  "", CKI_NOTE, 0, CK_BIT, 0x7763D2, 0x02 },
+    { "song_13", "Song of Storms",           "MM3D-EXCLUSIVE. Beneath the Graveyard, after Flat's eulogy + Iron Knuckle; needs Captain's Hat.", "", CKI_NOTE, 4, CK_BIT, 0x7763D2, 0x01 },
+};
+
+// Bomber's Notebook: MM3D overhauled this to 63 trackable events (the N64 original only tracked
+// 20 people). Completing all 63 puts a ribbon on the notebook header. No known save address -
+// all manual.
+static const ChkItem CK_NOTEBOOK[] = {
+    { "note_01", "A Stay at Stock Pot Inn",       "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_02", "Anju's Anguish",                "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_03", "A Testament of Love",           "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_04", "The Never-Ending Meeting",      "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_05", "Madame Aroma's Search",         "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_06", "A Challenge to Count On",       "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_07", "The Postman's Peril",           "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_08", "Curiosity Shop Rarity",         "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_09", "The Bomb Business",             "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_10", "History of the Carnival",       "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_11", "Termina Mythology",             "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_12", "The Ghost of the Inn",          "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_13", "A Melancholy Melody",           "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_14", "A Dance with Meaning",          "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_15", "Music Moves the Heart",         "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_16", "A Race near Milk Road",         "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_17", "Protect Romani's Cows!",        "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_18", "Protect the Milk!",             "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_19", "Cucco Shack's Cute Chicks",     "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_20", "Find the Stone-Faced Soldier",  "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_21", "Great Fairy of Clock Town",     "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_22", "Great Fairy of the Swamp",      "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_23", "Great Fairy of the Mountains",  "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_24", "Great Fairy of the Ocean",      "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_25", "Great Fairy of the Canyon",     "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_26", "Business Scrub Scramble",       "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_27", "Bank Loyalty Program",          "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_28", "The Suspicious Ocean House",    "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_29", "Target-Shooting Champ",         "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_30", "Swamp Shooting Champ",          "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_31", "Three Days of Gaming",          "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_32", "Lucky Numbers",                 "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_33", "Master Swordsman",              "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_34", "A Treasure-Chest Prize",        "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_35", "Deku Flower Power",             "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_36", "Find a Keaton!",                "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_37", "Secret Gossip",                 "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_38", "Follow That Scrub!",            "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_39", "Pictograph Contest",            "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_40", "The Terrifying Swamp House",    "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_41", "A Potion Hag's New Business",   "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_42", "A Royal Rush",                  "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_43", "A Goron's Grief",               "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_44", "An Explosive Exam",             "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_45", "Goron Races! Rock 'n' Roll!",   "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_46", "A Sharper Sword",               "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_47", "Reunite the Frog Choir",        "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_48", "Win Big at the Doggy Race",     "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_49", "Fishy Friends",                 "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_50", "Spider House Mystery",          "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_51", "A Fish Wish",                   "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_52", "Gimme a Break",                 "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_53", "Race the Beaver Bros.!",        "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_54", "Light It to Right It",          "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_55", "Playing Paparazzi",             "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_56", "A Zora Swan Song",              "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_57", "The Seafarer's Challenge",      "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_58", "Buried Treasure",               "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_59", "Free the Canyon Ghosts",        "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_60", "Vanquished Foes Return",        "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_61", "The Bombers' Code",             "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_62", "Child's Play",                  "", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+    { "note_63", "Fraternal Milk",                "MM3D-EXCLUSIVE quest, also the source of the game's 7th bottle.", "", CKI_SPRITE, MSPR_ALL_ITEMS, CK_MANUAL, 0, 0 },
+};
+
+// Owl Statues (10, save points - checked, not slashed, in MM3D, and they save permanently since
+// Song of Time no longer erases owl saves here). No known save address - all manual.
+static const ChkItem CK_OWLS[] = {
+    { "owl_01", "South Clock Town",     "By the Bank (relocated from beside the Clock Tower in N64).", "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+    { "owl_02", "Milk Road",            "Termina Field, at the Milk Road entrance.",                    "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+    { "owl_03", "Southern Swamp",       "Outside the Swamp Tourist Center.",                            "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+    { "owl_04", "Woodfall",             "In front of Woodfall Temple.",                                 "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+    { "owl_05", "Mountain Village",     "Near the smithy.",                                             "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+    { "owl_06", "Snowhead",             "On the path before Snowhead Temple.",                          "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+    { "owl_07", "Great Bay Coast",      "Near the Marine Research Lab.",                                "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+    { "owl_08", "Zora Cape",            "Outside Zora Hall.",                                           "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+    { "owl_09", "Ikana Canyon",         "Atop the cliff past the broken bridge.",                       "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+    { "owl_10", "Stone Tower",          "At the Stone Tower Temple entrance.",                          "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+};
+
+// Bottles (7 in MM3D, one more than N64's 6 - two changes net one extra: Koume's Boat-Cruise
+// archery gives a Bottle here instead of N64's Heart Piece, AND the Gorman "Fraternal Milk"
+// sidequest is entirely new to MM3D). No known save address for "which bottles you've unlocked"
+// (as opposed to bottle CONTENTS, which the Bottle #1-7 pickers already read/write) - all manual.
+static const ChkItem CK_BOTTLES[] = {
+    { "bottle_01", "Kotake's Red Potion",       "Woods of Mystery, after saving Koume.",                              "", CKI_SPRITE, MSPR_B_REDPOTION, CK_MANUAL, 0, 0 },
+    { "bottle_02", "Koume's Boat-Cruise",       "Target shooting, 20+ points, Swamp Tourist Center. MM3D: Bottle here (was a Heart Piece in N64).", "", CKI_SPRITE, MSPR_B_HOTSPRING, CK_MANUAL, 0, 0 }, // playful stand-in: no bottle art fits an archery minigame
+    { "bottle_03", "Chateau Romani",            "Survive the alien night with Romani, Romani Ranch.",                 "", CKI_SPRITE, MSPR_B_CHATEAU, CK_MANUAL, 0, 0 },
+    { "bottle_04", "Gold Dust",                 "Win the Goron Racetrack after defeating Goht.",                      "", CKI_SPRITE, MSPR_B_GOLDDUST, CK_MANUAL, 0, 0 },
+    { "bottle_05", "Fraternal Milk",             "MM3D-EXCLUSIVE. Gorman + Troupe Leader's Mask, fetch within 2 minutes, Stock Pot Inn/Milk Road.", "", CKI_SPRITE, MSPR_B_MILK, CK_MANUAL, 0, 0 },
+    { "bottle_06", "Beaver Brothers race #1",   "Win the first race, Zora Cape waterfall cave.",                      "", CKI_SPRITE, MSPR_B_FISH, CK_MANUAL, 0, 0 }, // playful stand-in: a fish for a waterfall-cave swimming race
+    { "bottle_07", "Madame Aroma's mail",       "Deliver Priority Mail with Kafei's Mask, Milk Bar.",                 "", CKI_SPRITE, MSPR_BOTTLE, CK_MANUAL, 0, 0 }, // playful stand-in: "message in a bottle" for a mail delivery
+};
+
+// Equipment upgrades. The first four already have CONFIRMED cheat addresses elsewhere in this
+// plugin (Battle/Inventory folders) and auto-detect from them; the rest have no known address
+// and are manual. Great Fairy's Sword is a C-item, not a sword-slot upgrade - tracked here
+// separately from the 3 sword tiers. Wallets are 3 tiers total in MM(3D), not 4.
+static const ChkItem CK_EQUIP[] = {
+    // auto-detected (confirmed addresses)
+    { "eq_gilded",   "Gilded Sword",           "Smithy + Gold Dust. Final sword tier.",                    "", CKI_SPRITE, MSPR_SWORD, CK_BYTEEQ,  0x776352, 0x23 },
+    { "eq_defense",  "Enhanced Defense",       "Great Bay Stray Fairy reward. Halves damage taken.",       "", CKI_SPRITE, MSPR_DEFENSE, CK_NONZERO, 0x776320, 0x00 },
+    { "eq_magic",    "Magic Meter",            "Unlocks the magic bar.",                                   "", CKI_SPRITE, MSPR_MAGIC_FAIRY, CK_NONZERO, 0x77631E, 0x00 },
+    { "eq_dmagic",   "Double Magic",           "Snowhead Stray Fairy reward (MM3D). Doubles magic capacity.", "", CKI_SPRITE, MSPR_MAGIC_FAIRY, CK_NONZERO, 0x77631F, 0x00 },
+    // manual (no known address)
+    { "eq_razor",    "Razor Sword",            "Mountain Smithy, 100 rupees, wait until morning. Reverts on Song of Time.", "", CKI_SPRITE, MSPR_EQ_RAZOR, CK_MANUAL, 0, 0 },
+    { "eq_hero",     "Hero's Shield",          "Starting shield.",                                         "", CKI_SPRITE, MSPR_EQ_HERO, CK_MANUAL, 0, 0 },
+    { "eq_mirror",   "Mirror Shield",          "Big chest, Beneath the Well (Ikana).",                     "", CKI_SPRITE, MSPR_DEFENSE, CK_MANUAL, 0, 0 },
+    { "eq_gfsword",  "Great Fairy's Sword",    "Stone Tower Stray Fairy reward. A C-item, not a sword upgrade.", "", CKI_SPRITE, MSPR_GFSWORD, CK_MANUAL, 0, 0 },
+    { "eq_quiver1",  "Quiver (30)",            "With the Hero's Bow, Woodfall Temple.",                    "", CKI_SPRITE, MSPR_QUIVER, CK_MANUAL, 0, 0 },
+    { "eq_quiver2",  "Large Quiver (40)",      "Town Shooting Gallery, 40+ points.",                       "", CKI_SPRITE, MSPR_EQ_QUIVER2, CK_MANUAL, 0, 0 },
+    { "eq_quiver3",  "Largest Quiver (50)",    "Swamp Shooting Gallery, perfect run.",                     "", CKI_SPRITE, MSPR_EQ_QUIVER3, CK_MANUAL, 0, 0 },
+    { "eq_bombbag1", "Bomb Bag (20)",          "Bomb Shop, 50 rupees.",                                    "", CKI_SPRITE, MSPR_EQ_BOMBBAG1, CK_MANUAL, 0, 0 },
+    { "eq_bombbag2", "Big Bomb Bag (30)",      "Bomb Shop, 90 rupees, after saving the old lady Night 1.", "", CKI_SPRITE, MSPR_EQ_BOMBBAG2, CK_MANUAL, 0, 0 },
+    { "eq_bombbag3", "Biggest Bomb Bag (40)",  "Goron Village Business Scrub, Big Bomb Bag + 200 rupees.", "", CKI_SPRITE, MSPR_EQ_BOMBBAG3, CK_MANUAL, 0, 0 },
+    { "eq_wallet1",  "Adult Wallet (200)",     "Clock Town Bank, deposit 200 rupees.",                     "", CKI_SPRITE, MSPR_WALLET, CK_MANUAL, 0, 0 },
+    { "eq_wallet2",  "Giant Wallet (500)",     "Oceanside Spider House, all 30 Gold Skulltulas (any day in MM3D).", "", CKI_SPRITE, MSPR_EQ_WALLET2, CK_MANUAL, 0, 0 },
 };
 
 static const ChkCat CHK_CATS[] = {
-    { "Masks",         CK_MASKS,   (int)(sizeof(CK_MASKS)   / sizeof(CK_MASKS[0])) },
-    { "Stray Fairies", CK_FAIRIES, (int)(sizeof(CK_FAIRIES) / sizeof(CK_FAIRIES[0])) },
-    { "Gear",          CK_GEAR,    (int)(sizeof(CK_GEAR)    / sizeof(CK_GEAR[0])) },
+    { "Masks",            CK_MASKS,    (int)(sizeof(CK_MASKS)    / sizeof(CK_MASKS[0])) },
+    { "Heart Pieces",     CK_HEARTS,   (int)(sizeof(CK_HEARTS)   / sizeof(CK_HEARTS[0])) },
+    { "Songs",            CK_SONGS,    (int)(sizeof(CK_SONGS)    / sizeof(CK_SONGS[0])) },
+    { "Bosses",           CK_BOSSES,   (int)(sizeof(CK_BOSSES)   / sizeof(CK_BOSSES[0])) },
+    { "Stray Fairies",    CK_FAIRIES,  (int)(sizeof(CK_FAIRIES)  / sizeof(CK_FAIRIES[0])) },
+    { "Bomber's Notebook", CK_NOTEBOOK, (int)(sizeof(CK_NOTEBOOK) / sizeof(CK_NOTEBOOK[0])) },
+    { "Owl Statues",       CK_OWLS,    (int)(sizeof(CK_OWLS)     / sizeof(CK_OWLS[0])) },
+    { "Bottles",           CK_BOTTLES, (int)(sizeof(CK_BOTTLES)  / sizeof(CK_BOTTLES[0])) },
+    { "Equipment",         CK_EQUIP,   (int)(sizeof(CK_EQUIP)    / sizeof(CK_EQUIP[0])) },
 };
 #define CHK_NCATS  ((int)(sizeof(CHK_CATS) / sizeof(CHK_CATS[0])))
-#define CHK_MAXITEMS 32
+#define CHK_MAXITEMS 63
 #define CHK_LEAF "Tracker.txt"
 
 static u8  chkState[CHK_NCATS][CHK_MAXITEMS]; // 0 untouched, 1 auto, 2 you-checked, 3 you-cleared
@@ -4808,8 +5071,20 @@ static void DrawChkIcon(const ChkItem *it, int x, int y, int cell)
 {
     switch (it->iconKind)
     {
-        // With a real sprite sheet you'd add a CKI_SPRITE kind here and blit it via
-        // DrawScaled(x, y, cell * 8, cell * 8, yourPixels, srcW, srcH, 0).
+        case CKI_SPRITE: {
+            // Detail card (cell > 3) uses iconArgBig if this item has one (Owl Statues' bigger
+            // 3D-render crop); every other item and every list row uses the one iconArg key.
+            int key = (cell > 3 && it->iconArgBig) ? it->iconArgBig : it->iconArg;
+            const SpriteRef *s = FindSprite(key);
+            if (s) DrawScaled(x, y, cell * 8, cell * 8, s->px16, SPR16, SPR16, 0);
+            break;
+        }
+        case CKI_SWATCH: {
+            u16 c = it->iconArg;
+            u8 r = (u8)(((c >> 11) & 0x1F) * 255 / 31), g = (u8)(((c >> 5) & 0x3F) * 255 / 63), b = (u8)((c & 0x1F) * 255 / 31);
+            CFill(x, y, cell * 8, cell * 8, r, g, b);
+            break;
+        }
         case CKI_HEART:   DrawBitmapIcon(iconHeartBmp, x, y, cell, 220, 60, 60); break;
         case CKI_SKULL:   DrawBitmapIcon(iconSkullBmp, x, y, cell, 224, 186, 96); break;
         case CKI_NOTE: {
@@ -5090,6 +5365,11 @@ static int ChecklistAutoFill(void)
             if (it->kind == CK_BIT)          got = (R8(it->addr) & it->mask) != 0;
             else if (it->kind == CK_BYTEEQ)  got = R8(it->addr) == it->mask;
             else if (it->kind == CK_NONZERO) got = R8(it->addr) != 0;
+            else if (it->kind == CK_SCANEQ)
+            {
+                for (int o = 0; o < it->scanLen; ++o)
+                    if (R8(it->addr + o) == it->mask) { got = 1; break; }
+            }
             else continue;
             u8 st = chkState[c][i];
             if (got) { if (st == 0 || st == 3) { chkState[c][i] = 1; ++g_afAdd; } }
@@ -5281,8 +5561,8 @@ static void ToolChecklist(void)
             int pageN = CHK_NCATS - pageBase; if (pageN > HUB_PAGESZ) pageN = HUB_PAGESZ;
 
             ComposeBackdrop();
-            CText(WIN_X + 12, WIN_Y + 7, T("Checklist 100%"), INK, 1);
-            CFill(WIN_X + 12, WIN_Y + 24, CTextWidth(T("Checklist 100%")) + 6, 1, GOLD);
+            CText(WIN_X + 12, WIN_Y + 7, T("100% Checklist"), INK, 1);
+            CFill(WIN_X + 12, WIN_Y + 24, CTextWidth(T("100% Checklist")) + 6, 1, GOLD);
             if (hubPages > 1)
             {
                 char pg[16]; siprintf(pg, "%d/%d", page + 1, hubPages);
