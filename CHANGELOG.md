@@ -6,7 +6,15 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–51
+## Unreleased · builds 1–52
+
+### b52 — Owl Statues "Locations" header uppercase, matching CLOCK TOWN/SWAMP/etc.
+
+### Investigation update: Cheat Search narrowing for Owl Statues did not converge (no code change)
+- Second live attempt using the refined Increased/Unchanged-while-idle method (to kill drift from
+  unrelated live-changing values) still landed on 11 surviving addresses after 13 steps, none in
+  the `0x776000`-`0x779000` range where every other confirmed save field lives. Left open; not
+  pursued further this session.
 
 ### b51 — Owl Statues list correction: Snowhead, not Goron Village
 - The 10th real owl statue is **Snowhead**, not Goron Village (user correction to the original
