@@ -73,10 +73,9 @@ static int PickerWrite(const Picker *pk, u8 v)
 // itself is CONFIRMED on hardware (see MM_Warp()); Termina Field (index 4) was the exact entry
 // individually hardware-tested - the rest reuse the same confirmed recipe, not each tested.
 // isOwl: one of MM3D's 10 real Owl Statue warp points (user-supplied list, cross-checked against
-// this table). Mountain Village and Goron Village each get TWO rows here (Spring/Winter scene
-// variants of the same physical statue), so 12 rows carry isOwl=1 for 10 real statues. Snowhead's
-// description used to claim "(from owl statue)" too - that was wrong; the real list does not
-// include it, so its owl flag stays 0 and the description was corrected.
+// this table, later corrected: Snowhead is real, Goron Village is not). Mountain Village keeps
+// TWO isOwl rows (Spring/Winter scene variants of the same physical statue); Snowhead is one row
+// with no season split. 11 rows carry isOwl=1 for 10 real statues.
 //
 // NOT used to drive the Owl Statues Teleport filter directly - that filter needs a specific
 // visiting order the geography-grouped teleportItems[] can't express, so it uses its own ordered
@@ -99,9 +98,9 @@ static const Warp warps[] = {
     // --- Mountain (10..15) ---
     /* 10 */ { "Mountain Village (Spring)", 0xAE80, 0, 1, "Warp to Mountain Village, Spring (from owl statue)." },
     /* 11 */ { "Mountain Village (Winter)", 0x9A80, 0, 1, "Warp to Mountain Village, Winter (from owl statue)." },
-    /* 12 */ { "Goron Village (Spring)",    0x8A00, 0, 1, "Warp to Goron Village, Spring (from owl statue)." },
-    /* 13 */ { "Goron Village (Winter)",    0x9400, 0, 1, "Warp to Goron Village, Winter (from owl statue)." },
-    /* 14 */ { "Snowhead",        0xB230, 0, 0, "Warp to Snowhead." },
+    /* 12 */ { "Goron Village (Spring)",    0x8A00, 0, 0, "Warp to Goron Village, Spring." },
+    /* 13 */ { "Goron Village (Winter)",    0x9400, 0, 0, "Warp to Goron Village, Winter." },
+    /* 14 */ { "Snowhead",        0xB230, 0, 1, "Warp to Snowhead (from owl statue)." },
     /* 15 */ { "Snowhead Temple", 0x3C00, 1, 0, "Warp inside Snowhead Temple." },
     // --- Great Bay (16..19) ---
     /* 16 */ { "Great Bay Coast",  0x68B0, 0, 1, "Warp to Great Bay Coast (from owl statue)." },

@@ -174,9 +174,10 @@ static const char OWL_ORDER_MARK[] = "";
 // are cosmetic grouping only; the Filter row's Overworld/Dungeons split is driven by each warp's
 // `isDungeon` flag, not by which section a row visually sits in. The Owl Statues filter is
 // different: it needs a specific visiting order (South Clock Town, Milk Road, Southern Swamp,
-// Woodfall, Mountain Village, Goron Village, Great Bay Coast, Zora Cape, Ikana Canyon, Stone
-// Tower - user-supplied), not the geography-grouped order the other filters use, so it gets its
-// own duplicate row block at the end instead of reusing the rows above.
+// Woodfall, Mountain Village, Snowhead, Great Bay Coast, Zora Cape, Ikana Canyon, Stone Tower -
+// user-supplied, later corrected: Snowhead is the real 10th statue, not Goron Village), not the
+// geography-grouped order the other filters use, so it gets its own duplicate row block at the
+// end instead of reusing the rows above.
 static const Item teleportItems[] = {
     IT_WARP_WIDE(NULL, 0, NULL),   // Reload current scene (full-width, first)
     IT_TPFILTER,                   // category filter (All / Overworld / Dungeons / Owl Statues)
@@ -204,8 +205,7 @@ static const Item teleportItems[] = {
     IT_WARP(NULL, 8,  OWL_ORDER_MARK), // Woodfall
     IT_WARP(NULL, 10, OWL_ORDER_MARK), // Mountain Village (Spring)
     IT_WARP(NULL, 11, OWL_ORDER_MARK), // Mountain Village (Winter)
-    IT_WARP(NULL, 12, OWL_ORDER_MARK), // Goron Village (Spring)
-    IT_WARP(NULL, 13, OWL_ORDER_MARK), // Goron Village (Winter)
+    IT_WARP(NULL, 14, OWL_ORDER_MARK), // Snowhead
     IT_WARP(NULL, 16, OWL_ORDER_MARK), // Great Bay Coast
     IT_WARP(NULL, 17, OWL_ORDER_MARK), // Zora Cape
     IT_WARP(NULL, 20, OWL_ORDER_MARK), // Ikana Canyon

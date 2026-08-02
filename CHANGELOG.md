@@ -6,7 +6,14 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–50
+## Unreleased · builds 1–51
+
+### b51 — Owl Statues list correction: Snowhead, not Goron Village
+- The 10th real owl statue is **Snowhead**, not Goron Village (user correction to the original
+  list). `isOwl` flipped: Goron Village (Spring/Winter) → 0, Snowhead → 1, with the "(from owl
+  statue)" description text moved to match. The Owl Statues filter's ordered block now shows
+  Snowhead (one row - it has no Spring/Winter split) in place of the two Goron Village rows,
+  between Mountain Village and Great Bay Coast.
 
 ### b50 — Owl Statues "Locations" header + grid header style fixed to match the list
 - Owl Statues filter now shows a "Locations" section header (dim label + gold hairline) between
