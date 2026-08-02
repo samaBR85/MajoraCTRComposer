@@ -42,6 +42,8 @@ static const ChkItem CK_MASKS[] = {
 // Stray Fairies (4 dungeons): CONFIRMED address range 0x7763E8-0x7763EB, one byte per dungeon
 // holding a 0-15 count (not a bitmask - "All Stray Fairies" fills each with 0x0F = 15). Tracking
 // is per-dungeon (15/15), not per-fairy - the save data doesn't expose which specific fairy.
+// Auto-fill CONFIRMED on hardware: applied "All Stray Fairies", saved, reloaded - the Checklist
+// read all 4 dungeon entries as done (4/5, only the manual Clock Town fairy left unchecked).
 static const ChkItem CK_FAIRIES[] = {
     // key             task                          hint                                                                    loc icon      arg kind        addr      mask
     { "fairy_woodfall", "Woodfall Stray Fairies",    "All 15 collected. MM3D reward: Great Spin Attack (swapped from N64's Snowhead).", "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763E8, 0x0F },

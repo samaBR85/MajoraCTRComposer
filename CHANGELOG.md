@@ -8,6 +8,13 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ## Unreleased · builds 1–53
 
+### Stray Fairies checklist auto-fill CONFIRMED on hardware (no code change)
+- Open since build 40 ("Stray Fairies still reading 0/4 against a real 100% save is unresolved").
+  User applied "All Stray Fairies", saved, reloaded - the Checklist correctly read all 4 dungeon
+  entries as done (4/5, only the manual Clock Town fairy left). Confirms both the address
+  (0x7763E8-0x7763EB) and the auto-fill round-trip through an actual save file. Comment updated
+  in `plugin/tracker_data.inc.c`; no functional change.
+
 ### b53 — 22 cheats/pickers marked CONFIRMED on hardware
 User tested every remaining "not yet confirmed" cheat and picker and confirmed all of them work:
 Fill Rupee Bank, Razor Sword + Mirror Shield, Gilded Sword / Great Fairy Sword (B Button), all 7
