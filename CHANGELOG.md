@@ -6,7 +6,14 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–54
+## Unreleased · builds 1–55
+
+### b55 — Clock Town Stray Fairy: hint/location split
+"Clock Town Stray Fairy" had its location crammed into the Hint field (this entry has no save
+address, so it was the only Stray Fairy without a real "Where" reveal). Split: Hint now says only
+the reward ("The 61st fairy. Reward: Great Fairy's Mask."), Where now holds the actual spot
+("Laundry Pool by day, Stock Pot Inn area by night."), revealed the same way every other
+Checklist entry's location is (press {X}).
 
 ### b54 — Checklist hints cleaned of "MM3D reward:"/N64-comparison text
 7 hint strings in `plugin/tracker_data.inc.c` simplified to plain MM3D-only descriptive text,

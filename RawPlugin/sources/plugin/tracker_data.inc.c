@@ -50,7 +50,7 @@ static const ChkItem CK_FAIRIES[] = {
     { "fairy_snowhead", "Snowhead Stray Fairies",    "All 15 collected. Reward: Double Magic Meter.", "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763E9, 0x0F },
     { "fairy_greatbay", "Great Bay Stray Fairies",   "All 15 collected. Reward: Enhanced Defense.",                          "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763EA, 0x0F },
     { "fairy_ikana",    "Stone Tower Stray Fairies", "All 15 collected. Reward: Great Fairy's Sword.",                       "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763EB, 0x0F },
-    { "fairy_clocktown", "Clock Town Stray Fairy",   "The 61st fairy - Laundry Pool by day, Stock Pot Inn area by night. Reward: Great Fairy's Mask.", "", CKI_SPRITE, MSPR_FAIRY, CK_MANUAL, 0, 0 },
+    { "fairy_clocktown", "Clock Town Stray Fairy",   "The 61st fairy. Reward: Great Fairy's Mask.", "Laundry Pool by day, Stock Pot Inn area by night.", CKI_SPRITE, MSPR_FAIRY, CK_MANUAL, 0, 0 },
 };
 
 // Bosses (4): NOT directly save-file confirmed, but decoded by cross-referencing the zeldaret/mm
