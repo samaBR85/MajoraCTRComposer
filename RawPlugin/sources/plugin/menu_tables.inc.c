@@ -195,6 +195,9 @@ static const Item teleportItems[] = {
     IT_SEP("RANCH / MOON"),
     IT_WARP(NULL, 23, NULL), IT_WARP(NULL, 24, NULL), IT_WARP(NULL, 25, NULL),
     // ---- Owl Statues visiting order (shown ONLY under that filter - see ItemHidden) ----
+    // Can't use IT_SEP() here - it hardcodes desc=NULL, and this header needs OWL_ORDER_MARK in
+    // desc so ItemHidden() shows it only under the Owl Statues filter, like the rows below it.
+    { "Locations", -2, -1, -1, OWL_ORDER_MARK, -1, -1, 0 },
     IT_WARP(NULL, 1,  OWL_ORDER_MARK), // South Clock Town
     IT_WARP(NULL, 24, OWL_ORDER_MARK), // Milk Road
     IT_WARP(NULL, 6,  OWL_ORDER_MARK), // Southern Swamp

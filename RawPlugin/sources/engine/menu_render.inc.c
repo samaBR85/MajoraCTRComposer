@@ -364,9 +364,9 @@ static void ComposeMenu(const Folder *fld, int depth, int cursor, int scroll)
             if (g_rlSep[i])
             {
                 const char *sec = T(fld->items[i].label);
-                CText6(ROW_X, dy + 3, sec, 150, 140, 112); // small dim label
+                CText6(ROW_X, dy + 3, sec, INK_DIM); // matches the list-mode header style (DrawMenuItem)
                 int lx = ROW_X + C6Width(sec) + 6;
-                CFill(lx, dy + 6, (WIN_X + WIN_W - 14) - lx, 1, 120, 98, 50); // hairline rule
+                CFill(lx, dy + 6, (WIN_X + WIN_W - 14) - lx, 1, GOLD); // hairline rule
             }
             else if (g_rlCol[i] == -2) // wide row: full row width, no column offset
                 DrawMenuItem(&fld->items[i], ROW_X, dy, ROW_W - 8, i == cursor, 0);

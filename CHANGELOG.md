@@ -6,7 +6,19 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–49
+## Unreleased · builds 1–50
+
+### b50 — Owl Statues "Locations" header + grid header style fixed to match the list
+- Owl Statues filter now shows a "Locations" section header (dim label + gold hairline) between
+  the Filter row and the destinations, matching how Overworld/Dungeons show "CLOCK TOWN" etc.
+  Implemented as a raw `Item` literal (not `IT_SEP()`, which hardcodes `desc=NULL`) carrying the
+  `OWL_ORDER_MARK` tag so it's shown only under that filter, same as the rows below it.
+- **Found and fixed a real bug while matching the styles**: the 2-column grid layout (used by the
+  "All" Teleport filter and HOME) drew section headers with hardcoded RGB triples
+  (`150,140,112` / `120,98,50`) instead of the theme-aware `INK_DIM`/`GOLD` macros the
+  single-column list uses (`engine/menu_render.inc.c`, `DrawMenuItem`'s `IS_SEP` branch). Every
+  grid-mode header (HOME's own section headers included, not just Teleport's) was rendering in a
+  fixed color instead of following the active theme. Now both paths call the same macros.
 
 ### b49 — Owl Statues filter now follows the requested visiting order
 - The Owl Statues filter (build 48) listed entries in the same geography-grouped order as
