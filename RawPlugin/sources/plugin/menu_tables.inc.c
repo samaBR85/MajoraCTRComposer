@@ -81,7 +81,7 @@ static const Item timeItems[] = {
 };
 
 // MM3D Battle cheats. Addresses derived from the offline save-file map (SaveGames/, anchored at
-// RAM = file_offset + 0x7761D8; see references/) - NOT yet confirmed on hardware.
+// RAM = file_offset + 0x7761D8; see references/). All 4 CONFIRMED on hardware.
 // USA, v1.1.0 (0004000000125500).
 static const Item battleItems[] = {
     IT_CHEAT("Refill Hearts", CH_MM_REFILL_HEARTS, "CONFIRMED on hardware. Fills current health up to your real max (reads capacity from 0x776312, writes it to 0x776314). Applies once."),
@@ -91,54 +91,54 @@ static const Item battleItems[] = {
 };
 
 // MM3D Inventory cheats. Max Rupees is CONFIRMED on hardware (Cheat Search: 27 -> 57, poked
-// 0x776318, in-game counter matched). The rest are derived from the save-file map and NOT yet
-// confirmed. USA, v1.1.0 (0004000000125500).
+// 0x776318, in-game counter matched). All others in this folder are also CONFIRMED on hardware.
+// USA, v1.1.0 (0004000000125500).
 static const Item inventoryItems[] = {
     IT_CHEAT("Max Rupees (999)", CH_MM_RUPEES_MAX, "CONFIRMED on hardware. Holds your rupee count at 999 while active. Address 0x776318, u16."),
-    IT_CHEAT("Fill Rupee Bank (5499)", CH_MM_BANK_FILL, "Not yet confirmed on hardware. Fills your Rupee Bank balance. Applies once. Address 0x777408, u16 = 0x157B. Outside the mapped save block, but the same address style as the confirmed Fishing Hole Pass (no v1.0/v1.1 split), so likely stable."),
+    IT_CHEAT("Fill Rupee Bank (5499)", CH_MM_BANK_FILL, "CONFIRMED on hardware. Fills your Rupee Bank balance. Applies once. Address 0x777408, u16 = 0x157B."),
     IT_CHEAT("Gilded Sword + Mirror Shield", CH_MM_GILDED_MIRROR, "CONFIRMED on hardware. Grants the Gilded Sword and Mirror Shield. Applies once. Address 0x776352, u8 = 0x23."),
-    IT_CHEAT("Razor Sword + Mirror Shield", CH_MM_RAZOR_MIRROR, "Not yet confirmed on hardware. Grants the Razor Sword and Mirror Shield - same address as the Gilded Sword cheat, different tier. Applies once. Address 0x776352, u8 = 0x22."),
+    IT_CHEAT("Razor Sword + Mirror Shield", CH_MM_RAZOR_MIRROR, "CONFIRMED on hardware. Grants the Razor Sword and Mirror Shield - same address as the Gilded Sword cheat, different tier. Applies once. Address 0x776352, u8 = 0x22."),
     IT_CHEAT("Large Quiver + Big Bomb Bag", CH_MM_QUIVER_BOMBBAG, "CONFIRMED on hardware. Grants a quiver/bomb bag upgrade tier (exact sizes unverified - matches the AR code's own value). Applies once. Address 0x7763CC, u16 = 0x201B."),
     IT_FOLDER("Items (Max/Inf ammo)", F_AMMO),
     IT_FOLDER("Bottles", F_BOTTLES),
     IT_SEP("B BUTTON ITEM"),
-    IT_CHEAT("Gilded Sword",      CH_BBUTTON_GILDED,  "Not yet confirmed on hardware. Equips the Gilded Sword on the B button. Applies once. Address 0x77632A, u8 = 0x4F."),
-    IT_CHEAT("Great Fairy Sword", CH_BBUTTON_GFSWORD, "Not yet confirmed on hardware. Equips the Great Fairy Sword on the B button. Applies once. Address 0x77632A, u8 = 0x50."),
+    IT_CHEAT("Gilded Sword",      CH_BBUTTON_GILDED,  "CONFIRMED on hardware. Equips the Gilded Sword on the B button. Applies once. Address 0x77632A, u8 = 0x4F."),
+    IT_CHEAT("Great Fairy Sword", CH_BBUTTON_GFSWORD, "CONFIRMED on hardware. Equips the Great Fairy Sword on the B button. Applies once. Address 0x77632A, u8 = 0x50."),
 };
 
 // Bottle contents get their own 2-column grid folder (same layout as Teleport/HOME) - 7 pickers
 // with real per-content sprites read a lot better as a grid than crammed into Inventory's list.
+// All 7 CONFIRMED on hardware.
 static const Item bottlesItems[] = {
-    IT_PICKER("Bottle #1", PK_BOTTLE1, "Not yet confirmed on hardware. Sets what Bottle #1 holds. Address 0x776384 is CONFIRMED (already used by Have all Items); the content values are from two independent community AR-code lists that agree, but not hardware-tested here."),
-    IT_PICKER("Bottle #2", PK_BOTTLE2, "Not yet confirmed on hardware. Sets what Bottle #2 holds. Address 0x776385 CONFIRMED; content values not individually hardware-tested."),
-    IT_PICKER("Bottle #3", PK_BOTTLE3, "Not yet confirmed on hardware. Sets what Bottle #3 holds. Address 0x776386 CONFIRMED; content values not individually hardware-tested."),
-    IT_PICKER("Bottle #4", PK_BOTTLE4, "Not yet confirmed on hardware. Sets what Bottle #4 holds. Address 0x776387 CONFIRMED; content values not individually hardware-tested."),
-    IT_PICKER("Bottle #5", PK_BOTTLE5, "Not yet confirmed on hardware. Sets what Bottle #5 holds. Address 0x776388 CONFIRMED; content values not individually hardware-tested."),
-    IT_PICKER("Bottle #6", PK_BOTTLE6, "Not yet confirmed on hardware. Sets what Bottle #6 holds. Address 0x776389 CONFIRMED; content values not individually hardware-tested."),
-    IT_PICKER("Bottle #7", PK_BOTTLE7, "Not yet confirmed on hardware. Sets what Bottle #7 holds. Address 0x77638A CONFIRMED; content values not individually hardware-tested."),
+    IT_PICKER("Bottle #1", PK_BOTTLE1, "CONFIRMED on hardware. Sets what Bottle #1 holds. Address 0x776384."),
+    IT_PICKER("Bottle #2", PK_BOTTLE2, "CONFIRMED on hardware. Sets what Bottle #2 holds. Address 0x776385."),
+    IT_PICKER("Bottle #3", PK_BOTTLE3, "CONFIRMED on hardware. Sets what Bottle #3 holds. Address 0x776386."),
+    IT_PICKER("Bottle #4", PK_BOTTLE4, "CONFIRMED on hardware. Sets what Bottle #4 holds. Address 0x776387."),
+    IT_PICKER("Bottle #5", PK_BOTTLE5, "CONFIRMED on hardware. Sets what Bottle #5 holds. Address 0x776388."),
+    IT_PICKER("Bottle #6", PK_BOTTLE6, "CONFIRMED on hardware. Sets what Bottle #6 holds. Address 0x776389."),
+    IT_PICKER("Bottle #7", PK_BOTTLE7, "CONFIRMED on hardware. Sets what Bottle #7 holds. Address 0x77638A."),
 };
 
 // MM3D ammo max/inf toggles. Addresses and per-slot values are from the AR code list
-// (references/mm3d-ar-cheats-usa-0004000000125500.txt) - the offline save-file map could not
-// independently confirm which slot is which, so these are NOT yet confirmed on hardware.
+// (references/mm3d-ar-cheats-usa-0004000000125500.txt). All 7 CONFIRMED on hardware.
 static const Item ammoItems[] = {
-    IT_CHEAT("Max/Inf Arrows",      CH_MM_AMMO_ARROWS, "Not yet confirmed on hardware. Holds your arrow count at 99 while active. Address 0x776391, u8."),
-    IT_CHEAT("Max/Inf Bombs",       CH_MM_AMMO_BOMBS,  "Not yet confirmed on hardware. Holds your bomb count at 99 while active. Address 0x776396, u8."),
-    IT_CHEAT("Max/Inf Bombchus",    CH_MM_AMMO_CHUS,   "Not yet confirmed on hardware. Holds your Bombchu count at 99 while active. Address 0x776397, u8."),
-    IT_CHEAT("Max/Inf Deku Sticks", CH_MM_AMMO_STICKS, "Not yet confirmed on hardware. Holds your Deku Stick count at 99 while active. Address 0x776398, u8."),
-    IT_CHEAT("Max/Inf Deku Nuts",   CH_MM_AMMO_NUTS,   "Not yet confirmed on hardware. Holds your Deku Nut count at 50 while active. Address 0x776399, u8."),
-    IT_CHEAT("Max/Inf Magic Beans", CH_MM_AMMO_BEANS,  "Not yet confirmed on hardware. Holds your Magic Bean count at 99 while active. Address 0x77639A, u8."),
-    IT_CHEAT("Max/Inf Powder Keg",  CH_MM_AMMO_KEG,    "Not yet confirmed on hardware. Holds your Powder Keg count at 99 while active. Address 0x77639C, u8."),
+    IT_CHEAT("Max/Inf Arrows",      CH_MM_AMMO_ARROWS, "CONFIRMED on hardware. Holds your arrow count at 99 while active. Address 0x776391, u8."),
+    IT_CHEAT("Max/Inf Bombs",       CH_MM_AMMO_BOMBS,  "CONFIRMED on hardware. Holds your bomb count at 99 while active. Address 0x776396, u8."),
+    IT_CHEAT("Max/Inf Bombchus",    CH_MM_AMMO_CHUS,   "CONFIRMED on hardware. Holds your Bombchu count at 99 while active. Address 0x776397, u8."),
+    IT_CHEAT("Max/Inf Deku Sticks", CH_MM_AMMO_STICKS, "CONFIRMED on hardware. Holds your Deku Stick count at 99 while active. Address 0x776398, u8."),
+    IT_CHEAT("Max/Inf Deku Nuts",   CH_MM_AMMO_NUTS,   "CONFIRMED on hardware. Holds your Deku Nut count at 50 while active. Address 0x776399, u8."),
+    IT_CHEAT("Max/Inf Magic Beans", CH_MM_AMMO_BEANS,  "CONFIRMED on hardware. Holds your Magic Bean count at 99 while active. Address 0x77639A, u8."),
+    IT_CHEAT("Max/Inf Powder Keg",  CH_MM_AMMO_KEG,    "CONFIRMED on hardware. Holds your Powder Keg count at 99 while active. Address 0x77639C, u8."),
 };
 
 // MM3D Quest cheats. All decoded from the AR code list's conditional/loop opcodes and
 // cross-checked against the save-file map (see references/ + CTRComposer-Repo-Kickoff.md).
-// CONFIRMED-status per cheat noted below; not yet exercised on hardware.
+// All 4 CONFIRMED on hardware.
 static const Item questItems[] = {
-    IT_CHEAT("Have all Items", CH_MM_ALL_ITEMS, "Not yet confirmed on hardware. Fills the 16 main item slots (0x776355-0x776364), byte-for-byte matching a real 100%-save item array. Applies once."),
-    IT_CHEAT("Have all Masks", CH_MM_ALL_MASKS, "Not yet confirmed on hardware. Fills all 24 mask slots (0x77636C-0x776383) with the acquisition-order id sequence 0x32-0x49, matching a real 100% save exactly. Applies once."),
-    IT_CHEAT("All Bosses and Songs", CH_MM_ALL_BOSSES_SONGS, "Not yet confirmed on hardware. Sets the boss/song bitfields to the values read from a real 100% save (0xCF 0xF7 0xCF) - NOT the AR code's own 0xFF 0xFF 0xFF, which doesn't match any legitimate save. Address 0x7763D0-0x7763D2. Applies once."),
-    IT_CHEAT("All Stray Fairies", CH_MM_ALL_FAIRIES, "Not yet confirmed on hardware. Fills all four dungeon stray-fairy bytes (0x7763E8-0x7763EB) - the AR code's own version only fills one. Applies once."),
+    IT_CHEAT("Have all Items", CH_MM_ALL_ITEMS, "CONFIRMED on hardware. Fills the 16 main item slots (0x776355-0x776364), byte-for-byte matching a real 100%-save item array. Applies once."),
+    IT_CHEAT("Have all Masks", CH_MM_ALL_MASKS, "CONFIRMED on hardware. Fills all 24 mask slots (0x77636C-0x776383) with the acquisition-order id sequence 0x32-0x49, matching a real 100% save exactly. Applies once."),
+    IT_CHEAT("All Bosses and Songs", CH_MM_ALL_BOSSES_SONGS, "CONFIRMED on hardware. Sets the boss/song bitfields to the values read from a real 100% save (0xCF 0xF7 0xCF) - NOT the AR code's own 0xFF 0xFF 0xFF, which doesn't match any legitimate save. Address 0x7763D0-0x7763D2. Applies once."),
+    IT_CHEAT("All Stray Fairies", CH_MM_ALL_FAIRIES, "CONFIRMED on hardware. Fills all four dungeon stray-fairy bytes (0x7763E8-0x7763EB) - the AR code's own version only fills one. Applies once."),
     IT_CHEAT("Fishing Hole Pass", CH_TEST_FISHING, "CONFIRMED on hardware. Grants the Fishing Hole Pass (lets you borrow a fishing rod for free at either Fishing Hole). Applies once. Address 0x7776C0, u8 = 0x63."),
 };
 

@@ -96,27 +96,25 @@ static int OneShot(int id)
         case CH_MM_TIME_10AM: W8(0x7761F9, 0x6B); return 1;
         case CH_MM_TIME_6PM:  W8(0x7761F9, 0xC0); return 1;
 
-        // MM3D Battle/Inventory one-shots - derived from the save-file map, not yet confirmed
-        // on hardware (see battleItems[]/inventoryItems[] above for evidence per cheat).
+        // MM3D Battle/Inventory one-shots - derived from the save-file map, CONFIRMED on hardware
+        // (see battleItems[]/inventoryItems[] above for evidence per cheat).
         case CH_MM_REFILL_HEARTS: W16(0x776314, R16(0x776312)); return 1;
         case CH_MM_REFILL_MAGIC:  W8(0x776317, R8(0x77631F) ? 0x60 : 0x30); return 1;
         case CH_MM_GILDED_MIRROR: W8(0x776352, 0x23); return 1;
         case CH_MM_RAZOR_MIRROR:  W8(0x776352, 0x22); return 1; // same address, the non-gilded upgrade tier
         case CH_MM_QUIVER_BOMBBAG: W16(0x7763CC, 0x201B); return 1;
 
-        // Rupee bank. Not yet confirmed on hardware - address is outside the mapped 0x776xxx
-        // save block, in the same "0x777xxx, no v1.0/v1.1 split" cluster as Fishing Hole Pass
-        // (which IS confirmed), so reasonably likely to be stable rather than heap-based.
+        // Rupee bank. CONFIRMED on hardware. Address is outside the mapped 0x776xxx save block,
+        // in the same "0x777xxx, no v1.0/v1.1 split" cluster as Fishing Hole Pass.
         case CH_MM_BANK_FILL: W16(0x777408, 0x157B); return 1; // 5499, the AR code's own max
 
-        // B Button item (0x77632A). Address is from the original AR code decode, not yet
-        // independently confirmed via Cheat Search. Fierce Deity Mask is deliberately not
+        // B Button item (0x77632A). CONFIRMED on hardware. Fierce Deity Mask is deliberately not
         // offered here - it duplicates Misc's "Play as..." Fierce Deity row.
         case CH_BBUTTON_GILDED:  W8(0x77632A, 0x4F); return 1;
         case CH_BBUTTON_GFSWORD: W8(0x77632A, 0x50); return 1;
 
         // MM3D Quest one-shots - decoded from the AR list's loop/conditional opcodes,
-        // cross-checked against a real 100% save. Not yet confirmed on hardware.
+        // cross-checked against a real 100% save. CONFIRMED on hardware.
         case CH_MM_ALL_ITEMS:
         {
             static const u8 buf[16] = {
@@ -232,7 +230,7 @@ static void ApplyCheats(void)
         }
     }
 
-    // Ammo max/inf toggles - NOT yet confirmed on hardware (see ammoItems[] above).
+    // Ammo max/inf toggles - CONFIRMED on hardware (see ammoItems[] above).
     if (cheatState[CH_MM_AMMO_ARROWS]) W8(0x776391, 0x63);
     if (cheatState[CH_MM_AMMO_BOMBS])  W8(0x776396, 0x63);
     if (cheatState[CH_MM_AMMO_CHUS])   W8(0x776397, 0x63);

@@ -6,7 +6,15 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–52
+## Unreleased · builds 1–53
+
+### b53 — 22 cheats/pickers marked CONFIRMED on hardware
+User tested every remaining "not yet confirmed" cheat and picker and confirmed all of them work:
+Fill Rupee Bank, Razor Sword + Mirror Shield, Gilded Sword / Great Fairy Sword (B Button), all 7
+Bottle pickers, all 7 Max/Inf ammo toggles, and Have all Items / Have all Masks / All Bosses and
+Songs / All Stray Fairies. In-menu descriptions and source comments updated accordingly. Also
+fixed two stale section-header comments (Battle folder, Ammo folder) that still said "not yet
+confirmed" despite every cheat inside them individually already saying CONFIRMED.
 
 ### b52 — Owl Statues "Locations" header uppercase, matching CLOCK TOWN/SWAMP/etc.
 
