@@ -6,7 +6,17 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–55
+## Unreleased · builds 1–56
+
+### b56 — Checklist spoiler sweep: locations moved from Hint to Where
+Following the Clock Town Stray Fairy split (build 55), swept every category for the same pattern
+- a Hint that states a specific navigable location the task title doesn't already give away - and
+moved that clause into `loc` (the "Where" field, hidden behind a press of {X}) instead. 74 more
+entries changed across Masks (6), Heart Pieces (26), Songs (11), Owl Statues (9, the remaining
+ones after South Clock Town), Bottles (all 7), and Equipment (10). Left alone: entries whose
+location is already stated in the task title, entries with no separate location clause to move,
+and "X Stray Fairy reward" phrasings on auto-detected Equipment (identifying which reward, not
+navigation).
 
 ### b55 — Clock Town Stray Fairy: hint/location split
 "Clock Town Stray Fairy" had its location crammed into the Hint field (this entry has no save
