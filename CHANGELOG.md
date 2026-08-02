@@ -6,7 +6,15 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–53
+## Unreleased · builds 1–54
+
+### b54 — Checklist hints cleaned of "MM3D reward:"/N64-comparison text
+7 hint strings in `plugin/tracker_data.inc.c` simplified to plain MM3D-only descriptive text,
+removing the "MM3D reward:" prefix and any N64-comparison clause ("swapped from N64's...", "was
+a Bottle in N64", etc.): Troupe Leader's Mask, Woodfall/Snowhead Stray Fairies, Dampe's grave
+dig, South Clock Town owl statue, Koume's Boat-Cruise bottle, Double Magic equipment. Source
+comments (not shown in-game) still mention N64 where relevant for context - only player-facing
+hint text was in scope.
 
 ### Stray Fairies checklist auto-fill CONFIRMED on hardware (no code change)
 - Open since build 40 ("Stray Fairies still reading 0/4 against a real 100% save is unresolved").

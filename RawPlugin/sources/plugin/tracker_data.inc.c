@@ -24,7 +24,7 @@ static const ChkItem CK_MASKS[] = {
     { "mask_keaton",      "Keaton Mask",            "Reward for correctly answering Keaton's riddles.",                            "", CKI_SPRITE, MSPR_MASK_KEATON, CK_SCANEQ, MASKS_BASE, 0x3A, MASKS_LEN },
     { "mask_garo",        "Garo's Mask",            "Reward from a Garo Master in Ikana Canyon.",                                  "", CKI_SPRITE, MSPR_GARO_MASK, CK_SCANEQ, MASKS_BASE, 0x3B, MASKS_LEN },
     { "mask_romani",      "Romani's Mask",          "Part of the Romani Ranch quest line.",                                        "", CKI_SPRITE, MSPR_MASK_ROMANI, CK_SCANEQ, MASKS_BASE, 0x3C, MASKS_LEN },
-    { "mask_circus",      "Troupe Leader's Mask",   "Reward from Gorman for the milk delivery side quest (renamed from OoT/N64's Circus Leader's Mask).", "", CKI_SPRITE, MSPR_MASK_TROUPE, CK_SCANEQ, MASKS_BASE, 0x3D, MASKS_LEN },
+    { "mask_circus",      "Troupe Leader's Mask",   "Reward from Gorman for the milk delivery side quest.", "", CKI_SPRITE, MSPR_MASK_TROUPE, CK_SCANEQ, MASKS_BASE, 0x3D, MASKS_LEN },
     { "mask_postman",     "Postman's Hat",          "Reward for helping the Postman.",                                             "", CKI_SPRITE, MSPR_MASK_POSTMAN, CK_SCANEQ, MASKS_BASE, 0x3E, MASKS_LEN },
     { "mask_couple",      "Couple's Mask",          "Final reward of the Anju & Kafei quest.",                                     "", CKI_SPRITE, MSPR_MASK_COUPLE, CK_SCANEQ, MASKS_BASE, 0x3F, MASKS_LEN },
     { "mask_greatfairy",  "Great Fairy's Mask",     "Reward from the Clock Town Great Fairy for collecting Stray Fairies.",        "", CKI_SPRITE, MSPR_MASK_GREATFAIRY, CK_SCANEQ, MASKS_BASE, 0x40, MASKS_LEN },
@@ -46,8 +46,8 @@ static const ChkItem CK_MASKS[] = {
 // read all 4 dungeon entries as done (4/5, only the manual Clock Town fairy left unchecked).
 static const ChkItem CK_FAIRIES[] = {
     // key             task                          hint                                                                    loc icon      arg kind        addr      mask
-    { "fairy_woodfall", "Woodfall Stray Fairies",    "All 15 collected. MM3D reward: Great Spin Attack (swapped from N64's Snowhead).", "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763E8, 0x0F },
-    { "fairy_snowhead", "Snowhead Stray Fairies",    "All 15 collected. MM3D reward: Double Magic Meter (swapped from N64's Woodfall).", "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763E9, 0x0F },
+    { "fairy_woodfall", "Woodfall Stray Fairies",    "All 15 collected. Reward: Great Spin Attack.", "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763E8, 0x0F },
+    { "fairy_snowhead", "Snowhead Stray Fairies",    "All 15 collected. Reward: Double Magic Meter.", "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763E9, 0x0F },
     { "fairy_greatbay", "Great Bay Stray Fairies",   "All 15 collected. Reward: Enhanced Defense.",                          "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763EA, 0x0F },
     { "fairy_ikana",    "Stone Tower Stray Fairies", "All 15 collected. Reward: Great Fairy's Sword.",                       "", CKI_SPRITE, MSPR_FAIRY, CK_BYTEEQ, 0x7763EB, 0x0F },
     { "fairy_clocktown", "Clock Town Stray Fairy",   "The 61st fairy - Laundry Pool by day, Stock Pot Inn area by night. Reward: Great Fairy's Mask.", "", CKI_SPRITE, MSPR_FAIRY, CK_MANUAL, 0, 0 },
@@ -120,7 +120,7 @@ static const ChkItem CK_HEARTS[] = {
     { "hp_42", "Fisherman's jumping game",      "Score 20+, after clearing Great Bay Temple.",                      "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
     { "hp_43", "Ikana Deku Flower Deed",        "Trade for the Land Title Deed, Ikana Canyon.",                     "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
     { "hp_44", "Iron Knuckle (Graveyard)",      "Wear the Captain's Hat, Day 1 night, Ikana Graveyard.",            "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
-    { "hp_45", "Dampe's grave dig",             "Ikana Graveyard, Final Night only. MM3D: Heart Piece here (was a Bottle in N64).", "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
+    { "hp_45", "Dampe's grave dig",             "Ikana Graveyard, Final Night only.", "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
     { "hp_46", "Poe Sisters",                   "Catch all 4 within the time limit, Beneath the Graveyard.",        "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
     { "hp_47", "Ancient Castle of Ikana roof",  "Rooftop pillar switch.",                                           "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
     { "hp_48", "Secret Shrine",                 "Light Arrow door, defeat all 4 mini-bosses, Ikana Canyon.",        "", CKI_SPRITE, MSPR_HEART, CK_MANUAL, 0, 0 },
@@ -242,7 +242,7 @@ static const ChkItem CK_NOTEBOOK[] = {
 // Owl Statues (10, save points - checked, not slashed, in MM3D, and they save permanently since
 // Song of Time no longer erases owl saves here). No known save address - all manual.
 static const ChkItem CK_OWLS[] = {
-    { "owl_01", "South Clock Town",     "By the Bank (relocated from beside the Clock Tower in N64).", "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
+    { "owl_01", "South Clock Town",     "By the Bank.", "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
     { "owl_02", "Milk Road",            "Termina Field, at the Milk Road entrance.",                    "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
     { "owl_03", "Southern Swamp",       "Outside the Swamp Tourist Center.",                            "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
     { "owl_04", "Woodfall",             "In front of Woodfall Temple.",                                 "", CKI_SPRITE, MSPR_OWL_ICON, CK_MANUAL, 0, 0, 0, MSPR_OWL_MODEL },
@@ -260,7 +260,7 @@ static const ChkItem CK_OWLS[] = {
 // (as opposed to bottle CONTENTS, which the Bottle #1-7 pickers already read/write) - all manual.
 static const ChkItem CK_BOTTLES[] = {
     { "bottle_01", "Kotake's Red Potion",       "Woods of Mystery, after saving Koume.",                              "", CKI_SPRITE, MSPR_B_REDPOTION, CK_MANUAL, 0, 0 },
-    { "bottle_02", "Koume's Boat-Cruise",       "Target shooting, 20+ points, Swamp Tourist Center. MM3D: Bottle here (was a Heart Piece in N64).", "", CKI_SPRITE, MSPR_B_HOTSPRING, CK_MANUAL, 0, 0 }, // playful stand-in: no bottle art fits an archery minigame
+    { "bottle_02", "Koume's Boat-Cruise",       "Target shooting, 20+ points, Swamp Tourist Center.", "", CKI_SPRITE, MSPR_B_HOTSPRING, CK_MANUAL, 0, 0 }, // playful stand-in: no bottle art fits an archery minigame
     { "bottle_03", "Chateau Romani",            "Survive the alien night with Romani, Romani Ranch.",                 "", CKI_SPRITE, MSPR_B_CHATEAU, CK_MANUAL, 0, 0 },
     { "bottle_04", "Gold Dust",                 "Win the Goron Racetrack after defeating Goht.",                      "", CKI_SPRITE, MSPR_B_GOLDDUST, CK_MANUAL, 0, 0 },
     { "bottle_05", "Fraternal Milk",             "MM3D-EXCLUSIVE. Gorman + Troupe Leader's Mask, fetch within 2 minutes, Stock Pot Inn/Milk Road.", "", CKI_SPRITE, MSPR_B_MILK, CK_MANUAL, 0, 0 },
@@ -277,7 +277,7 @@ static const ChkItem CK_EQUIP[] = {
     { "eq_gilded",   "Gilded Sword",           "Smithy + Gold Dust. Final sword tier.",                    "", CKI_SPRITE, MSPR_SWORD, CK_BYTEEQ,  0x776352, 0x23 },
     { "eq_defense",  "Enhanced Defense",       "Great Bay Stray Fairy reward. Halves damage taken.",       "", CKI_SPRITE, MSPR_DEFENSE, CK_NONZERO, 0x776320, 0x00 },
     { "eq_magic",    "Magic Meter",            "Unlocks the magic bar.",                                   "", CKI_SPRITE, MSPR_MAGIC_FAIRY, CK_NONZERO, 0x77631E, 0x00 },
-    { "eq_dmagic",   "Double Magic",           "Snowhead Stray Fairy reward (MM3D). Doubles magic capacity.", "", CKI_SPRITE, MSPR_MAGIC_FAIRY, CK_NONZERO, 0x77631F, 0x00 },
+    { "eq_dmagic",   "Double Magic",           "Snowhead Stray Fairy reward. Doubles magic capacity.", "", CKI_SPRITE, MSPR_MAGIC_FAIRY, CK_NONZERO, 0x77631F, 0x00 },
     // manual (no known address)
     { "eq_razor",    "Razor Sword",            "Mountain Smithy, 100 rupees, wait until morning. Reverts on Song of Time.", "", CKI_SPRITE, MSPR_EQ_RAZOR, CK_MANUAL, 0, 0 },
     { "eq_hero",     "Hero's Shield",          "Starting shield.",                                         "", CKI_SPRITE, MSPR_EQ_HERO, CK_MANUAL, 0, 0 },
