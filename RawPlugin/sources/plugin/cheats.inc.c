@@ -182,22 +182,42 @@ static const CodePatch MG_PATCHES[] = {
 };
 #define NUM_MG_PATCHES ((int)(sizeof(MG_PATCHES) / sizeof(MG_PATCHES[0])))
 
+// Write one word into a read-only game page (.text). The process-wide RWX flip (main.c) does NOT
+// make .text writable here - a plain store to it faults and is silently dropped - so we alias the
+// target's physical page at a scratch RW virtual address and write through that. Get a free VA by
+// allocating a page then freeing it (the address stays a valid hole to map into), map the target
+// page there, store, flush that word back to physical RAM, unmap, then invalidate the I-cache at
+// the real address so the CPU refetches the rewritten instruction.
+static int PatchWord(u32 addr, u32 val)
+{
+    u32 page = addr & ~0xFFFu, off = addr & 0xFFFu, scratch = 0, dummy = 0;
+    if (R_FAILED(svcControlMemory(&scratch, 0, 0, 0x1000, MEMOP_ALLOC, MEMPERM_READ | MEMPERM_WRITE)))
+        return 0;
+    svcControlMemory(&dummy, scratch, 0, 0x1000, MEMOP_FREE, 0);
+    if (R_FAILED(svcMapProcessMemoryEx(CUR_PROCESS_HANDLE, scratch, CUR_PROCESS_HANDLE, page, 0x1000)))
+        return 0;
+    *(volatile u32 *)(scratch + off) = val;
+    svcFlushDataCacheRange((void *)(scratch + off), 4);
+    svcUnmapProcessMemoryEx(CUR_PROCESS_HANDLE, scratch, 0x1000);
+    svcInvalidateInstructionCacheRange((void *)addr, 4);
+    return 1;
+}
+
 static void ApplyCodePatches(void)
 {
     static u8 rowOn[NUM_MG_PATCHES];       // per-row edge memory - patch/revert only on a change
-    int changed = 0;
     for (int i = 0; i < NUM_MG_PATCHES; ++i)
     {
         int on = cheatState[MG_PATCHES[i].ch] ? 1 : 0;
         if (on == rowOn[i]) continue;
-        u32 cur = R32(MG_PATCHES[i].addr);
-        if (on) { if (cur == MG_PATCHES[i].orig)  { W32(MG_PATCHES[i].addr, MG_PATCHES[i].patch); changed = 1; } }
-        else    { if (cur == MG_PATCHES[i].patch) { W32(MG_PATCHES[i].addr, MG_PATCHES[i].orig);  changed = 1; } }
+        u32 want = on ? MG_PATCHES[i].patch : MG_PATCHES[i].orig;
+        u32 cur  = R32(MG_PATCHES[i].addr);
+        // Only touch a word we recognise - the recorded original, or our own patch (idempotent /
+        // revert). Anything else is unknown code (wrong version); leave it alone.
+        if (cur != want && (cur == MG_PATCHES[i].orig || cur == MG_PATCHES[i].patch))
+            PatchWord(MG_PATCHES[i].addr, want);
         rowOn[i] = (u8)on;
     }
-    // Instruction rewrites need the D-cache flushed to RAM and the I-cache invalidated, or the CPU
-    // keeps running the stale instruction. Flush once per batch, only when something actually moved.
-    if (changed) { svcFlushEntireDataCache(); svcInvalidateEntireInstructionCache(); }
 }
 
 // Continuous cheats: applied every tick while the menu is CLOSED (game running).

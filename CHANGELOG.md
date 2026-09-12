@@ -6,9 +6,19 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–62
+## Unreleased · builds 1–63
 
-### b62 — Fix: minigame patches never ran (dead code after EXAMPLE guard)
+### b63 — Minigame patches: write .text via a page-mirror SVC
+Build 62's fix made `ApplyCodePatches` run, but the write still did not land: the Hex Editor
+showed the byte unchanged even with the cheat on and the game ticking. Diagnosis: the global
+`PROCESSOP_SET_MMU_TO_RWX` flip does not actually make `.text` writable on hardware here (a
+plain store to it faults and is silently dropped - `MemWritable`/`svcQueryMemory` reports the
+segment read-only, and no existing cheat ever wrote to `.text`; "Can Use All Items" writes to
+`0x776xxx` save RAM, not code). New `PatchWord()` aliases the target's physical page at a
+scratch RW VA (allocate a page, free it for the hole, `svcMapProcessMemoryEx` the target there),
+writes through the alias, flushes that word to RAM, unmaps, then invalidates the I-cache at the
+real address. Fails safe: if the map fails it skips the write rather than crashing. Not yet
+confirmed on hardware.
 `ApplyCodePatches()` was called at the very end of `ApplyCheats()`, but `ApplyCheats` has an
 `if (!EXAMPLE_ENABLED) return;` guard partway through that fences off the inert EXAMPLE
 cheats - and my call sat after it, so it never executed (Easy Town Shooting Gallery toggled
