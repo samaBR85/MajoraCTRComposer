@@ -1,14 +1,3 @@
-static const char *GUIDE_CREDITS =
-    "MajoraCTRComposer - an unofficial fan tool for The Legend of Zelda:\n"
-    "Majora's Mask 3D.\n"
-    "\n"
-    "- Built on the CTRComposer overlay engine.\n"
-    "- In-game sprites adapted from community-ripped Majora's Mask sheets.\n"
-    "- Guide and menu text written for this plugin.\n"
-    "\n"
-    "The Legend of Zelda: Majora's Mask and all game content belong to Nintendo.\n"
-    "Not affiliated with or endorsed by Nintendo.";
-
 static const GuidePage PLUGIN_PAGES[] = {
     { "Overview",
       "This plugin draws its own overlay on top of the running game.\n"

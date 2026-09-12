@@ -778,6 +778,13 @@ static void ToolAbout(void)
         { "",                            0 },
         { "Termina theme art: samaBR",   1 },
         { "(original artwork)",          0 },
+        { "",                            0 },
+        { "Legal",                       1 },
+        { "The Legend of Zelda:",        0 },
+        { "Majora's Mask (c) Nintendo.", 0 },
+        { "Unofficial fan tool, not",    0 },
+        { "affiliated with or endorsed", 0 },
+        { "by Nintendo.",                0 },
 #endif
     };
     int N = (int)(sizeof(lines) / sizeof(lines[0]));

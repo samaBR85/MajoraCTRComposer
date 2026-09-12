@@ -6,7 +6,16 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–58
+## Unreleased · builds 1–60
+
+### b60 — Remove Game Guide "Credits" entry; disclaimer lives in About
+The Game Guide's appended "Credits" page was engine-template filler and out of place next
+to a walkthrough. Dropped it entirely: `ToolGameGuide` no longer appends a Credits row
+(modes reduce to list/pages/reader), and `GUIDE_CREDITS` is deleted. Real credits already
+live on the About screen (engine, cheat-table, icon and art attribution); added a short
+Nintendo ownership / "unofficial fan tool" disclaimer block there so it is not lost.
+(Folds in build 59, which removed the Credits row but was never shipped.)
+
 
 ### b58 — Game Guide reordered as a walkthrough; real Credits
 Reworked the SD guide (`guide/English/game.txt`) from topic-reference order into

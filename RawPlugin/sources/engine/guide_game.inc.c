@@ -1,7 +1,7 @@
 // Navigation state persists so that SELECT-to-game then SELECT-back returns you
 // to the exact page and scroll position you were reading.
-// mode: 0 = category list, 1 = page list, 2 = reader, 3 = credits reader.
-static int g_ggMode = 0, g_ggCatCur = 0, g_ggCat = 0, g_ggPage = 0, g_ggScroll = 0, g_ggCredScroll = 0;
+// mode: 0 = category list, 1 = page list, 2 = reader.
+static int g_ggMode = 0, g_ggCatCur = 0, g_ggCat = 0, g_ggPage = 0, g_ggScroll = 0;
 static void ToolGameGuide(void)
 {
     GuideBottom(T("Game Guide"), T("Your game's content"));
@@ -17,22 +17,14 @@ static void ToolGameGuide(void)
             if (r == 0) return;          // SELECT: stay at mode 2 -> resume here next time
             g_ggMode = 1;                // B -> page list
         }
-        else if (g_ggMode == 3) // reading Credits
-        {
-            int r = GuideReader("Credits", GUIDE_CREDITS, &g_ggCredScroll);
-            if (r == 0) return;
-            g_ggMode = 0;
-        }
         else if (g_ggMode == 0) // category list
         {
-            const char *labels[SDG_MAXCATS + 1];
+            const char *labels[SDG_MAXCATS];
             for (int i = 0; i < ncats; ++i) labels[i] = cats[i].title;
-            labels[ncats] = "Credits";
-            int r = GuideList(T("Game Guide"), labels, ncats + 1, g_ggCatCur, &g_ggCatCur);
+            int r = GuideList(T("Game Guide"), labels, ncats, g_ggCatCur, &g_ggCatCur);
             if (r == -2) { g_quitToGame = 1; return; } // stay at mode 0 -> resume the list
             if (r == -1) return;
-            if (r == ncats) g_ggMode = 3;              // Credits
-            else { g_ggCat = r; g_ggMode = 1; }
+            g_ggCat = r; g_ggMode = 1;
         }
         else // page list
         {
