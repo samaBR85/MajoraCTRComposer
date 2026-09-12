@@ -6,7 +6,18 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–57
+## Unreleased · builds 1–58
+
+### b58 — Game Guide reordered as a walkthrough; real Credits
+Reworked the SD guide (`guide/English/game.txt`) from topic-reference order into
+progression order: Before You Start, Clock Town first cycle, then the four regions in
+play order (Swamp/Woodfall, Mountains/Snowhead, Great Bay, Ikana/Stone Tower), the Moon
+finale, an "Along the Way" tail for side content, and Quick Tips. Each mechanic (Deku/
+Goron/Zora forms, the songs, dungeon items) is now introduced at the point the player
+first meets it, instead of front-loading systems before anything happens. Guide text is
+SD-only, so this needs no rebuild. `GUIDE_CREDITS` (in the binary) was rewritten from
+generic filler into real attribution: CTRComposer engine, community-ripped sprites,
+Nintendo ownership disclaimer.
 
 ### b57 — Game Guide: real Majora's Mask content
 The Game Guide was still the blank CTRComposer template ("This guide is empty"). Filled it with

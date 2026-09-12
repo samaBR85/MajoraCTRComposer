@@ -1,13 +1,13 @@
 static const char *GUIDE_CREDITS =
-    "This guide text is original to the plugin, written to be short and\n"
-    "spoiler-light rather than a full walkthrough. It is not copied from any\n"
-    "published guide.\n"
+    "MajoraCTRComposer - an unofficial fan tool for The Legend of Zelda:\n"
+    "Majora's Mask 3D.\n"
     "\n"
-    "The fuller guide loads from guide/English/game.txt on the SD card, so you\n"
-    "can edit or translate it without rebuilding the plugin.\n"
+    "- Built on the CTRComposer overlay engine.\n"
+    "- In-game sprites adapted from community-ripped Majora's Mask sheets.\n"
+    "- Guide and menu text written for this plugin.\n"
     "\n"
-    "The Legend of Zelda: Majora's Mask and all its content belong to Nintendo.\n"
-    "This is an unofficial fan tool, not affiliated with or endorsed by Nintendo.";
+    "The Legend of Zelda: Majora's Mask and all game content belong to Nintendo.\n"
+    "Not affiliated with or endorsed by Nintendo.";
 
 static const GuidePage PLUGIN_PAGES[] = {
     { "Overview",
