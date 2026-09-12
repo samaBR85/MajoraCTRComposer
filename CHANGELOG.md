@@ -6,7 +6,16 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–56
+## Unreleased · builds 1–57
+
+### b57 — Game Guide: real Majora's Mask content
+The Game Guide was still the blank CTRComposer template ("This guide is empty"). Filled it with
+original, spoiler-light content delivered the intended way: a full guide on the SD card at
+`guide/English/game.txt` (Getting Started, Time & the Song of Time, the four temples one each,
+Tips), which overrides the embedded pages at runtime. The embedded `guide.h` fallback was
+replaced with a short MM3D summary so a missing SD file still shows game content, not template
+placeholder. `GUIDE_CREDITS` now carries real attribution (original text; game © Nintendo).
+English only for now. Plugin Guide was already complete and is unchanged.
 
 ### b56 — Checklist spoiler sweep: locations moved from Hint to Where
 Following the Clock Town Stray Fairy split (build 55), swept every category for the same pattern

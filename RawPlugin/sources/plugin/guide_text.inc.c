@@ -1,16 +1,13 @@
 static const char *GUIDE_CREDITS =
-    "Replace this page with credits for your guide content.\n"
+    "This guide text is original to the plugin, written to be short and\n"
+    "spoiler-light rather than a full walkthrough. It is not copied from any\n"
+    "published guide.\n"
     "\n"
-    "If the walkthrough text is not yours, say so here:\n"
-    "  - who wrote it\n"
-    "  - where it came from\n"
-    "  - that you have permission to redistribute it\n"
+    "The fuller guide loads from guide/English/game.txt on the SD card, so you\n"
+    "can edit or translate it without rebuilding the plugin.\n"
     "\n"
-    "Do the same for anything else you build on: address maps, save-data\n"
-    "research, art, translations. It costs one screen and it is the difference\n"
-    "between a fan project and a rip.\n"
-    "\n"
-    "Game names and game content belong to their publisher.";
+    "The Legend of Zelda: Majora's Mask and all its content belong to Nintendo.\n"
+    "This is an unofficial fan tool, not affiliated with or endorsed by Nintendo.";
 
 static const GuidePage PLUGIN_PAGES[] = {
     { "Overview",
