@@ -378,6 +378,9 @@ static void RunMenu(void)
                 cheatState[it->cheat] ^= 1;
                 if (it->cheat == CH_CFG_TOAST || it->cheat == CH_CFG_AUTOFILL) configDirty = 1; // settings toggles: persist, no self-toast
                 else QueueToast(T(it->label), cheatState[it->cheat]);
+                ApplyCodePatches(); // code patches are applied here (game paused), not only in ApplyCheats:
+                                    // ApplyCheats runs only while the menu is CLOSED, so a toggle-then-check
+                                    // without returning to the game would otherwise never write the .text patch
                 changed = 1;
             }
         }

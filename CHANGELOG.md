@@ -6,43 +6,28 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–63
+## Unreleased · builds 1–75
 
-### b63 — Minigame patches: write .text via a page-mirror SVC
-Build 62's fix made `ApplyCodePatches` run, but the write still did not land: the Hex Editor
-showed the byte unchanged even with the cheat on and the game ticking. Diagnosis: the global
-`PROCESSOP_SET_MMU_TO_RWX` flip does not actually make `.text` writable on hardware here (a
-plain store to it faults and is silently dropped - `MemWritable`/`svcQueryMemory` reports the
-segment read-only, and no existing cheat ever wrote to `.text`; "Can Use All Items" writes to
-`0x776xxx` save RAM, not code). New `PatchWord()` aliases the target's physical page at a
-scratch RW VA (allocate a page, free it for the hole, `svcMapProcessMemoryEx` the target there),
-writes through the alias, flushes that word to RAM, unmaps, then invalidates the I-cache at the
-real address. Fails safe: if the map fails it skips the write rather than crashing. Not yet
-confirmed on hardware.
-`ApplyCodePatches()` was called at the very end of `ApplyCheats()`, but `ApplyCheats` has an
-`if (!EXAMPLE_ENABLED) return;` guard partway through that fences off the inert EXAMPLE
-cheats - and my call sat after it, so it never executed (Easy Town Shooting Gallery toggled
-on but the .text byte stayed original, confirmed in the Hex Editor). Moved the call above the
-guard, next to the other live MM3D cheats. This also makes the build the first real test of
-whether the global RWX flip actually lets a write land in `.text`.
-
-### b61 — Phase 8: minigame code patches (Minigames folder)
+### b75 — Phase 8: minigame code patches (Minigames folder)
 Five instruction-patch cheats in a new **Minigames** folder: Easy Town / Swamp Shooting
-Galleries, Easy Beaver Swimming, Easy Boat & Jump, Auto-win Honey & Darling. Each rewrites
-one (Beaver: two) 4-byte ARM instruction in the game's `.text`, applied on the toggle edge
-and reverted to the captured original when turned off, with a D-cache flush + I-cache
-invalidate per change (`svcFlushEntireDataCache` / `svcInvalidateEntireInstructionCache`).
-The process is already RWX from init, so no per-cheat remap is needed. Each of the six
-addresses was read in the Hex Editor on USA v1.1.0 to confirm the AR address maps 1:1 to the
-plugin's VA and to record the exact original instruction; the patch only fires when the live
-word matches that original, so a wrong version/region is left untouched rather than corrupted.
-Code-patch state is never persisted (never auto-enabled on boot). `Easy Deku Rupee Game`
-stays out of this set — it is a plain 16-bit data write, not a code patch.
+Galleries, Easy Beaver Swimming, Easy Boat & Jump, Auto-win Honey & Darling. Each rewrites one
+(Beaver: two) 4-byte ARM instruction in the game's `.text`, applied on the toggle edge - at both
+toggle time (menu paused) and from `ApplyCheats` - and reverted to the recorded original when
+turned off. Addresses/values come from the JourneyOver AR list and were cross-checked by reading
+each word in the Hex Editor on USA v1.1.0; the Town Shooting Gallery patch is confirmed on
+hardware (scored PERFECT). `Easy Deku Rupee Game` stays out of this set - it is a plain 16-bit
+data write, not a code patch.
 
-Note: adding cheats changes `NUM_CHEATS`, so this build resets `Settings.cfg` and
-`Favorites.txt` once (theme/language/favorites return to defaults). Effect not yet
-hardware-confirmed — the address mapping and originals are, the in-game result is pending a
-console test.
+The write path is the hard-won part. `.text` is read-only to user code on this console, and
+neither `PROCESSOP_SET_MMU_TO_RWX` (the store is silently dropped) nor `svcMapProcessMemoryEx`
+(the kernel data-aborts on the alias) works from the plugin. The fix: `MgBackdoorWrite` runs the
+single store in **supervisor mode** via `svcCustomBackdoor` - the RWX flip leaves `.text` RW for
+privileged / RO for user, so a privileged store lands where a user store does not - then a
+D-cache flush + I-cache invalidate. Same privilege level the Rosalina cheat engine uses to apply
+these very codes. Code-patch state is never persisted (never auto-enabled on boot).
+
+Note: adding cheats changes `NUM_CHEATS`, so this build resets `Settings.cfg` and `Favorites.txt`
+once (theme/language/favorites return to defaults).
 
 ### b60 — Remove Game Guide "Credits" entry; disclaimer lives in About
 The Game Guide's appended "Credits" page was engine-template filler and out of place next

@@ -41,10 +41,13 @@ limitations.
    (`guide/<Language>/game.txt`), with a short embedded English fallback if the file is missing.
    English only for now; drop in other languages without recompiling. Credits live on the About
    screen.
-8. **Minigame code patches** — instruction-patch cheats (Shooting Galleries, Beaver Swimming,
-   Honey & Darling). Highest risk in the plan (RWX + flush, never auto-enabled on boot);
-   deliberately last. `Easy Deku Rupee Game` turned out to be a plain data write despite being
-   grouped with these in the source list, so it'll ship as a normal cheat instead, whenever it's picked up.
+8. **Minigame code patches** — done. A **Minigames** folder with five instruction-patch cheats
+   (Town/Swamp Shooting Galleries, Beaver Swimming, Boat & Jump, Auto-win Honey & Darling). The
+   Town Gallery is hardware-confirmed. `.text` is read-only to user code on this console, so the
+   store runs in supervisor mode via `svcCustomBackdoor` (the RWX flip leaves `.text` RW for
+   privileged / RO for user) - the same privilege the Rosalina cheat engine uses. Never
+   auto-enabled on boot. `Easy Deku Rupee Game` is a plain data write, not a code patch, so it is
+   not part of this set.
 
 ## Requirements
 
