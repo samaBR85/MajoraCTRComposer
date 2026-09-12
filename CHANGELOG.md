@@ -6,7 +6,25 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–60
+## Unreleased · builds 1–61
+
+### b61 — Phase 8: minigame code patches (Minigames folder)
+Five instruction-patch cheats in a new **Minigames** folder: Easy Town / Swamp Shooting
+Galleries, Easy Beaver Swimming, Easy Boat & Jump, Auto-win Honey & Darling. Each rewrites
+one (Beaver: two) 4-byte ARM instruction in the game's `.text`, applied on the toggle edge
+and reverted to the captured original when turned off, with a D-cache flush + I-cache
+invalidate per change (`svcFlushEntireDataCache` / `svcInvalidateEntireInstructionCache`).
+The process is already RWX from init, so no per-cheat remap is needed. Each of the six
+addresses was read in the Hex Editor on USA v1.1.0 to confirm the AR address maps 1:1 to the
+plugin's VA and to record the exact original instruction; the patch only fires when the live
+word matches that original, so a wrong version/region is left untouched rather than corrupted.
+Code-patch state is never persisted (never auto-enabled on boot). `Easy Deku Rupee Game`
+stays out of this set — it is a plain 16-bit data write, not a code patch.
+
+Note: adding cheats changes `NUM_CHEATS`, so this build resets `Settings.cfg` and
+`Favorites.txt` once (theme/language/favorites return to defaults). Effect not yet
+hardware-confirmed — the address mapping and originals are, the in-game result is pending a
+console test.
 
 ### b60 — Remove Game Guide "Credits" entry; disclaimer lives in About
 The Game Guide's appended "Credits" page was engine-template filler and out of place next

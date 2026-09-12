@@ -33,6 +33,10 @@ enum {
     CH_MM_MOONJUMP,
     // ---- MM3D: Play as... (CONFIRMED - see the folder comment for what's safe and why) ----
     CH_PLAY_NORMAL, CH_PLAY_ZORA, CH_PLAY_FIERCEDEITY,
+    // ---- MM3D: Minigames. CODE PATCHES - instruction rewrites in .text, applied on the toggle
+    // edge and reverted to the captured original when turned off. Never persisted (a code patch
+    // must not survive a reboot with the game already past that code). See MG_PATCHES.
+    CH_MG_TOWN_GALLERY, CH_MG_SWAMP_GALLERY, CH_MG_BEAVER, CH_MG_BOAT_JUMP, CH_MG_HONEY_DARLING,
     // ---- Settings rows (not cheats) ----
     CH_CFG_TOAST, CH_CFG_AUTOFILL, CH_CFG_QMKEY, CH_CFG_HK1, CH_CFG_HK2,
     CH_CFG_HKRESET, CH_CFG_THEME, CH_CFG_LANG,

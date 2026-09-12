@@ -20,6 +20,7 @@ static const Item rootItems[] = {
     IT_FOLDER("Inventory", F_INVENTORY),
     IT_FOLDER("Quest", F_QUEST),
     IT_FOLDER("Misc.", F_MISC),
+    IT_FOLDER("Minigames", F_MINIGAMES),
     IT_FOLDER("Teleport", F_TELEPORT),
     IT_SEP("GUIDES"),
     IT_TOOL_WIDE("100% Checklist", T_TRACKER, "A 100% progress tracker: Masks, Stray Fairies and Gear upgrades. Each entry is untouched / auto / checked / cleared. Auto-fill syncs it from game memory - none of it is hardware-confirmed yet, so double-check against your own save before trusting it."),
@@ -161,6 +162,23 @@ static const Item miscItems[] = {
     IT_CHEAT("Fierce Deity", CH_PLAY_FIERCEDEITY, "CONFIRMED on hardware. Bypasses the vanilla boss-arena-only restriction entirely - fully controllable. Applies once, on your next area transition. Address 0x7761FE, u8 = 0x00."),
 };
 
+// Minigame CODE PATCHES. Each toggle rewrites an instruction in the game's .text and puts the
+// original back when turned off (see MG_PATCHES in cheats.inc.c). Turn one on just before the
+// minigame; leave it off otherwise.
+static const Item minigameItems[] = {
+    IT_SEP("CODE PATCHES"),
+    IT_CHEAT("Easy Town Shooting Gallery",  CH_MG_TOWN_GALLERY,
+             "Inflates the score so one hit clears it: shoot a single target, then let the timer run out. Code patch at 0x04E441C, reverted when off."),
+    IT_CHEAT("Easy Swamp Shooting Gallery", CH_MG_SWAMP_GALLERY,
+             "Same idea for the Swamp gallery: shoot one Deku scrub, then let time run out. Code patch at 0x04FA838, reverted when off."),
+    IT_CHEAT("Easy Beaver Swimming",        CH_MG_BEAVER,
+             "Removes the race's fail checks so you can just swim to the end. Two NOP patches at 0x036A358/0x036A360, reverted when off."),
+    IT_CHEAT("Easy Boat & Jump games",      CH_MG_BOAT_JUMP,
+             "Lets the timer run out for the win. Code patch at 0x171780, reverted when off."),
+    IT_CHEAT("Auto-win Honey & Darling",    CH_MG_HONEY_DARLING,
+             "Neutralizes the win check for an instant clear. Code patch at 0x458774, reverted when off."),
+};
+
 // Sentinel identifying the Owl Statues re-ordered rows below, by pointer identity (not content -
 // an empty string is fine). Item.desc is never read for a warp row (label/desc always come from
 // warps[it->warp] instead, see menu_render.inc.c), so it is free to repurpose as a tag here.
@@ -249,6 +267,7 @@ static const Folder folders[NUM_FOLDERS] = {
     { "Bottles",              bottlesItems,  FCOUNT(bottlesItems) },
     { "Quest",                questItems,    FCOUNT(questItems) },
     { "Misc.",                miscItems,     FCOUNT(miscItems) },
+    { "Minigames",            minigameItems, FCOUNT(minigameItems) },
     { "Teleport",             teleportItems, FCOUNT(teleportItems) },
     { "Examples",             exampleItems,  FCOUNT(exampleItems) },
     { "Tools",                toolsItems,    FCOUNT(toolsItems) },

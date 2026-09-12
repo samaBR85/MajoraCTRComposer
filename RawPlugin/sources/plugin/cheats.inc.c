@@ -166,6 +166,40 @@ static int OneShot(int id)
 
 #include "../engine/input.inc.c"
 
+// MM3D minigame CODE PATCHES. Each row rewrites one 4-byte ARM instruction in the game's .text
+// (the process is already RWX - see main.c). We only act on the toggle edge, verify the current
+// word against the original before touching it, and restore that original when turned off - so an
+// address that does not hold the instruction we recorded (wrong version/region) is left alone
+// instead of corrupted. Originals were read from each address in the Hex Editor on USA v1.1.0.
+typedef struct { u8 ch; u32 addr, orig, patch; } CodePatch;
+static const CodePatch MG_PATCHES[] = {
+    { CH_MG_TOWN_GALLERY,  0x004E441C, 0xE2011001, 0xE2811032 }, // AND r1,r1,#1  -> ADD r1,r1,#0x32
+    { CH_MG_SWAMP_GALLERY, 0x004FA838, 0xE281201E, 0xE2812B1E }, // ADD r2,r1,#0x1E -> #0x7800
+    { CH_MG_BEAVER,        0x0036A358, 0xEA000004, 0xE1A00000 }, // B    -> NOP
+    { CH_MG_BEAVER,        0x0036A360, 0x0A000002, 0xE1A00000 }, // BEQ  -> NOP
+    { CH_MG_BOAT_JUMP,     0x00171780, 0xE0800001, 0xE3A00015 }, // ADD r0,r0,r1 -> MOV r0,#0x15
+    { CH_MG_HONEY_DARLING, 0x00458774, 0xE3500001, 0xE2800000 }, // CMP r0,#1 -> ADD r0,r0,#0
+};
+#define NUM_MG_PATCHES ((int)(sizeof(MG_PATCHES) / sizeof(MG_PATCHES[0])))
+
+static void ApplyCodePatches(void)
+{
+    static u8 rowOn[NUM_MG_PATCHES];       // per-row edge memory - patch/revert only on a change
+    int changed = 0;
+    for (int i = 0; i < NUM_MG_PATCHES; ++i)
+    {
+        int on = cheatState[MG_PATCHES[i].ch] ? 1 : 0;
+        if (on == rowOn[i]) continue;
+        u32 cur = R32(MG_PATCHES[i].addr);
+        if (on) { if (cur == MG_PATCHES[i].orig)  { W32(MG_PATCHES[i].addr, MG_PATCHES[i].patch); changed = 1; } }
+        else    { if (cur == MG_PATCHES[i].patch) { W32(MG_PATCHES[i].addr, MG_PATCHES[i].orig);  changed = 1; } }
+        rowOn[i] = (u8)on;
+    }
+    // Instruction rewrites need the D-cache flushed to RAM and the I-cache invalidated, or the CPU
+    // keeps running the stale instruction. Flush once per batch, only when something actually moved.
+    if (changed) { svcFlushEntireDataCache(); svcInvalidateEntireInstructionCache(); }
+}
+
 // Continuous cheats: applied every tick while the menu is CLOSED (game running).
 // Keep this cheap - it runs at game framerate.
 static void ApplyCheats(void)
@@ -265,6 +299,8 @@ static void ApplyCheats(void)
         u32 base = ExampleBase();
         if (base) W32(base + EXAMPLE_OFF_FIELD, EXAMPLE_VALUE_FIELD);
     }
+
+    ApplyCodePatches();  // minigame instruction patches - edge-triggered, self-reverting
 }
 
 // Real RGBA4444 sprites (sprites.h), ripped from The Spriters Resource: Item Icons by
