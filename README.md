@@ -13,10 +13,11 @@ Work in progress — see [`RawPlugin/README.md`](RawPlugin/README.md) for build 
 ## Status
 
 This build targets **Majora's Mask 3D, USA, v1.1.0** (Title ID `0004000000125500`). Boots and
-menu confirmed on real hardware. 24+ cheats confirmed so far across Time, Battle, Inventory,
-Items (ammo), Quest and Misc (Moon Jump, Play as... forms), plus a
-25-destination Teleport and item pickers (bottle contents, B button item) — see
-`CHANGELOG.md` for the full list and known limitations.
+menu confirmed on real hardware. The cheat table is hardware-confirmed across Time, Battle,
+Inventory, Items (ammo), Quest and Misc (Moon Jump, Play as... forms), plus a Teleport with
+location filters and item pickers (bottle contents, B button item). A 9-category 100% Checklist
+and an SD-loaded Game Guide round out the build — see `CHANGELOG.md` for the full list and known
+limitations.
 
 ## Roadmap
 
@@ -26,12 +27,20 @@ Items (ammo), Quest and Misc (Moon Jump, Play as... forms), plus a
 4. **Art and identity** — done. Item/UI sprite sheets (Colbydude, xAct), button glyphs
    (manpaint), the "Termina" theme (original art by samaBR), an About-screen logo, and sprite
    icons throughout HOME, Tools and Settings, all from The Spriters Resource / original art.
-5. **100% Checklist** — first pass done: Masks (24), Stray Fairies (4) and Gear (4) auto-fill
-   from the save-file map. Not yet hardware-confirmed. Boss/Song tracking still needs a bit-level
-   Cheat Search pass before it can be added safely.
-6. **Teleport** — done. 25 destinations; the warp mechanism (GlobalContext, heap-allocated,
-   resolved via the same stable pointer Moon Jump uses) is confirmed on hardware.
-7. **Game Guide** — needs an MM3D walkthrough text source; not started.
+5. **100% Checklist** — done (first-pass content complete). A 9-category, 194-item tracker:
+   Masks (24), Heart Pieces (52), Songs (13), Bosses (4), Stray Fairies (5), Bomber's Notebook
+   (63), Owl Statues (10), Bottles (7), Equipment (16). ~49 items auto-fill from the save-file
+   map (Masks and Stray Fairies auto-fill confirmed on hardware); the rest are manual toggles,
+   each with a Hint and a `{X}` "Where" reveal. Open gaps: most Bomber's Notebook events and
+   the Owl Statues completion state have no mapped save bit yet, so they stay manual until a
+   Cheat Search pass finds them.
+6. **Teleport** — done. Destinations with folder filters (All / Dungeons / Overworld / Owl
+   Statues); the warp mechanism (GlobalContext, heap-allocated, resolved via the same stable
+   pointer Moon Jump uses) is confirmed on hardware.
+7. **Game Guide** — done. A progression-ordered walkthrough loaded from the SD card
+   (`guide/<Language>/game.txt`), with a short embedded English fallback if the file is missing.
+   English only for now; drop in other languages without recompiling. Credits live on the About
+   screen.
 8. **Minigame code patches** — instruction-patch cheats (Shooting Galleries, Beaver Swimming,
    Honey & Darling). Highest risk in the plan (RWX + flush, never auto-enabled on boot);
    deliberately last. `Easy Deku Rupee Game` turned out to be a plain data write despite being
