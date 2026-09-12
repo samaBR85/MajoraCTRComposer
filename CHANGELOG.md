@@ -6,7 +6,15 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–61
+## Unreleased · builds 1–62
+
+### b62 — Fix: minigame patches never ran (dead code after EXAMPLE guard)
+`ApplyCodePatches()` was called at the very end of `ApplyCheats()`, but `ApplyCheats` has an
+`if (!EXAMPLE_ENABLED) return;` guard partway through that fences off the inert EXAMPLE
+cheats - and my call sat after it, so it never executed (Easy Town Shooting Gallery toggled
+on but the .text byte stayed original, confirmed in the Hex Editor). Moved the call above the
+guard, next to the other live MM3D cheats. This also makes the build the first real test of
+whether the global RWX flip actually lets a write land in `.text`.
 
 ### b61 — Phase 8: minigame code patches (Minigames folder)
 Five instruction-patch cheats in a new **Minigames** folder: Easy Town / Swamp Shooting

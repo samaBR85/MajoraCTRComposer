@@ -273,6 +273,8 @@ static void ApplyCheats(void)
     if (cheatState[CH_MM_AMMO_BEANS])  W8(0x77639A, 0x63);
     if (cheatState[CH_MM_AMMO_KEG])    W8(0x77639C, 0x63);
 
+    ApplyCodePatches();  // minigame instruction patches - MUST run before the EXAMPLE guard below
+
     // Guard, not #if: the example bodies below stay COMPILED (so they cannot silently rot
     // as the engine changes) while -Os folds them away entirely until you flip the flag.
     if (!EXAMPLE_ENABLED) return;
@@ -299,8 +301,6 @@ static void ApplyCheats(void)
         u32 base = ExampleBase();
         if (base) W32(base + EXAMPLE_OFF_FIELD, EXAMPLE_VALUE_FIELD);
     }
-
-    ApplyCodePatches();  // minigame instruction patches - edge-triggered, self-reverting
 }
 
 // Real RGBA4444 sprites (sprites.h), ripped from The Spriters Resource: Item Icons by
