@@ -43,6 +43,13 @@ static int SpriteKeyForCheat(int ch)
         case CH_PLAY_ZORA:        return MSPR_ZORA_MASK;
         case CH_PLAY_FIERCEDEITY: return MSPR_FD_MASK;
 
+        // Minigames: an icon that hints at the activity - a bow for the shooting galleries,
+        // Zora for the swim race, a jump for boat/jump, a heart for Honey & Darling.
+        case CH_MG_TOWN_GALLERY:  case CH_MG_SWAMP_GALLERY: return MSPR_ARROWS;
+        case CH_MG_BEAVER:        return MSPR_ZORA_MASK;
+        case CH_MG_BOAT_JUMP:     return MSPR_MOONJUMP;
+        case CH_MG_HONEY_DARLING: return MSPR_HEART;
+
         // Settings rows: a mask changes your look, like a theme changes the menu's; a
         // written scroll for picking a language.
         case CH_CFG_THEME: return MSPR_GARO_MASK;

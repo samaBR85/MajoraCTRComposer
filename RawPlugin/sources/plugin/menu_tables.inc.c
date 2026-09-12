@@ -20,7 +20,6 @@ static const Item rootItems[] = {
     IT_FOLDER("Inventory", F_INVENTORY),
     IT_FOLDER("Quest", F_QUEST),
     IT_FOLDER("Misc.", F_MISC),
-    IT_FOLDER("Minigames", F_MINIGAMES),
     IT_FOLDER("Teleport", F_TELEPORT),
     IT_SEP("GUIDES"),
     IT_TOOL_WIDE("100% Checklist", T_TRACKER, "A 100% progress tracker: Masks, Stray Fairies and Gear upgrades. Each entry is untouched / auto / checked / cleared. Auto-fill syncs it from game memory - none of it is hardware-confirmed yet, so double-check against your own save before trusting it."),
@@ -69,78 +68,78 @@ static const Item exampleItems[] = {
 // One-shots: pressing {A} writes once, it does not hold the value.
 static const Item timeItems[] = {
     IT_SEP("DAY"),
-    IT_CHEAT("Set to Day 1", CH_MM_DAY1, "CONFIRMED on hardware: takes effect on your next area transition (door, warp, load), not instantly. Address 0x7761EC, u8."),
-    IT_CHEAT("Set to Day 2", CH_MM_DAY2, "CONFIRMED on hardware: takes effect on your next area transition (door, warp, load), not instantly. Address 0x7761EC, u8."),
-    IT_CHEAT("Set to Day 3", CH_MM_DAY3, "CONFIRMED on hardware: takes effect on your next area transition (door, warp, load), not instantly. Address 0x7761EC, u8."),
+    IT_CHEAT("Set to Day 1", CH_MM_DAY1, "Takes effect on your next area transition (door, warp, load), not instantly."),
+    IT_CHEAT("Set to Day 2", CH_MM_DAY2, "Takes effect on your next area transition (door, warp, load), not instantly."),
+    IT_CHEAT("Set to Day 3", CH_MM_DAY3, "Takes effect on your next area transition (door, warp, load), not instantly."),
     IT_SEP("TIME OF DAY"),
-    IT_CHEAT("Set Time to 6AM",  CH_MM_TIME_6AM,  "CONFIRMED on hardware: applies instantly. KNOWN LIMITATION: jumping to an EARLIER time than now also advances the day - the game treats the decrease as midnight passing. Not currently fixable with a simple write. Address 0x7761F9, u8 = 0x40."),
-    IT_CHEAT("Set Time to 10AM", CH_MM_TIME_10AM, "CONFIRMED on hardware: applies instantly. KNOWN LIMITATION: jumping to an EARLIER time than now also advances the day - the game treats the decrease as midnight passing. Not currently fixable with a simple write. Address 0x7761F9, u8 = 0x6B."),
-    IT_CHEAT("Set Time to 6PM",  CH_MM_TIME_6PM,  "CONFIRMED on hardware: applies instantly. Address 0x7761F9, u8 = 0xC0."),
+    IT_CHEAT("Set Time to 6AM",  CH_MM_TIME_6AM,  "Applies instantly. KNOWN LIMITATION: jumping to an EARLIER time than now also advances the day - the game treats the decrease as midnight passing. Not currently fixable with a simple write."),
+    IT_CHEAT("Set Time to 10AM", CH_MM_TIME_10AM, "Applies instantly. KNOWN LIMITATION: jumping to an EARLIER time than now also advances the day - the game treats the decrease as midnight passing. Not currently fixable with a simple write."),
+    IT_CHEAT("Set Time to 6PM",  CH_MM_TIME_6PM,  "Applies instantly."),
     IT_SEP("SCRUB (hold + D-Pad)"),
-    IT_CHEAT("Time Scrub",  CH_MM_TIME_SCRUB, "CONFIRMED on hardware. Hold {HK} + D-Pad Up/Down to nudge the clock forward/backward while held. Rebind the hold button in Settings. Forward is reliable. KNOWN LIMITATION: going backward far enough to cross midnight advances the day, same as Set Time - use forward only if that matters."),
-    IT_CHEAT("Day Scrub",   CH_MM_DAY_SCRUB,  "CONFIRMED on hardware. Hold {HK} + D-Pad Up/Down to cycle the day 1/2/3, one step per press. Rebind the hold button in Settings. Only takes effect on your next area transition, same as Set Day. KNOWN LIMITATION: going backward is unreliable around that transition - forward is the reliable direction."),
+    IT_CHEAT("Time Scrub",  CH_MM_TIME_SCRUB, "Hold {HK} + D-Pad Up/Down to nudge the clock forward/backward while held. Rebind the hold button in Settings. Forward is reliable. KNOWN LIMITATION: going backward far enough to cross midnight advances the day, same as Set Time - use forward only if that matters."),
+    IT_CHEAT("Day Scrub",   CH_MM_DAY_SCRUB,  "Hold {HK} + D-Pad Up/Down to cycle the day 1/2/3, one step per press. Rebind the hold button in Settings. Only takes effect on your next area transition, same as Set Day. KNOWN LIMITATION: going backward is unreliable around that transition - forward is the reliable direction."),
 };
 
 // MM3D Battle cheats. Addresses derived from the offline save-file map (SaveGames/, anchored at
 // RAM = file_offset + 0x7761D8; see references/). All 4 CONFIRMED on hardware.
 // USA, v1.1.0 (0004000000125500).
 static const Item battleItems[] = {
-    IT_CHEAT("Refill Hearts", CH_MM_REFILL_HEARTS, "CONFIRMED on hardware. Fills current health up to your real max (reads capacity from 0x776312, writes it to 0x776314). Applies once."),
-    IT_CHEAT("Max Hearts", CH_MM_HEARTS_MAX, "CONFIRMED on hardware. Holds both health capacity and current health at 20 hearts (0x0140) while active - unlocks every heart container. Turning it off restores your real capacity and current health. Address 0x776312/0x776314, u16."),
-    IT_CHEAT("Refill Magic", CH_MM_REFILL_MAGIC, "CONFIRMED on hardware. Fills the magic meter to your real cap (0x30 normal, 0x60 if Double Magic is unlocked - reads the flag at 0x77631F). Applies once."),
-    IT_CHEAT("Enhanced Defense", CH_MM_DEFENSE, "CONFIRMED on hardware. Halves damage taken while active. Turning it off restores whatever you actually had before. Address 0x776320, u8."),
+    IT_CHEAT("Refill Hearts", CH_MM_REFILL_HEARTS, "Fills current health up to your real max. Applies once."),
+    IT_CHEAT("Max Hearts", CH_MM_HEARTS_MAX, "Holds both health capacity and current health at 20 hearts while active - unlocks every heart container. Turning it off restores your real capacity and current health."),
+    IT_CHEAT("Refill Magic", CH_MM_REFILL_MAGIC, "Fills the magic meter to your real cap (normal, or double if Double Magic is unlocked). Applies once."),
+    IT_CHEAT("Enhanced Defense", CH_MM_DEFENSE, "Halves damage taken while active. Turning it off restores whatever you actually had before."),
+    IT_SEP("B BUTTON ITEM"),
+    IT_CHEAT("Gilded Sword",      CH_BBUTTON_GILDED,  "Equips the Gilded Sword on the B button. Applies once."),
+    IT_CHEAT("Great Fairy Sword", CH_BBUTTON_GFSWORD, "Equips the Great Fairy Sword on the B button. Applies once."),
 };
 
 // MM3D Inventory cheats. Max Rupees is CONFIRMED on hardware (Cheat Search: 27 -> 57, poked
 // 0x776318, in-game counter matched). All others in this folder are also CONFIRMED on hardware.
 // USA, v1.1.0 (0004000000125500).
 static const Item inventoryItems[] = {
-    IT_CHEAT("Max Rupees (999)", CH_MM_RUPEES_MAX, "CONFIRMED on hardware. Holds your rupee count at 999 while active. Address 0x776318, u16."),
-    IT_CHEAT("Fill Rupee Bank (5499)", CH_MM_BANK_FILL, "CONFIRMED on hardware. Fills your Rupee Bank balance. Applies once. Address 0x777408, u16 = 0x157B."),
-    IT_CHEAT("Gilded Sword + Mirror Shield", CH_MM_GILDED_MIRROR, "CONFIRMED on hardware. Grants the Gilded Sword and Mirror Shield. Applies once. Address 0x776352, u8 = 0x23."),
-    IT_CHEAT("Razor Sword + Mirror Shield", CH_MM_RAZOR_MIRROR, "CONFIRMED on hardware. Grants the Razor Sword and Mirror Shield - same address as the Gilded Sword cheat, different tier. Applies once. Address 0x776352, u8 = 0x22."),
-    IT_CHEAT("Large Quiver + Big Bomb Bag", CH_MM_QUIVER_BOMBBAG, "CONFIRMED on hardware. Grants a quiver/bomb bag upgrade tier (exact sizes unverified - matches the AR code's own value). Applies once. Address 0x7763CC, u16 = 0x201B."),
+    IT_CHEAT("Max Rupees (999)", CH_MM_RUPEES_MAX, "Holds your rupee count at 999 while active."),
+    IT_CHEAT("Fill Rupee Bank (5499)", CH_MM_BANK_FILL, "Fills your Rupee Bank balance. Applies once."),
+    IT_CHEAT("Gilded Sword + Mirror Shield", CH_MM_GILDED_MIRROR, "Grants the Gilded Sword and Mirror Shield. Applies once."),
+    IT_CHEAT("Razor Sword + Mirror Shield", CH_MM_RAZOR_MIRROR, "Grants the Razor Sword and Mirror Shield. Applies once."),
+    IT_CHEAT("Large Quiver + Big Bomb Bag", CH_MM_QUIVER_BOMBBAG, "Grants a quiver/bomb bag upgrade tier (exact sizes unverified). Applies once."),
     IT_FOLDER("Items (Max/Inf ammo)", F_AMMO),
     IT_FOLDER("Bottles", F_BOTTLES),
-    IT_SEP("B BUTTON ITEM"),
-    IT_CHEAT("Gilded Sword",      CH_BBUTTON_GILDED,  "CONFIRMED on hardware. Equips the Gilded Sword on the B button. Applies once. Address 0x77632A, u8 = 0x4F."),
-    IT_CHEAT("Great Fairy Sword", CH_BBUTTON_GFSWORD, "CONFIRMED on hardware. Equips the Great Fairy Sword on the B button. Applies once. Address 0x77632A, u8 = 0x50."),
 };
 
 // Bottle contents get their own 2-column grid folder (same layout as Teleport/HOME) - 7 pickers
 // with real per-content sprites read a lot better as a grid than crammed into Inventory's list.
 // All 7 CONFIRMED on hardware.
 static const Item bottlesItems[] = {
-    IT_PICKER("Bottle #1", PK_BOTTLE1, "CONFIRMED on hardware. Sets what Bottle #1 holds. Address 0x776384."),
-    IT_PICKER("Bottle #2", PK_BOTTLE2, "CONFIRMED on hardware. Sets what Bottle #2 holds. Address 0x776385."),
-    IT_PICKER("Bottle #3", PK_BOTTLE3, "CONFIRMED on hardware. Sets what Bottle #3 holds. Address 0x776386."),
-    IT_PICKER("Bottle #4", PK_BOTTLE4, "CONFIRMED on hardware. Sets what Bottle #4 holds. Address 0x776387."),
-    IT_PICKER("Bottle #5", PK_BOTTLE5, "CONFIRMED on hardware. Sets what Bottle #5 holds. Address 0x776388."),
-    IT_PICKER("Bottle #6", PK_BOTTLE6, "CONFIRMED on hardware. Sets what Bottle #6 holds. Address 0x776389."),
-    IT_PICKER("Bottle #7", PK_BOTTLE7, "CONFIRMED on hardware. Sets what Bottle #7 holds. Address 0x77638A."),
+    IT_PICKER("Bottle #1", PK_BOTTLE1, "Sets what Bottle #1 holds."),
+    IT_PICKER("Bottle #2", PK_BOTTLE2, "Sets what Bottle #2 holds."),
+    IT_PICKER("Bottle #3", PK_BOTTLE3, "Sets what Bottle #3 holds."),
+    IT_PICKER("Bottle #4", PK_BOTTLE4, "Sets what Bottle #4 holds."),
+    IT_PICKER("Bottle #5", PK_BOTTLE5, "Sets what Bottle #5 holds."),
+    IT_PICKER("Bottle #6", PK_BOTTLE6, "Sets what Bottle #6 holds."),
+    IT_PICKER("Bottle #7", PK_BOTTLE7, "Sets what Bottle #7 holds."),
 };
 
 // MM3D ammo max/inf toggles. Addresses and per-slot values are from the AR code list
 // (references/mm3d-ar-cheats-usa-0004000000125500.txt). All 7 CONFIRMED on hardware.
 static const Item ammoItems[] = {
-    IT_CHEAT("Max/Inf Arrows",      CH_MM_AMMO_ARROWS, "CONFIRMED on hardware. Holds your arrow count at 99 while active. Address 0x776391, u8."),
-    IT_CHEAT("Max/Inf Bombs",       CH_MM_AMMO_BOMBS,  "CONFIRMED on hardware. Holds your bomb count at 99 while active. Address 0x776396, u8."),
-    IT_CHEAT("Max/Inf Bombchus",    CH_MM_AMMO_CHUS,   "CONFIRMED on hardware. Holds your Bombchu count at 99 while active. Address 0x776397, u8."),
-    IT_CHEAT("Max/Inf Deku Sticks", CH_MM_AMMO_STICKS, "CONFIRMED on hardware. Holds your Deku Stick count at 99 while active. Address 0x776398, u8."),
-    IT_CHEAT("Max/Inf Deku Nuts",   CH_MM_AMMO_NUTS,   "CONFIRMED on hardware. Holds your Deku Nut count at 50 while active. Address 0x776399, u8."),
-    IT_CHEAT("Max/Inf Magic Beans", CH_MM_AMMO_BEANS,  "CONFIRMED on hardware. Holds your Magic Bean count at 99 while active. Address 0x77639A, u8."),
-    IT_CHEAT("Max/Inf Powder Keg",  CH_MM_AMMO_KEG,    "CONFIRMED on hardware. Holds your Powder Keg count at 99 while active. Address 0x77639C, u8."),
+    IT_CHEAT("Max/Inf Arrows",      CH_MM_AMMO_ARROWS, "Holds your arrow count at 99 while active."),
+    IT_CHEAT("Max/Inf Bombs",       CH_MM_AMMO_BOMBS,  "Holds your bomb count at 99 while active."),
+    IT_CHEAT("Max/Inf Bombchus",    CH_MM_AMMO_CHUS,   "Holds your Bombchu count at 99 while active."),
+    IT_CHEAT("Max/Inf Deku Sticks", CH_MM_AMMO_STICKS, "Holds your Deku Stick count at 99 while active."),
+    IT_CHEAT("Max/Inf Deku Nuts",   CH_MM_AMMO_NUTS,   "Holds your Deku Nut count at 50 while active."),
+    IT_CHEAT("Max/Inf Magic Beans", CH_MM_AMMO_BEANS,  "Holds your Magic Bean count at 99 while active."),
+    IT_CHEAT("Max/Inf Powder Keg",  CH_MM_AMMO_KEG,    "Holds your Powder Keg count at 99 while active."),
 };
 
 // MM3D Quest cheats. All decoded from the AR code list's conditional/loop opcodes and
 // cross-checked against the save-file map (see references/ + CTRComposer-Repo-Kickoff.md).
 // All 4 CONFIRMED on hardware.
 static const Item questItems[] = {
-    IT_CHEAT("Have all Items", CH_MM_ALL_ITEMS, "CONFIRMED on hardware. Fills the 16 main item slots (0x776355-0x776364), byte-for-byte matching a real 100%-save item array. Applies once."),
-    IT_CHEAT("Have all Masks", CH_MM_ALL_MASKS, "CONFIRMED on hardware. Fills all 24 mask slots (0x77636C-0x776383) with the acquisition-order id sequence 0x32-0x49, matching a real 100% save exactly. Applies once."),
-    IT_CHEAT("All Bosses and Songs", CH_MM_ALL_BOSSES_SONGS, "CONFIRMED on hardware. Sets the boss/song bitfields to the values read from a real 100% save (0xCF 0xF7 0xCF) - NOT the AR code's own 0xFF 0xFF 0xFF, which doesn't match any legitimate save. Address 0x7763D0-0x7763D2. Applies once."),
-    IT_CHEAT("All Stray Fairies", CH_MM_ALL_FAIRIES, "CONFIRMED on hardware. Fills all four dungeon stray-fairy bytes (0x7763E8-0x7763EB) - the AR code's own version only fills one. Applies once."),
-    IT_CHEAT("Fishing Hole Pass", CH_TEST_FISHING, "CONFIRMED on hardware. Grants the Fishing Hole Pass (lets you borrow a fishing rod for free at either Fishing Hole). Applies once. Address 0x7776C0, u8 = 0x63."),
+    IT_CHEAT("Have all Items", CH_MM_ALL_ITEMS, "Fills the 16 main item slots to match a real 100% save. Applies once."),
+    IT_CHEAT("Have all Masks", CH_MM_ALL_MASKS, "Fills all 24 mask slots to match a real 100% save. Applies once."),
+    IT_CHEAT("All Bosses and Songs", CH_MM_ALL_BOSSES_SONGS, "Sets the boss and song flags to match a real 100% save. Applies once."),
+    IT_CHEAT("All Stray Fairies", CH_MM_ALL_FAIRIES, "Fills all four dungeons' stray fairies. Applies once."),
+    IT_CHEAT("Fishing Hole Pass", CH_TEST_FISHING, "Grants the Fishing Hole Pass (lets you borrow a fishing rod for free at either Fishing Hole). Applies once."),
 };
 
 // MM3D Misc. Moon Jump was the first base+offset cheat in this plugin - the pointer chain
@@ -155,28 +154,25 @@ static const Item questItems[] = {
 // icons (The Spriters Resource, Colbydude's Item Icons sheet); Normal Link has no mask to show,
 // so it keeps the hand-drawn placeholder.
 static const Item miscItems[] = {
-    IT_CHEAT("Moon Jump", CH_MM_MOONJUMP, "CONFIRMED on hardware. Hold {L}+{A} to rise into the air, release to fall. Mind the fall distance."),
+    IT_CHEAT("Moon Jump", CH_MM_MOONJUMP, "Hold {L}+{A} to rise into the air, release to fall. Mind the fall distance."),
     IT_SEP("FORMS"),
-    IT_CHEAT("Normal Link",  CH_PLAY_NORMAL,      "CONFIRMED on hardware. Applies once, on your next area transition. Address 0x7761FE, u8 = 0x04."),
-    IT_CHEAT("Zora",         CH_PLAY_ZORA,        "CONFIRMED on hardware. Applies once, on your next area transition. Address 0x7761FE, u8 = 0x02."),
-    IT_CHEAT("Fierce Deity", CH_PLAY_FIERCEDEITY, "CONFIRMED on hardware. Bypasses the vanilla boss-arena-only restriction entirely - fully controllable. Applies once, on your next area transition. Address 0x7761FE, u8 = 0x00."),
-};
-
-// Minigame CODE PATCHES. Each toggle rewrites an instruction in the game's .text and puts the
-// original back when turned off (see MG_PATCHES in cheats.inc.c). Turn one on just before the
-// minigame; leave it off otherwise.
-static const Item minigameItems[] = {
-    IT_SEP("CODE PATCHES"),
+    IT_CHEAT("Normal Link",  CH_PLAY_NORMAL,      "Applies once, on your next area transition."),
+    IT_CHEAT("Zora",         CH_PLAY_ZORA,        "Applies once, on your next area transition."),
+    IT_CHEAT("Fierce Deity", CH_PLAY_FIERCEDEITY, "Bypasses the vanilla boss-arena-only restriction entirely - fully controllable. Applies once, on your next area transition."),
+    // Minigame CODE PATCHES: each toggle rewrites an instruction in the game's .text via a
+    // supervisor-mode write (see MG_PATCHES/PatchWord in cheats.inc.c) and reverts it when off.
+    // Turn one on just before the minigame.
+    IT_SEP("MINIGAMES"),
     IT_CHEAT("Easy Town Shooting Gallery",  CH_MG_TOWN_GALLERY,
-             "Inflates the score so one hit clears it: shoot a single target, then let the timer run out. Code patch at 0x04E441C, reverted when off."),
+             "Inflates the score so one hit clears it: shoot a single target, then let the timer run out. Reverts when off."),
     IT_CHEAT("Easy Swamp Shooting Gallery", CH_MG_SWAMP_GALLERY,
-             "Same idea for the Swamp gallery: shoot one Deku scrub, then let time run out. Code patch at 0x04FA838, reverted when off."),
+             "Same idea for the Swamp gallery: shoot one Deku scrub, then let time run out. Reverts when off."),
     IT_CHEAT("Easy Beaver Swimming",        CH_MG_BEAVER,
-             "Removes the race's fail checks so you can just swim to the end. Two NOP patches at 0x036A358/0x036A360, reverted when off."),
+             "Removes the race's fail checks so you can just swim to the end. Reverts when off."),
     IT_CHEAT("Easy Boat & Jump games",      CH_MG_BOAT_JUMP,
-             "Lets the timer run out for the win. Code patch at 0x171780, reverted when off."),
+             "Lets the timer run out for the win. Reverts when off."),
     IT_CHEAT("Auto-win Honey & Darling",    CH_MG_HONEY_DARLING,
-             "Neutralizes the win check for an instant clear. Code patch at 0x458774, reverted when off."),
+             "Neutralizes the win check for an instant clear. Reverts when off."),
 };
 
 // Sentinel identifying the Owl Statues re-ordered rows below, by pointer identity (not content -
@@ -267,7 +263,6 @@ static const Folder folders[NUM_FOLDERS] = {
     { "Bottles",              bottlesItems,  FCOUNT(bottlesItems) },
     { "Quest",                questItems,    FCOUNT(questItems) },
     { "Misc.",                miscItems,     FCOUNT(miscItems) },
-    { "Minigames",            minigameItems, FCOUNT(minigameItems) },
     { "Teleport",             teleportItems, FCOUNT(teleportItems) },
     { "Examples",             exampleItems,  FCOUNT(exampleItems) },
     { "Tools",                toolsItems,    FCOUNT(toolsItems) },

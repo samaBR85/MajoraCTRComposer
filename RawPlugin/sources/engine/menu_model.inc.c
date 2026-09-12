@@ -8,7 +8,7 @@ typedef struct { const char *title; const Item *items; int count; } Folder;
 #if TOOLS_ONLY
 enum { F_ROOT, F_SETTINGS, NUM_FOLDERS };
 #else
-enum { F_ROOT, F_TIME, F_BATTLE, F_INVENTORY, F_AMMO, F_BOTTLES, F_QUEST, F_MISC, F_MINIGAMES, F_TELEPORT, F_EXAMPLES, F_TOOLS, F_SETTINGS, NUM_FOLDERS };
+enum { F_ROOT, F_TIME, F_BATTLE, F_INVENTORY, F_AMMO, F_BOTTLES, F_QUEST, F_MISC, F_TELEPORT, F_EXAMPLES, F_TOOLS, F_SETTINGS, NUM_FOLDERS };
 #endif
 
 // tool screens. The tools-only build drops the two that are inherently per-game, so their
