@@ -56,7 +56,7 @@ static const char *g_oneShotMsg = "OK"; // OneShot() sets this: "OK" / a custom 
 
 static int configDirty = 0; // settings changed -> save config on menu close
 static int favDirty = 0;    // a favorite toggled -> save Favorites.txt on menu close
-static int g_themeIdx = 0, g_themeParchment = 0; // active theme (colors live in CGOLD/... below)
+static int g_themeIdx = 1, g_themeParchment = 1; // active theme: Termina (1) is the shipped default
 
 // ===================== Where this plugin keeps its files =====================
 // Luma loads a plugin from  sdmc:/luma/plugins/<TitleID>/<Name>.3gx  and this is where the

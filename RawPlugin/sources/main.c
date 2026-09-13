@@ -138,9 +138,10 @@ void ThreadMain(void *arg)
     gCompose = (u8 *)malloc(TOP_W * TOP_H * 3);
     savedBot = (u16 *)malloc(BOT_W * BOT_H * 2);
     savedTop = (u16 *)malloc(TOP_W * TOP_H * 2);
-    ApplyTheme(0); // seed the live colors from THEMES[0] BEFORE anything can draw. Without this a
-                   // fresh install (no Settings.cfg -> ConfigLoad never calls ApplyTheme) would run
-                   // on whatever the CINK/CBG initializers happen to hold.
+    ApplyTheme(1); // seed the live colors from THEMES[1] (Termina, the shipped default) BEFORE
+                   // anything can draw. A fresh install has no Settings.cfg, so ConfigLoad never
+                   // calls ApplyTheme; without this the menu would run on whatever the CINK/CBG
+                   // initializers happen to hold. Users who pick a theme keep it (saved to config).
     ConfigLoad(); // restore toast toggle + quick-menu hotkey + theme + language from SD
     FavLoad();    // restore favorites (own label-keyed file, survives cheat-list changes)
 
