@@ -221,7 +221,10 @@ static int IsToggleCheat(int id)
         case CH_MM_AMMO_ARROWS: case CH_MM_AMMO_BOMBS: case CH_MM_AMMO_CHUS:
         case CH_MM_AMMO_STICKS: case CH_MM_AMMO_NUTS: case CH_MM_AMMO_BEANS:
         case CH_MM_AMMO_KEG: case CH_MM_TIME_SCRUB: case CH_MM_DAY_SCRUB:
-        case CH_MM_MOONJUMP:
+        case CH_MM_ISOT_THIRD: case CH_MM_MOONJUMP:
+        case CH_MG_TOWN_GALLERY: case CH_MG_SWAMP_GALLERY: case CH_MG_BEAVER:
+        case CH_MG_BOAT_JUMP: case CH_MG_HONEY_DARLING:
+        case CH_MV_DEKU_WALK: case CH_MV_ZORA_SWIM:
             return 1;
         default: return 0;
     }

@@ -767,6 +767,8 @@ static void ToolAbout(void)
         { "(CTRPF-AR-CHEAT-CODES)",      0 },
         { "Save-file mapping: HTW",      0 },
         { "(HelpTheWretched)",           0 },
+        { "ISoT 1/3 tweak: Project",     0 },
+        { "Restoration (leoetlino)",     0 },
         { "",                            0 },
         { "Icon credits",                1 },
         { "Item Icons: Colbydude",       0 },

@@ -6,7 +6,26 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–75
+## Unreleased · builds 1–83
+
+### b83 — Movement restores + Inverted Song of Time 1/3; menu UX
+New cheats:
+- **Zora Fast Swim** (Misc -> MOVEMENT): restores the faster Zora swimming - six `.text`
+  instruction patches via the supervisor backdoor. Confirmed on hardware.
+- **Deku Water Hop** (Misc -> MOVEMENT): restores the faster Deku flower-to-flower water hops
+  (a live 16-bit acceleration parameter, written continuously). Subtle on land.
+- **Inverted Song of Time -> 1/3 speed** (Time -> INVERTED SONG OF TIME): MM3D advances the clock
+  by 2 units/frame and the song sets `extra_time_speed` to -1 (1/2 speed); setting it to -2 would
+  pause time (base is 2, not the N64's 3), so instead we leave the song's -1 in place and cancel
+  one clock tick every third frame - averaging 1/3 of normal - only while the song is active, so
+  the game ends it on its own and the cheat reverts cleanly. Field/mechanism from Project
+  Restoration's open source (credited on the About screen). Confirmed on hardware.
+
+Menu UX (was builds 76-78): Minigames moved from their own folder into a MINIGAMES section of
+Misc; the B BUTTON ITEM section moved from Inventory to Battle; playful per-cheat icons; and every
+player-facing cheat description was stripped of developer noise (memory addresses, write widths,
+"Code patch at 0x...", "CONFIRMED on hardware"). `IsToggleCheat` now lists the minigame and
+movement toggles so they draw a proper checkbox.
 
 ### b75 — Phase 8: minigame code patches (Minigames folder)
 Five instruction-patch cheats in a new **Minigames** folder: Easy Town / Swamp Shooting

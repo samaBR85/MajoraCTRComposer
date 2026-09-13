@@ -182,32 +182,65 @@ static const CodePatch MG_PATCHES[] = {
 };
 #define NUM_MG_PATCHES ((int)(sizeof(MG_PATCHES) / sizeof(MG_PATCHES[0])))
 
-// Runs in SUPERVISOR mode via svcCustomBackdoor. The RWX flip (main.c) marks .text RW for
-// privileged but leaves it RO for user - so a user-mode store is dropped (the reason W32 never
-// took), while this privileged store lands. Same mechanism the Rosalina cheat engine uses to
-// apply these exact AR codes. Keep it minimal: one store, no SVCs from inside supervisor mode.
-static void MgBackdoorWrite(u32 addr, u32 val)
+// MM3D movement restores (from the AR list). Unlike the minigames we have no recorded originals,
+// so we capture the live value on enable and put it back on disable. Mixed widths: the Deku one is
+// a 16-bit parameter write, the Zora one is six .text instruction/byte patches.
+// Zora Fast Swim is six .text patches; Deku Walk is a live 16-bit parameter handled continuously
+// in ApplyCheats (a one-shot write gets overwritten by the game next frame), not here.
+typedef struct { u8 ch, size; u32 addr, val; } MovPatch;
+static const MovPatch MOV_PATCHES[] = {
+    { CH_MV_ZORA_SWIM, 4, 0x00220F50, 0xE3A00001 },
+    { CH_MV_ZORA_SWIM, 4, 0x002210CC, 0xE3A00001 },
+    { CH_MV_ZORA_SWIM, 4, 0x001FFDA8, 0xE3A00001 },
+    { CH_MV_ZORA_SWIM, 1, 0x002210ED, 0x00000000 },
+    { CH_MV_ZORA_SWIM, 1, 0x001FFCA1, 0x00000000 },
+    { CH_MV_ZORA_SWIM, 4, 0x00220EF0, 0xEA000009 },
+};
+#define NUM_MOV_PATCHES ((int)(sizeof(MOV_PATCHES) / sizeof(MOV_PATCHES[0])))
+
+// Runs in SUPERVISOR mode via svcCustomBackdoor. The RWX flip (main.c) marks the game's pages RW
+// for privileged but leaves them RO for user - so a user-mode store is dropped (the reason W32
+// never took), while this privileged store lands. Same privilege the Rosalina cheat engine uses to
+// apply these exact AR codes. Keep it minimal: one sized store, no SVCs from inside supervisor mode.
+static void MgBackdoorWrite(u32 addr, u32 val, u32 size)
 {
-    *(volatile u32 *)addr = val;
+    if (size == 1)      *(volatile u8  *)addr = (u8)val;
+    else if (size == 2) *(volatile u16 *)addr = (u16)val;
+    else                *(volatile u32 *)addr = val;
 }
 
-static int PatchWord(u32 addr, u32 val)
+static void PatchWrite(u32 addr, u32 val, u32 size)
 {
-    svcCustomBackdoor((void *)MgBackdoorWrite, addr, val);
+    svcCustomBackdoor((void *)MgBackdoorWrite, addr, val, size);
     svcFlushEntireDataCache();              // push the store to RAM...
     svcInvalidateEntireInstructionCache();  // ...and make the CPU refetch the new instruction
-    return 1;
 }
 
 static void ApplyCodePatches(void)
 {
-    static u8 rowOn[NUM_MG_PATCHES];   // act only on the toggle edge
+    // Minigames: recorded originals, so we guard on the live word (leave unknown code alone).
+    static u8 mgOn[NUM_MG_PATCHES];
     for (int i = 0; i < NUM_MG_PATCHES; ++i)
     {
         int on = cheatState[MG_PATCHES[i].ch] ? 1 : 0;
-        if (on == rowOn[i]) continue;
-        PatchWord(MG_PATCHES[i].addr, on ? MG_PATCHES[i].patch : MG_PATCHES[i].orig);
-        rowOn[i] = (u8)on;
+        if (on == mgOn[i]) continue;
+        u32 cur = R32(MG_PATCHES[i].addr);
+        if (cur == MG_PATCHES[i].orig || cur == MG_PATCHES[i].patch)
+            PatchWrite(MG_PATCHES[i].addr, on ? MG_PATCHES[i].patch : MG_PATCHES[i].orig, 4);
+        mgOn[i] = (u8)on;
+    }
+    // Movement restores: capture the live value on enable, restore it on disable.
+    static u8  mvOn[NUM_MOV_PATCHES];
+    static u32 mvOrig[NUM_MOV_PATCHES];
+    for (int i = 0; i < NUM_MOV_PATCHES; ++i)
+    {
+        int on = cheatState[MOV_PATCHES[i].ch] ? 1 : 0;
+        if (on == mvOn[i]) continue;
+        u32 sz = MOV_PATCHES[i].size, a = MOV_PATCHES[i].addr;
+        if (on)  { mvOrig[i] = (sz == 1) ? R8(a) : (sz == 2) ? R16(a) : R32(a);
+                   PatchWrite(a, MOV_PATCHES[i].val, sz); }
+        else     { PatchWrite(a, mvOrig[i], sz); }
+        mvOn[i] = (u8)on;
     }
 }
 
@@ -284,7 +317,24 @@ static void ApplyCheats(void)
     if (cheatState[CH_MM_AMMO_BEANS])  W8(0x77639A, 0x63);
     if (cheatState[CH_MM_AMMO_KEG])    W8(0x77639C, 0x63);
 
-    ApplyCodePatches();  // minigame instruction patches - MUST run before the EXAMPLE guard below
+    // Inverted Song of Time to 1/3 speed, instead of MM3D's 1/2. MM3D advances the clock by 2
+    // units/frame; the ISoT sets extra_time_speed (s32 @ 0x7761E8) to -1, giving +1/frame (1/2).
+    // Setting it to -2 would PAUSE time (the base is 2, not the N64's 3), so instead we leave the
+    // song's -1 in place and cancel one clock tick (time, u16 @ 0x7761F8) every third frame -
+    // averaging +2/3 per frame = 1/3 of normal - only while the song is active (extra == -1), so
+    // the game still ends it on its own and turning the cheat off restores 1/2 cleanly.
+    // (Field/mechanism from Project Restoration's open source - see the About screen.)
+    if (cheatState[CH_MM_ISOT_THIRD] && R32(0x7761E8) == 0xFFFFFFFFu)
+    {
+        static u8 isotDiv = 0;
+        if (++isotDiv >= 3) { isotDiv = 0; u16 t = R16(0x7761F8); if (t) W16(0x7761F8, (u16)(t - 1)); }
+    }
+
+    // Deku Walk Speed: restore the faster hop/spin acceleration. Written every frame (the game
+    // keeps resetting this parameter), as a plain data write - it lives in writable memory.
+    if (cheatState[CH_MV_DEKU_WALK]) W16(0x007AFA60, 0x00C8);
+
+    ApplyCodePatches();  // minigame + Zora instruction patches - MUST run before the EXAMPLE guard
 
     // Guard, not #if: the example bodies below stay COMPILED (so they cannot silently rot
     // as the engine changes) while -Os folds them away entirely until you flip the flag.

@@ -11,6 +11,7 @@ static int SpriteKeyForCheat(int ch)
         case CH_MM_TIME_6PM:  return SPRK_SUNSET;
         case CH_MM_TIME_SCRUB: return SPRK_CLOCK;
         case CH_MM_DAY_SCRUB:  return SPRK_DAY;
+        case CH_MM_ISOT_THIRD: return SPRK_CLOCK;
 
         case CH_MM_REFILL_HEARTS: case CH_MM_HEARTS_MAX: return MSPR_HEART;
         case CH_MM_REFILL_MAGIC:  return MSPR_MAGIC_FAIRY;
@@ -49,6 +50,10 @@ static int SpriteKeyForCheat(int ch)
         case CH_MG_BEAVER:        return MSPR_ZORA_MASK;
         case CH_MG_BOAT_JUMP:     return MSPR_MOONJUMP;
         case CH_MG_HONEY_DARLING: return MSPR_HEART;
+
+        // Movement restores: the form each one speeds up.
+        case CH_MV_DEKU_WALK: return MSPR_MASK_DEKU;
+        case CH_MV_ZORA_SWIM: return MSPR_ZORA_MASK;
 
         // Settings rows: a mask changes your look, like a theme changes the menu's; a
         // written scroll for picking a language.

@@ -78,6 +78,8 @@ static const Item timeItems[] = {
     IT_SEP("SCRUB (hold + D-Pad)"),
     IT_CHEAT("Time Scrub",  CH_MM_TIME_SCRUB, "Hold {HK} + D-Pad Up/Down to nudge the clock forward/backward while held. Rebind the hold button in Settings. Forward is reliable. KNOWN LIMITATION: going backward far enough to cross midnight advances the day, same as Set Time - use forward only if that matters."),
     IT_CHEAT("Day Scrub",   CH_MM_DAY_SCRUB,  "Hold {HK} + D-Pad Up/Down to cycle the day 1/2/3, one step per press. Rebind the hold button in Settings. Only takes effect on your next area transition, same as Set Day. KNOWN LIMITATION: going backward is unreliable around that transition - forward is the reliable direction."),
+    IT_SEP("INVERTED SONG OF TIME"),
+    IT_CHEAT("Slow to 1/3 speed", CH_MM_ISOT_THIRD, "While the Inverted Song of Time is active, slows time to 1/3 speed instead of the default 1/2 - more time in a cycle. Only acts while the song is in effect. Scheduled NPCs may animate a little rough, a side effect of the simple version of this tweak."),
 };
 
 // MM3D Battle cheats. Addresses derived from the offline save-file map (SaveGames/, anchored at
@@ -159,6 +161,9 @@ static const Item miscItems[] = {
     IT_CHEAT("Normal Link",  CH_PLAY_NORMAL,      "Applies once, on your next area transition."),
     IT_CHEAT("Zora",         CH_PLAY_ZORA,        "Applies once, on your next area transition."),
     IT_CHEAT("Fierce Deity", CH_PLAY_FIERCEDEITY, "Bypasses the vanilla boss-arena-only restriction entirely - fully controllable. Applies once, on your next area transition."),
+    IT_SEP("MOVEMENT"),
+    IT_CHEAT("Deku Water Hop",  CH_MV_DEKU_WALK, "Restores the faster Deku Scrub hopping across water (the flower-to-flower hops). Subtle on land. Reverts when off."),
+    IT_CHEAT("Zora Fast Swim",  CH_MV_ZORA_SWIM, "Restores the faster Zora Link swimming speed. Reverts when off."),
     // Minigame CODE PATCHES: each toggle rewrites an instruction in the game's .text via a
     // supervisor-mode write (see MG_PATCHES/PatchWord in cheats.inc.c) and reverts it when off.
     // Turn one on just before the minigame.

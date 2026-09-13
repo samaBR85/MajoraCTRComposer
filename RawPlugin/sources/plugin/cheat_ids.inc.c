@@ -18,7 +18,7 @@ enum {
     // ---- MM3D: Time (v1.1 USA, 0004000000125500) ----
     CH_MM_DAY1, CH_MM_DAY2, CH_MM_DAY3,
     CH_MM_TIME_6AM, CH_MM_TIME_10AM, CH_MM_TIME_6PM,
-    CH_MM_TIME_SCRUB, CH_MM_DAY_SCRUB,
+    CH_MM_TIME_SCRUB, CH_MM_DAY_SCRUB, CH_MM_ISOT_THIRD,
     // ---- MM3D: Battle ----
     CH_MM_REFILL_HEARTS, CH_MM_HEARTS_MAX, CH_MM_REFILL_MAGIC,
     // ---- MM3D: Inventory ----
@@ -37,6 +37,9 @@ enum {
     // edge and reverted to the captured original when turned off. Never persisted (a code patch
     // must not survive a reboot with the game already past that code). See MG_PATCHES.
     CH_MG_TOWN_GALLERY, CH_MG_SWAMP_GALLERY, CH_MG_BEAVER, CH_MG_BOAT_JUMP, CH_MG_HONEY_DARLING,
+    // ---- MM3D: Movement restores. Also .text/param patches (supervisor write); originals are
+    // captured at runtime on enable and put back on disable (we have no recorded originals). ----
+    CH_MV_DEKU_WALK, CH_MV_ZORA_SWIM,
     // ---- Settings rows (not cheats) ----
     CH_CFG_TOAST, CH_CFG_AUTOFILL, CH_CFG_QMKEY, CH_CFG_HK1, CH_CFG_HK2,
     CH_CFG_HKRESET, CH_CFG_THEME, CH_CFG_LANG,
