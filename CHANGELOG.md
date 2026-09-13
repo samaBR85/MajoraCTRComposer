@@ -6,7 +6,15 @@ SemVer; the **build** counter is the running iteration count shown on-screen (`b
 
 ---
 
-## Unreleased · builds 1–83
+## Unreleased · builds 1–85
+
+### b85 — Time folder: DAY | TIME two-column layout
+The Time folder scrolled a lot as a plain list. Gave it a custom layout: the DAY section sits in
+a left column and TIME OF DAY in a right column, tops aligned (headers over their own column),
+with SCRUB and the Inverted Song of Time row full-width below. Shortened the labels to fit the
+half-width columns ("Set to Day 1" -> "Set Day 1", "Set Time to 6AM" -> "Time 6AM", the ISoT row
+to "Slow to 1/3"). Reuses the existing grid render/nav via the `g_rl*` arrays plus a new
+`BuildTimeLayout`; the grid header draw now supports a half-width column header.
 
 ### b83 — Movement restores + Inverted Song of Time 1/3; menu UX
 New cheats:

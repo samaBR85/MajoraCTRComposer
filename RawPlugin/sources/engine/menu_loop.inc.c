@@ -252,7 +252,7 @@ static void RunMenu(void)
         const Folder *fld = &folders[folderIdx];
         int changed = 0;
 
-        if (folderIdx == F_ROOT || (folderIdx == F_TELEPORT && g_tpFilter == 0)) // grouped 2-column grid
+        if (folderIdx == F_ROOT || folderIdx == F_TIME || (folderIdx == F_TELEPORT && g_tpFilter == 0)) // grouped 2-column grid
         {
             BuildRootLayout(fld);
             if (NavSkip(folderIdx, cursor)) cursor = RootFirstSel(fld);
@@ -420,7 +420,7 @@ static void RunMenu(void)
 
         if (flashTicks > 0 && --flashTicks == 0) { flashCheat = -1; changed = 1; }
 
-        if (folderIdx == F_ROOT || (folderIdx == F_TELEPORT && g_tpFilter == 0)) // 2-col grid: scroll is a pixel offset that follows the cursor
+        if (folderIdx == F_ROOT || folderIdx == F_TIME || (folderIdx == F_TELEPORT && g_tpFilter == 0)) // 2-col grid: scroll is a pixel offset that follows the cursor
         {
             BuildRootLayout(fld);
             int visBot = WIN_Y + WIN_H - 22, cy = g_rlY[cursor];

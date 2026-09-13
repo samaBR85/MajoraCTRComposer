@@ -256,9 +256,31 @@ static void DrawMenuItem(const Item *it, int x, int y, int cellW, int selected, 
 #define RL_MAX  40
 #define HDR_H   14
 static int g_rlY[RL_MAX], g_rlCol[RL_MAX], g_rlSep[RL_MAX], g_rlHid[RL_MAX];
+// Custom Time-folder layout: the first two sections sit SIDE BY SIDE (section 1 with its header in
+// the left column, section 2 in the right column, tops aligned); every later section is a plain
+// full-width list below the taller of the two. col: 0/1 = a half-width column, -1 = full-width
+// header, -2 = full-width row. Populates the same g_rl* arrays the grid render/nav already use.
+static void BuildTimeLayout(const Folder *fld)
+{
+    int yL = ROW_Y0, yR = ROW_Y0, yTail = -1, sec = 0;
+    for (int i = 0; i < fld->count && i < RL_MAX; ++i)
+    {
+        int isSep = IS_SEP(&fld->items[i]);
+        if (isSep) sec++;
+        int lane = (sec == 1) ? 0 : (sec == 2) ? 1 : 2;   // 0 left, 1 right, 2 full-width tail
+        if (lane == 2 && yTail < 0) yTail = (yL > yR ? yL : yR);
+        int *py = (lane == 0) ? &yL : (lane == 1) ? &yR : &yTail;
+        g_rlHid[i] = 0;
+        g_rlSep[i] = isSep;
+        g_rlY[i] = *py;
+        g_rlCol[i] = isSep ? (lane == 2 ? -1 : lane) : (lane == 2 ? -2 : lane);
+        *py += isSep ? HDR_H : ROW_H;
+    }
+}
 static void BuildRootLayout(const Folder *fld)
 {
     int folderIdx = (int)(fld - folders);
+    if (folderIdx == F_TIME) { BuildTimeLayout(fld); return; }
     int y = ROW_Y0, col = 0;
     for (int i = 0; i < fld->count && i < RL_MAX; ++i)
     {
@@ -347,7 +369,7 @@ static void ComposeMenu(const Folder *fld, int depth, int cursor, int scroll)
     // category headers with just one surviving destination each, and a forced 2-col break per
     // header wasted the other column and forced a lot of scrolling for very little content -
     // a single full-width column both fixes that and stops long dungeon names from clipping.
-    int twoCol = (fld == &folders[F_ROOT] || (fld == &folders[F_TELEPORT] && g_tpFilter == 0));
+    int twoCol = (fld == &folders[F_ROOT] || fld == &folders[F_TIME] || (fld == &folders[F_TELEPORT] && g_tpFilter == 0));
     if (twoCol)
     {
         BuildRootLayout(fld);
@@ -363,10 +385,14 @@ static void ComposeMenu(const Folder *fld, int depth, int cursor, int scroll)
             if (dy < ROW_Y0 - 2 || dy + rowH > visBot + 2) continue; // clip to the visible band
             if (g_rlSep[i])
             {
+                // A header spans the whole width (g_rlCol -1) or sits in one half-width column
+                // (g_rlCol 0/1) - the Time folder puts DAY over the left column and TIME over the right.
+                int hx   = (g_rlCol[i] >= 0) ? ROW_X + g_rlCol[i] * colW : ROW_X;
+                int hend = (g_rlCol[i] >= 0) ? ROW_X + (g_rlCol[i] + 1) * colW - 8 : (WIN_X + WIN_W - 14);
                 const char *sec = T(fld->items[i].label);
-                CText6(ROW_X, dy + 3, sec, INK_DIM); // matches the list-mode header style (DrawMenuItem)
-                int lx = ROW_X + C6Width(sec) + 6;
-                CFill(lx, dy + 6, (WIN_X + WIN_W - 14) - lx, 1, GOLD); // hairline rule
+                CText6(hx, dy + 3, sec, INK_DIM); // matches the list-mode header style (DrawMenuItem)
+                int lx = hx + C6Width(sec) + 6;
+                if (lx < hend) CFill(lx, dy + 6, hend - lx, 1, GOLD); // hairline rule
             }
             else if (g_rlCol[i] == -2) // wide row: full row width, no column offset
                 DrawMenuItem(&fld->items[i], ROW_X, dy, ROW_W - 8, i == cursor, 0);

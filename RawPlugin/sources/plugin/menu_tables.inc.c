@@ -68,18 +68,18 @@ static const Item exampleItems[] = {
 // One-shots: pressing {A} writes once, it does not hold the value.
 static const Item timeItems[] = {
     IT_SEP("DAY"),
-    IT_CHEAT("Set to Day 1", CH_MM_DAY1, "Takes effect on your next area transition (door, warp, load), not instantly."),
-    IT_CHEAT("Set to Day 2", CH_MM_DAY2, "Takes effect on your next area transition (door, warp, load), not instantly."),
-    IT_CHEAT("Set to Day 3", CH_MM_DAY3, "Takes effect on your next area transition (door, warp, load), not instantly."),
+    IT_CHEAT("Set Day 1", CH_MM_DAY1, "Takes effect on your next area transition (door, warp, load), not instantly."),
+    IT_CHEAT("Set Day 2", CH_MM_DAY2, "Takes effect on your next area transition (door, warp, load), not instantly."),
+    IT_CHEAT("Set Day 3", CH_MM_DAY3, "Takes effect on your next area transition (door, warp, load), not instantly."),
     IT_SEP("TIME OF DAY"),
-    IT_CHEAT("Set Time to 6AM",  CH_MM_TIME_6AM,  "Applies instantly. KNOWN LIMITATION: jumping to an EARLIER time than now also advances the day - the game treats the decrease as midnight passing. Not currently fixable with a simple write."),
-    IT_CHEAT("Set Time to 10AM", CH_MM_TIME_10AM, "Applies instantly. KNOWN LIMITATION: jumping to an EARLIER time than now also advances the day - the game treats the decrease as midnight passing. Not currently fixable with a simple write."),
-    IT_CHEAT("Set Time to 6PM",  CH_MM_TIME_6PM,  "Applies instantly."),
+    IT_CHEAT("Time 6AM",  CH_MM_TIME_6AM,  "Applies instantly. KNOWN LIMITATION: jumping to an EARLIER time than now also advances the day - the game treats the decrease as midnight passing. Not currently fixable with a simple write."),
+    IT_CHEAT("Time 10AM", CH_MM_TIME_10AM, "Applies instantly. KNOWN LIMITATION: jumping to an EARLIER time than now also advances the day - the game treats the decrease as midnight passing. Not currently fixable with a simple write."),
+    IT_CHEAT("Time 6PM",  CH_MM_TIME_6PM,  "Applies instantly."),
     IT_SEP("SCRUB (hold + D-Pad)"),
     IT_CHEAT("Time Scrub",  CH_MM_TIME_SCRUB, "Hold {HK} + D-Pad Up/Down to nudge the clock forward/backward while held. Rebind the hold button in Settings. Forward is reliable. KNOWN LIMITATION: going backward far enough to cross midnight advances the day, same as Set Time - use forward only if that matters."),
     IT_CHEAT("Day Scrub",   CH_MM_DAY_SCRUB,  "Hold {HK} + D-Pad Up/Down to cycle the day 1/2/3, one step per press. Rebind the hold button in Settings. Only takes effect on your next area transition, same as Set Day. KNOWN LIMITATION: going backward is unreliable around that transition - forward is the reliable direction."),
     IT_SEP("INVERTED SONG OF TIME"),
-    IT_CHEAT("Slow to 1/3 speed", CH_MM_ISOT_THIRD, "While the Inverted Song of Time is active, slows time to 1/3 speed instead of the default 1/2 - more time in a cycle. Only acts while the song is in effect. Scheduled NPCs may animate a little rough, a side effect of the simple version of this tweak."),
+    IT_CHEAT("Slow to 1/3", CH_MM_ISOT_THIRD, "While the Inverted Song of Time plays, slows time to 1/3 instead of the default 1/2 - more time per cycle. Scheduled NPCs may animate a bit rough."),
 };
 
 // MM3D Battle cheats. Addresses derived from the offline save-file map (SaveGames/, anchored at
