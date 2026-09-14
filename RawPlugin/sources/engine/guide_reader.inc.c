@@ -4,24 +4,29 @@
 static u16 g_glOff[GR_MAXLINES];
 static u16 g_glLen[GR_MAXLINES];
 static int g_glN;
-static void GuideWrap(const char *s, int cols)
+static void GuideWrap(const char *s, int maxW)
 {
     g_glN = 0;
     int len = 0; while (s[len]) len++;
     int i = 0;
+    char buf[64];
     while (i < len && g_glN < GR_MAXLINES)
     {
-        int start = i, lastSpace = -1, count = 0;
-        while (i < len && count < cols && s[i] != '\n')
+        int start = i, lastSpace = -1;
+        while (i < len && s[i] != '\n')
         {
             if (s[i] == ' ') lastSpace = i;
-            i++; count++;
+            int lineLen = i - start + 1;
+            if (lineLen > 62) break;
+            memcpy(buf, s + start, (size_t)lineLen); buf[lineLen] = 0;
+            if (CTextWidth(buf) > maxW) break;
+            i++;
         }
         int end;
-        if (i < len && s[i] == '\n')                  { end = i; i++; }               // hard break
-        else if (i >= len)                            { end = i; }                     // end of text
-        else if (count >= cols && lastSpace > start)  { end = lastSpace; i = lastSpace + 1; } // wrap at space
-        else                                          { end = i; }                     // long word / hard cut
+        if (i < len && s[i] == '\n')              { end = i; i++; }
+        else if (i >= len)                        { end = i; }
+        else if (lastSpace > start)               { end = lastSpace; i = lastSpace + 1; }
+        else                                      { end = i; }
         g_glOff[g_glN] = (u16)start; g_glLen[g_glN] = (u16)(end - start); g_glN++;
     }
 }
@@ -67,8 +72,7 @@ static void GuideBackdrop(void)
 // Scrollable reader. Returns 1 on B (back); sets g_quitToGame and returns 0 on SELECT.
 static int GuideReader(const char *title, const char *body, int *scrollIO)
 {
-    int cols = (WIN_W - 30) / 12;  // chars/line for system font (~24)
-    GuideWrap(body, cols);
+    GuideWrap(body, WIN_W - 30);
     int rows = 8, redraw = 1;
     int scroll = scrollIO ? *scrollIO : 0;
     if (scroll > g_glN) scroll = 0;
