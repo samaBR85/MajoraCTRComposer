@@ -1,186 +1,186 @@
 %C Avant de Commencer
 %P Le Cycle des Trois Jours
-Une seule rÃ¨gle compte avant de jouer : Termina tourne sur une horloge de
-72 heures, et la lune tombe Ã  la fin du troisiÃ¨me jour. Lorsque vous jouez la
-Chanson du Temps, l'horloge se remet Ã  la premiÃ¨re aube â€” et c'est aussi votre
+Une seule règle compte avant de jouer : Termina tourne sur une horloge de
+72 heures, et la lune tombe à la fin du troisième jour. Lorsque vous jouez la
+Chanson du Temps, l'horloge se remet à la première aube — et c'est aussi votre
 sauvegarde.
 
-Une rÃ©initialisation garde ce qui compte (masques, chants, restes des boss, et
-vos amÃ©liorations d'Ã©pÃ©e, de carquois, de sac Ã  bombes et de porte-monnaie,
-plus les PiÃ¨ces de CÅ“ur que vous avez dÃ©posÃ©es) et efface le reste (rubis en
-poche, bombes, flÃ¨ches, petites clÃ©s, progression en donjon). Jouez chaque
-cycle vers UN objectif, rÃ©cupÃ©rez sa rÃ©compense durable, puis rÃ©initialisez.
+Une réinitialisation garde ce qui compte (masques, chants, restes des boss, et
+vos améliorations d'épée, de carquois, de sac à bombes et de porte-monnaie,
+plus les Pièces de Cœur que vous avez déposées) et efface le reste (rubis en
+poche, bombes, flèches, petites clés, progression en donjon). Jouez chaque
+cycle vers UN objectif, récupérez sa récompense durable, puis réinitialisez.
 
-Les statues de hibou sauvegardent aussi â€” mais SANS rÃ©initialiser l'horloge.
+Les statues de hibou sauvegardent aussi — mais SANS réinitialiser l'horloge.
 C'est votre sauvegarde "pause maintenant, garder ce cycle". Tout ce qui suit
-est Ã©crit dans l'ordre oÃ¹ vous le ferez vraiment.
+est écrit dans l'ordre où vous le ferez vraiment.
 
 %C Clock Town : 1er Cycle
-%P RÃ©cupÃ©rez votre Ocarina
-Vous commencez maudit en forme Deku, ocarina volÃ©e. Link Deku s'Ã©lance depuis
-des fleurs Deku et saute sur l'eau â€” c'est suffisant pour se dÃ©placer en ville.
+%P Récupérez votre Ocarina
+Vous commencez maudit en forme Deku, ocarina volée. Link Deku s'élance depuis
+des fleurs Deku et saute sur l'eau — c'est suffisant pour se déplacer en ville.
 Votre premier travail est d'atteindre le sommet de la Tour de l'Horloge la
-troisiÃ¨me nuit, affronter Skull Kid, rÃ©cupÃ©rer l'ocarina et apprendre la
+troisième nuit, affronter Skull Kid, récupérer l'ocarina et apprendre la
 Chanson du Temps.
 
-Jouez-la. Le cycle se remet Ã  zÃ©ro, et cette fois le Vendeur de Masques
-restaure Link et lui donne le Masque Deku â€” donc dÃ©sormais vous pouvez passer
-en forme Deku quand vous voulez, au lieu d'y Ãªtre coincÃ©.
+Jouez-la. Le cycle se remet à zéro, et cette fois le Vendeur de Masques
+restaure Link et lui donne le Masque Deku — donc désormais vous pouvez passer
+en forme Deku quand vous voulez, au lieu d'y être coincé.
 
 %P Deux Astuces Temporelles
-Maintenant que vous avez la Chanson du Temps, apprenez ses deux variations tÃ´t
-â€” vous vous en servirez tout au long du jeu :
-- La Chanson du Temps InversÃ©e ralentit l'horloge Ã  environ un tiers de vitesse.
-- La Chanson du Double Temps avance jusqu'Ã  la prochaine aube ou crÃ©puscule.
+Maintenant que vous avez la Chanson du Temps, apprenez ses deux variations tôt
+— vous vous en servirez tout au long du jeu :
+- La Chanson du Temps Inversée ralentit l'horloge à environ un tiers de vitesse.
+- La Chanson du Double Temps avance jusqu'à la prochaine aube ou crépuscule.
 
 %P Le Carnet des Bombardiers
 Retrouvez le gang des Bombardiers et rejoignez-les pour obtenir le Carnet des
-Bombardiers. Il consigne les personnes, leurs horaires quotidiens et les quÃªtes
-qui leur sont liÃ©es, et vous rappelle quand quelqu'un sera quelque part. Traitez
-ce carnet comme votre liste de tÃ¢ches pour tout le jeu. Pendant que vous Ãªtes
-lÃ , dÃ©posez vos rubis Ã  la banque â€” l'argent dÃ©posÃ© est l'une des rares choses
-qui survivent Ã  une rÃ©initialisation.
+Bombardiers. Il consigne les personnes, leurs horaires quotidiens et les quêtes
+qui leur sont liées, et vous rappelle quand quelqu'un sera quelque part. Traitez
+ce carnet comme votre liste de tâches pour tout le jeu. Pendant que vous êtes
+là, déposez vos rubis à la banque — l'argent déposé est l'une des rares choses
+qui survivent à une réinitialisation.
 
 %C Marais du Sud & Woodfall
 %P Dans le Marais
-Dirigez-vous vers le sud. L'eau du marais est empoisonnÃ©e jusqu'Ã  ce que vous
-ayez terminÃ© le temple de la rÃ©gion. En chemin, un grand hibou vous enseigne la
-Chanson du Survol â€” tÃ©lÃ©portez-vous entre les statues de hibou que vous avez
-activÃ©es. DÃ©sormais, allumez chaque statue que vous croisez ; c'est votre voyage
+Dirigez-vous vers le sud. L'eau du marais est empoisonnée jusqu'à ce que vous
+ayez terminé le temple de la région. En chemin, un grand hibou vous enseigne la
+Chanson du Survol — téléportez-vous entre les statues de hibou que vous avez
+activées. Désormais, allumez chaque statue que vous croisez ; c'est votre voyage
 rapide.
 
-Suivez le singe pour apprendre la Sonate de l'Ã‰veil. Jouez-la sur l'autel de
+Suivez le singe pour apprendre la Sonate de l'Éveil. Jouez-la sur l'autel de
 Woodfall pour faire surgir le temple de l'eau, puis grimpez avec les fleurs Deku.
 
 %P Temple de Woodfall
-- Objet du donjon : l'Arc du HÃ©ros. Une fois obtenu, cherchez les interrupteurs
-  Ã  Å“il et les coffres que vous ne pouviez pas atteindre avant.
-- Mini-boss : un Dinolfos â€” bloquez son Ã©pÃ©e et contre-attaquez, ou utilisez
+- Objet du donjon : l'Arc du Héros. Une fois obtenu, cherchez les interrupteurs
+  à œil et les coffres que vous ne pouviez pas atteindre avant.
+- Mini-boss : un Dinolfos — bloquez son épée et contre-attaquez, ou utilisez
   une bombe.
-- Chaque temple cache 15 fÃ©es errantes ; le Masque de la Grande FÃ©e (rÃ©compense
-  Ã  Clock Town) les attire vers vous et c'est de loin la faÃ§on la plus facile
+- Chaque temple cache 15 fées errantes ; le Masque de la Grande Fée (récompense
+  à Clock Town) les attire vers vous et c'est de loin la façon la plus facile
   de les rassembler.
 
 %P Boss : Odolwa
-Un guerrier de la jungle masquÃ© qui danse, manie une lame et appelle des
-insectes. DÃ©sÃ©quilibrez-le avec une flÃ¨che ou un insecte en bouteille, puis
-rapprochez-vous. RÃ©compense : les Restes d'Odolwa, et le marais redevient
-propre. Un gÃ©ant libÃ©rÃ© vous enseigne maintenant le Serment Ã  l'Ordre â€” la
-chanson qui convoque les gÃ©ants Ã  la toute fin.
+Un guerrier de la jungle masqué qui danse, manie une lame et appelle des
+insectes. Déséquilibrez-le avec une flèche ou un insecte en bouteille, puis
+rapprochez-vous. Récompense : les Restes d'Odolwa, et le marais redevient
+propre. Un géant libéré vous enseigne maintenant le Serment à l'Ordre — la
+chanson qui convoque les géants à la toute fin.
 
 %C Les Montagnes & Snowhead
 %P Atteindre Snowhead
-En montant la route de montagne, une tempÃªte Ã©ternelle saisit la rÃ©gion. Vous
-rencontrez ici l'esprit du hÃ©ros Goron Darmani ; jouez la Chanson de la GuÃ©rison
+En montant la route de montagne, une tempête éternelle saisit la région. Vous
+rencontrez ici l'esprit du héros Goron Darmani ; jouez la Chanson de la Guérison
 pour le soulager et obtenir le Masque Goron. Link Goron est un combattant au
-corps Ã  corps lourd â€” un pilonnage au sol et une charge en roulade qui devient
-un rocher Ã©pineux avec la magie, la faÃ§on la plus rapide de traverser un terrain
+corps à corps lourd — un pilonnage au sol et une charge en roulade qui devient
+un rocher épineux avec la magie, la façon la plus rapide de traverser un terrain
 ouvert.
 
-Apaisez l'enfant Goron qui pleure pour complÃ©ter la Berceuse Goron, puis
-dÃ©gagez le chemin bloquÃ© par le vent jusqu'au temple.
+Apaisez l'enfant Goron qui pleure pour compléter la Berceuse Goron, puis
+dégagez le chemin bloqué par le vent jusqu'au temple.
 
 %P Temple de Snowhead
-- Objet du donjon : FlÃ¨ches de Feu â€” elles font fondre les puzzles de glace et
-  allument les torches Ã©loignÃ©es.
+- Objet du donjon : Flèches de Feu — elles font fondre les puzzles de glace et
+  allument les torches éloignées.
 - Le temple s'enroule autour d'un grand pilier central ; la majeure partie du
-  puzzle consiste Ã  dÃ©cider quel Ã©tage atteindre.
-- Mini-boss : un Wizzrobe tÃ©lÃ©porteur â€” frappez dÃ¨s qu'il rÃ©apparaÃ®t.
+  puzzle consiste à décider quel étage atteindre.
+- Mini-boss : un Wizzrobe téléporteur — frappez dès qu'il réapparaît.
 
 %P Boss : Goht
-Une bÃªte mÃ©canique qui charge sur une piste circulaire. Restez en forme Goron,
-enroulez-vous en roulade Ã©pineuse, poursuivez-le et tirez quand il trÃ©buche.
-RÃ©compense : les Restes de Goht, et le printemps revient sur les montagnes.
+Une bête mécanique qui charge sur une piste circulaire. Restez en forme Goron,
+enroulez-vous en roulade épineuse, poursuivez-le et tirez quand il trébuche.
+Récompense : les Restes de Goht, et le printemps revient sur les montagnes.
 
-%C Grande Baie & Temple OcÃ©an
+%C Grande Baie & Temple Océan
 %P Atteindre le Temple
-Sur la CÃ´te de la Grande Baie, vous trouvez l'esprit de Mikau, un guitariste
-Zora. La Chanson de la GuÃ©rison vous donne le Masque Zora â€” Link Zora nage
-librement, lance des nageoires-boomerang et dresse un bouclier Ã©lectrique.
-Aidez les problÃ¨mes du groupe Zora et rassemblez leur chanson pour apprendre
-la New Wave Bossa Nova, qui rÃ©veille le temple. C'est le donjon le plus
+Sur la Côte de la Grande Baie, vous trouvez l'esprit de Mikau, un guitariste
+Zora. La Chanson de la Guérison vous donne le Masque Zora — Link Zora nage
+librement, lance des nageoires-boomerang et dresse un bouclier électrique.
+Aidez les problèmes du groupe Zora et rassemblez leur chanson pour apprendre
+la New Wave Bossa Nova, qui réveille le temple. C'est le donjon le plus
 difficile des quatre.
 
 %P Temple de la Grande Baie
-- Objet du donjon : FlÃ¨ches de Glace â€” congÃ¨le la surface de l'eau en
-  marchepied, aussi bien dans le temple qu'Ã  l'arÃ¨ne du boss.
-- Tout l'endroit fonctionne avec le dÃ©bit d'eau ; vannes et hÃ©lices redirigent
-  les courants pour ouvrir le passage. Si une salle semble bloquÃ©e, un contrÃ´le
-  que vous avez dÃ©jÃ  croisÃ© doit gÃ©nÃ©ralement Ãªtre refait.
-- Mini-boss : Verrue, un grand Å“il flottant â€” faites Ã©clater ses bulles, puis
-  frappez l'Å“il.
+- Objet du donjon : Flèches de Glace — congèle la surface de l'eau en
+  marchepied, aussi bien dans le temple qu'à l'arène du boss.
+- Tout l'endroit fonctionne avec le débit d'eau ; vannes et hélices redirigent
+  les courants pour ouvrir le passage. Si une salle semble bloquée, un contrôle
+  que vous avez déjà croisé doit généralement être refait.
+- Mini-boss : Verrue, un grand œil flottant — faites éclater ses bulles, puis
+  frappez l'œil.
 
 %P Boss : Gyorg
-Un poisson gÃ©ant qui rÃ¨gne sur une arÃ¨ne inondÃ©e. Combattez depuis la plateforme
-quand il saute, et passez en forme Zora avec des FlÃ¨ches de Glace quand le
-combat se dÃ©roule sous l'eau. RÃ©compense : les Restes de Gyorg.
+Un poisson géant qui règne sur une arène inondée. Combattez depuis la plateforme
+quand il saute, et passez en forme Zora avec des Flèches de Glace quand le
+combat se déroule sous l'eau. Récompense : les Restes de Gyorg.
 
 %C Canyon Ikana & Tour de Pierre
 %P Dans Ikana
-Ikana est un canyon des morts-vivants â€” les masques Gibdo, de Pierre et du
-Capitaine sont tous utiles ici. Vous apprenez l'Ã‰lÃ©gie du Vide, qui laisse
-derriÃ¨re vous une statue de votre forme actuelle pour maintenir des interrupteurs
-pendant que vous vous Ã©loignez. Vous l'utiliserez constamment dans le temple.
+Ikana est un canyon des morts-vivants — les masques Gibdo, de Pierre et du
+Capitaine sont tous utiles ici. Vous apprenez l'Élégie du Vide, qui laisse
+derrière vous une statue de votre forme actuelle pour maintenir des interrupteurs
+pendant que vous vous éloignez. Vous l'utiliserez constamment dans le temple.
 
 %P Temple de la Tour de Pierre
-- Objet du donjon : les FlÃ¨ches de LumiÃ¨re, trouvÃ©es Ã  l'intÃ©rieur.
-- Astuce signature : tirez une FlÃ¨che de LumiÃ¨re sur un bloc solaire et tout
-  le donjon se retourne Ã  l'envers, vous permettant de revisiter les salles sous
+- Objet du donjon : les Flèches de Lumière, trouvées à l'intérieur.
+- Astuce signature : tirez une Flèche de Lumière sur un bloc solaire et tout
+  le donjon se retourne à l'envers, vous permettant de revisiter les salles sous
   un nouvel angle. La plupart des impasses sont simplement une salle attendant
-  d'Ãªtre inversÃ©e â€” suivez la direction.
-- Mini-boss : le MaÃ®tre Garo (un ninja rapide) et Gomess (repoussez-le avec
-  la lumiÃ¨re).
+  d'être inversée — suivez la direction.
+- Mini-boss : le Maître Garo (un ninja rapide) et Gomess (repoussez-le avec
+  la lumière).
 
 %P Boss : Twinmold
-Une paire de serpents de sable gÃ©ants. Le Masque du GÃ©ant, trouvÃ© dans le
-temple, rend Link Ã©norme pour que vous puissiez les affronter directement â€” la
-faÃ§on prÃ©vue de gagner. RÃ©compense : les Restes de Twinmold. Avec les quatre
+Une paire de serpents de sable géants. Le Masque du Géant, trouvé dans le
+temple, rend Link énorme pour que vous puissiez les affronter directement — la
+façon prévue de gagner. Récompense : les Restes de Twinmold. Avec les quatre
 restes, la route vers la lune s'ouvre.
 
 %C Le Dernier Jour & la Lune
-%P Appelez les GÃ©ants
-Lors de la derniÃ¨re nuit, retournez au sommet de la Tour de l'Horloge et jouez
-le Serment Ã  l'Ordre. Les Quatre GÃ©ants rÃ©pondent et retiennent la lune, ouvrant
+%P Appelez les Géants
+Lors de la dernière nuit, retournez au sommet de la Tour de l'Horloge et jouez
+le Serment à l'Ordre. Les Quatre Géants répondent et retiennent la lune, ouvrant
 le chemin vers le haut.
 
 %P Sur la Lune
-Si vous avez collectÃ© des masques en chemin, les enfants sur la lune vous
-Ã©changeront le Masque de la DivinitÃ© FÃ©roce â€” une grande forme avec Ã©pÃ©e qui
-tire des rayons d'Ã©nergie et tranche le combat final contre Majora. C'est la
-rÃ©compense de la chasse aux masques.
+Si vous avez collecté des masques en chemin, les enfants sur la lune vous
+échangeront le Masque de la Divinité Féroce — une grande forme avec épée qui
+tire des rayons d'énergie et tranche le combat final contre Majora. C'est la
+récompense de la chasse aux masques.
 
 %C En Chemin
-%P Masques et QuÃªtes Secondaires
-Entre les temples, passez vos cycles libres Ã  Clock Town et sur les routes :
-- Capuche de Lapin : grand bonus de vitesse â€” portez-le quand vous voyagez.
-- Masque de la Grande FÃ©e : rassemble les fÃ©es errantes d'un temple pour vous.
-- Masque de Pierre : vous rend invisible Ã  de nombreux gardes et ennemis.
-- Masques de quÃªte (Masque du Couple de Kafei et Anju, de Kamaro, Chapeau
-  du Facteur et les autres) remplissent le Carnet et, ensemble, dÃ©bloquent
-  la DivinitÃ© FÃ©roce.
-La plupart des quÃªtes liÃ©es au temps se rÃ©solvent en planifiant toute la chaÃ®ne
-d'abord, puis en manipulant le jour avec les Chansons du Temps InversÃ©e et Double.
+%P Masques et Quêtes Secondaires
+Entre les temples, passez vos cycles libres à Clock Town et sur les routes :
+- Capuche de Lapin : grand bonus de vitesse — portez-le quand vous voyagez.
+- Masque de la Grande Fée : rassemble les fées errantes d'un temple pour vous.
+- Masque de Pierre : vous rend invisible à de nombreux gardes et ennemis.
+- Masques de quête (Masque du Couple de Kafei et Anju, de Kamaro, Chapeau
+  du Facteur et les autres) remplissent le Carnet et, ensemble, débloquent
+  la Divinité Féroce.
+La plupart des quêtes liées au temps se résolvent en planifiant toute la chaîne
+d'abord, puis en manipulant le jour avec les Chansons du Temps Inversée et Double.
 
-%P AmÃ©liorations & Collectibles
-- Ã‰pÃ©e : l'Ã‰pÃ©e Rasoir (s'Ã©mousse Ã  chaque rÃ©initialisation) et la permanente
-  Ã‰pÃ©e DorÃ©e, forgÃ©e avec de la PoussiÃ¨re d'Or.
-- AmÃ©liorations de capacitÃ© de carquois et de sac Ã  bombes dans les boutiques
+%P Améliorations & Collectibles
+- Épée : l'Épée Rasoir (s'émousse à chaque réinitialisation) et la permanente
+  Épée Dorée, forgée avec de la Poussière d'Or.
+- Améliorations de capacité de carquois et de sac à bombes dans les boutiques
   et mini-jeux.
-- Porte-monnaie : les Porte-monnaie Adulte et du GÃ©ant augmentent ce que vous
-  pouvez porter ; la banque garde l'argent entre les rÃ©initialisations.
-- Six bouteilles, chacune issue d'une quÃªte. Ramenez les fÃ©es errantes de chaque
-  rÃ©gion Ã  sa Grande FÃ©e pour obtenir de la magie, un spin attack plus puissant
-  et de la dÃ©fense supplÃ©mentaire.
-- Les PiÃ¨ces de CÅ“ur viennent en groupes de quatre ; les boss et les quÃªtes
+- Porte-monnaie : les Porte-monnaie Adulte et du Géant augmentent ce que vous
+  pouvez porter ; la banque garde l'argent entre les réinitialisations.
+- Six bouteilles, chacune issue d'une quête. Ramenez les fées errantes de chaque
+  région à sa Grande Fée pour obtenir de la magie, un spin attack plus puissant
+  et de la défense supplémentaire.
+- Les Pièces de Cœur viennent en groupes de quatre ; les boss et les quêtes
   donnent aussi des conteneurs entiers.
 
 %C Conseils Rapides
 %P Faits Essentiels
-- DÃ©posez les rÃ©compenses permanentes avant de rÃ©initialiser ; les consommables
+- Déposez les récompenses permanentes avant de réinitialiser ; les consommables
   ne survivent jamais.
-- Allumez chaque statue de hibou â€” la Chanson du Survol s'y tÃ©lÃ©porte.
-- BloquÃ© dans un temple ? L'objet que vous venez de trouver est presque toujours
-  la rÃ©ponse.
-- Masque de la Grande FÃ©e pour les 15 fÃ©es ; Capuche de Lapin pour tout le reste.
-- Planifiez une quÃªte liÃ©e au temps entiÃ¨rement avant de commencer le cycle,
+- Allumez chaque statue de hibou — la Chanson du Survol s'y téléporte.
+- Bloqué dans un temple ? L'objet que vous venez de trouver est presque toujours
+  la réponse.
+- Masque de la Grande Fée pour les 15 fées ; Capuche de Lapin pour tout le reste.
+- Planifiez une quête liée au temps entièrement avant de commencer le cycle,
   puis manipulez le temps.

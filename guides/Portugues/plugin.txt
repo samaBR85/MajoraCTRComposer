@@ -1,58 +1,58 @@
 %C MajoraCTRComposer
-%P Vis√£o Geral
-Este plugin exibe uma sobreposi√ß√£o por cima do jogo em execu√ß√£o.
+%P Vis„o Geral
+Este plugin exibe uma sobreposiÁ„o por cima do jogo em execuÁ„o.
 
 Pressione SELECT durante o jogo para abrir o menu. O jogo pausa enquanto o
-menu est√° aberto. Pressione SELECT novamente (de qualquer tela) para voltar
+menu est· aberto. Pressione SELECT novamente (de qualquer tela) para voltar
 diretamente ao jogo.
 
-Navegue com o D-Pad. A abre uma pasta ou ativa um cheat. B volta um n√≠vel.
-X exibe informa√ß√µes sobre o item selecionado. Y adiciona aos favoritos.
+Navegue com o D-Pad. A abre uma pasta ou ativa um cheat. B volta um nÌvel.
+X exibe informaÁıes sobre o item selecionado. Y adiciona aos favoritos.
 
-%P Menu R√°pido & Favoritos
+%P Menu R·pido & Favoritos
 Adicione seus cheats mais usados com Y no menu. Depois segure L+SELECT (ou
-R+SELECT) para abrir o Menu R√°pido: uma lista compacta s√≥ dos seus favoritos,
+R+SELECT) para abrir o Menu R·pido: uma lista compacta sÛ dos seus favoritos,
 sem abrir o menu completo.
 
-O atalho pode ser alterado em Configura√ß√µes. Os favoritos, o estado das
-notifica√ß√µes e o atalho s√£o salvos no cart√£o SD e sobrevivem a um rein√≠cio.
+O atalho pode ser alterado em ConfiguraÁıes. Os favoritos, o estado das
+notificaÁıes e o atalho s„o salvos no cart„o SD e sobrevivem a um reinÌcio.
 
 %P Busca de Cheat
-Encontre o endere√ßo de mem√≥ria de qualquer valor e depois modifique-o.
+Encontre o endereÁo de memÛria de qualquer valor e depois modifique-o.
 
-Valor Conhecido: digite um n√∫mero vis√≠vel (ex. suas r√∫pias), Pesquise, depois
+Valor Conhecido: digite um n˙mero visÌvel (ex. suas r˙pias), Pesquise, depois
 refine os resultados conforme o valor muda (Maior / Menor / Alterado...).
 
-Busca Desconhecida: n√£o sabe o n√∫mero? Tire um instant√¢neo, mude o valor no
-jogo, depois varra Aumentado / Diminu√≠do / Alterado para localizar.
+Busca Desconhecida: n„o sabe o n˙mero? Tire um instant‚neo, mude o valor no
+jogo, depois varra Aumentado / DiminuÌdo / Alterado para localizar.
 
 O loop real: Pesquise, pressione SELECT para voltar ao jogo, mude o valor,
-SELECT para reabrir (os resultados s√£o mantidos), varra novamente. Repita at√©
+SELECT para reabrir (os resultados s„o mantidos), varra novamente. Repita atÈ
 restar poucos resultados. Pressione A em um resultado para inserir um novo
 valor. L desfaz uma varredura.
 
 %P Dump de RAM
-Salva um bloco da mem√≥ria do jogo em um arquivo .bin no cart√£o SD.
+Salva um bloco da memÛria do jogo em um arquivo .bin no cart„o SD.
 
-Defina um endere√ßo In√≠cio (ou pressione Y / Da Busca para usar o endere√ßo
-encontrado na Busca de Cheat) e um Tamanho, depois fa√ßa o Dump. Os arquivos
-s√£o gravados na pasta do plugin no cart√£o SD, em dumps/.
+Defina um endereÁo InÌcio (ou pressione Y / Da Busca para usar o endereÁo
+encontrado na Busca de Cheat) e um Tamanho, depois faÁa o Dump. Os arquivos
+s„o gravados na pasta do plugin no cart„o SD, em dumps/.
 
-A ferramenta s√≥ l√™ mem√≥ria acess√≠vel, portanto nunca trava em um endere√ßo
-n√£o mapeado. √ìtima para estudar os bytes em torno de um valor encontrado.
+A ferramenta sÛ lÍ memÛria acessÌvel, portanto nunca trava em um endereÁo
+n„o mapeado. ”tima para estudar os bytes em torno de um valor encontrado.
 
 %P Editor Hex
-Navegue pela mem√≥ria como uma grade hex ao vivo e edite qualquer byte.
+Navegue pela memÛria como uma grade hex ao vivo e edite qualquer byte.
 
 O D-Pad move o cursor (esquerda/direita um byte, cima/baixo uma linha). L/R
-muda de p√°gina. X salta para um endere√ßo; Y salta para o resultado da Busca.
+muda de p·gina. X salta para um endereÁo; Y salta para o resultado da Busca.
 Pressione A para editar o byte sob o cursor.
 
-Regi√µes somente leitura s√£o protegidas: a edi√ß√£o √© recusada em vez de travar.
-Bytes ileg√≠veis aparecem como --.
+Regiıes somente leitura s„o protegidas: a ediÁ„o È recusada em vez de travar.
+Bytes ilegÌveis aparecem como --.
 
 %P Dicas
-- SELECT √© sempre 'voltar ao jogo', de qualquer tela.
-- Reabrir o menu retorna ao lugar onde voc√™ estava, mesmo dentro de uma ferramenta.
-- Cheats com modifica√ß√£o de c√≥digo nunca s√£o ativados automaticamente na inicializa√ß√£o.
-- As notifica√ß√µes toast podem ser desativadas em Configura√ß√µes.
+- SELECT È sempre 'voltar ao jogo', de qualquer tela.
+- Reabrir o menu retorna ao lugar onde vocÍ estava, mesmo dentro de uma ferramenta.
+- Cheats com modificaÁ„o de cÛdigo nunca s„o ativados automaticamente na inicializaÁ„o.
+- As notificaÁıes toast podem ser desativadas em ConfiguraÁıes.

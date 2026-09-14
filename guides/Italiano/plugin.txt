@@ -3,18 +3,18 @@
 Questo plugin mostra una sovrapposizione sopra il gioco in esecuzione.
 
 Premi SELECT nel gioco per aprire il menu. Il gioco si mette in pausa mentre
-il menu Ã¨ aperto. Premi di nuovo SELECT (da qualsiasi schermata) per tornare
+il menu è aperto. Premi di nuovo SELECT (da qualsiasi schermata) per tornare
 direttamente al gioco.
 
 Naviga con il D-Pad. A apre una cartella o attiva un cheat. B torna un livello
 indietro. X mostra informazioni sull'elemento selezionato. Y aggiunge ai preferiti.
 
 %P Menu Rapido & Preferiti
-Aggiungi i tuoi cheat piÃ¹ usati con Y nel menu. Poi tieni premuto L+SELECT
+Aggiungi i tuoi cheat più usati con Y nel menu. Poi tieni premuto L+SELECT
 (o R+SELECT) per aprire il Menu Rapido: un elenco compatto solo dei tuoi
 preferiti, senza aprire il menu completo.
 
-La scorciatoia puÃ² essere cambiata nelle Impostazioni. I preferiti, lo stato
+La scorciatoia può essere cambiata nelle Impostazioni. I preferiti, lo stato
 delle notifiche e la scorciatoia sono salvati sulla scheda SD e sopravvivono
 a un riavvio.
 
@@ -29,7 +29,7 @@ nel gioco, poi scorri Aumentato / Diminuito / Modificato per localizzare.
 
 Il ciclo reale: Cerca, premi SELECT per tornare al gioco, cambia il valore,
 SELECT per riaprire (i risultati vengono mantenuti), scorri di nuovo. Ripeti
-finchÃ© rimangono pochi risultati. Premi A su un risultato per inserire un nuovo
+finché rimangono pochi risultati. Premi A su un risultato per inserire un nuovo
 valore. L annulla una scansione.
 
 %P Dump RAM
@@ -45,7 +45,7 @@ un indirizzo non mappato. Ottimo per studiare i byte attorno a un valore trovato
 %P Editor Hex
 Naviga nella memoria come una griglia hex dal vivo e modifica qualsiasi byte.
 
-Il D-Pad sposta il cursore (sinistra/destra un byte, su/giÃ¹ una riga). L/R
+Il D-Pad sposta il cursore (sinistra/destra un byte, su/giù una riga). L/R
 cambia pagina. X salta a un indirizzo; Y salta al risultato della Ricerca.
 Premi A per modificare il byte sotto il cursore.
 
@@ -53,7 +53,7 @@ Le regioni di sola lettura sono protette: la modifica viene rifiutata invece
 di causare un crash. I byte illeggibili appaiono come --.
 
 %P Suggerimenti
-- SELECT Ã¨ sempre 'torna al gioco', da qualsiasi schermata.
+- SELECT è sempre 'torna al gioco', da qualsiasi schermata.
 - Riaprire il menu torna dove eri, anche dentro uno strumento.
 - I cheat con modifica del codice non vengono mai attivati automaticamente
   all'avvio.

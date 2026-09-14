@@ -1,30 +1,30 @@
 %C MajoraCTRComposer
-%P DescripciÃ³n General
-Este plugin muestra una superposiciÃ³n encima del juego en ejecuciÃ³n.
+%P Descripción General
+Este plugin muestra una superposición encima del juego en ejecución.
 
-Pulsa SELECT en el juego para abrir el menÃº. El juego se pausa mientras el
-menÃº estÃ¡ abierto. Pulsa SELECT de nuevo (desde cualquier pantalla) para
+Pulsa SELECT en el juego para abrir el menú. El juego se pausa mientras el
+menú está abierto. Pulsa SELECT de nuevo (desde cualquier pantalla) para
 volver directamente al juego.
 
 Navega con el D-Pad. A abre una carpeta o activa un cheat. B vuelve un nivel
-atrÃ¡s. X muestra informaciÃ³n sobre el elemento seleccionado. Y aÃ±ade a favoritos.
+atrás. X muestra información sobre el elemento seleccionado. Y añade a favoritos.
 
-%P MenÃº RÃ¡pido & Favoritos
-AÃ±ade tus cheats mÃ¡s usados con Y en el menÃº. Luego mantÃ©n L+SELECT (o
-R+SELECT) para abrir el MenÃº RÃ¡pido: una lista compacta solo de tus favoritos,
-sin abrir el menÃº completo.
+%P Menú Rápido & Favoritos
+Añade tus cheats más usados con Y en el menú. Luego mantén L+SELECT (o
+R+SELECT) para abrir el Menú Rápido: una lista compacta solo de tus favoritos,
+sin abrir el menú completo.
 
 El atajo puede cambiarse en Ajustes. Los favoritos, el estado de las
 notificaciones y el atajo se guardan en la tarjeta SD y sobreviven a un reinicio.
 
-%P BÃºsqueda de Cheat
-Encuentra la direcciÃ³n de memoria de cualquier valor y luego modifÃ­calo.
+%P Búsqueda de Cheat
+Encuentra la dirección de memoria de cualquier valor y luego modifícalo.
 
-Valor Conocido: escribe un nÃºmero visible (ej. tus rupias), Busca, luego
+Valor Conocido: escribe un número visible (ej. tus rupias), Busca, luego
 refina los resultados a medida que el valor cambia (Mayor / Menor /
 Modificado...).
 
-BÃºsqueda Desconocida: Â¿no sabes el nÃºmero? Toma una instantÃ¡nea, cambia el
+Búsqueda Desconocida: ¿no sabes el número? Toma una instantánea, cambia el
 valor en el juego, luego escanea Aumentado / Disminuido / Modificado para
 localizar.
 
@@ -36,28 +36,28 @@ nuevo valor. L deshace un escaneo.
 %P Dump de RAM
 Guarda un bloque de la memoria del juego en un archivo .bin en la tarjeta SD.
 
-Establece una direcciÃ³n de Inicio (o pulsa Y / Desde la BÃºsqueda para usar
-la direcciÃ³n encontrada en la BÃºsqueda de Cheat) y un TamaÃ±o, luego haz el
+Establece una dirección de Inicio (o pulsa Y / Desde la Búsqueda para usar
+la dirección encontrada en la Búsqueda de Cheat) y un Tamaño, luego haz el
 Dump. Los archivos se escriben en la carpeta del plugin en la tarjeta SD,
 en dumps/.
 
-La herramienta solo lee memoria accesible, asÃ­ que nunca se cuelga en una
-direcciÃ³n no mapeada. Ideal para estudiar los bytes alrededor de un valor
+La herramienta solo lee memoria accesible, así que nunca se cuelga en una
+dirección no mapeada. Ideal para estudiar los bytes alrededor de un valor
 encontrado.
 
 %P Editor Hex
-Navega por la memoria como una cuadrÃ­cula hex en vivo y edita cualquier byte.
+Navega por la memoria como una cuadrícula hex en vivo y edita cualquier byte.
 
-El D-Pad mueve el cursor (izquierda/derecha un byte, arriba/abajo una lÃ­nea).
-L/R cambia de pÃ¡gina. X salta a una direcciÃ³n; Y salta al resultado de la
-BÃºsqueda. Pulsa A para editar el byte bajo el cursor.
+El D-Pad mueve el cursor (izquierda/derecha un byte, arriba/abajo una línea).
+L/R cambia de página. X salta a una dirección; Y salta al resultado de la
+Búsqueda. Pulsa A para editar el byte bajo el cursor.
 
-Las regiones de solo lectura estÃ¡n protegidas: la ediciÃ³n se rechaza en vez
+Las regiones de solo lectura están protegidas: la edición se rechaza en vez
 de causar un cuelgue. Los bytes ilegibles aparecen como --.
 
 %P Consejos
 - SELECT siempre es 'volver al juego', desde cualquier pantalla.
-- Reabrir el menÃº vuelve a donde estabas, incluso dentro de una herramienta.
-- Los cheats con modificaciÃ³n de cÃ³digo nunca se activan automÃ¡ticamente
+- Reabrir el menú vuelve a donde estabas, incluso dentro de una herramienta.
+- Los cheats con modificación de código nunca se activan automáticamente
   al arrancar.
 - Las notificaciones toast pueden desactivarse en Ajustes.
