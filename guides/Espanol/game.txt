@@ -38,7 +38,7 @@ relacionadas, y te recuerda cuándo alguien estará en algún lugar. Trátalo co
 tu lista de tareas para todo el juego. Además, deposita tus rupias en el banco
 — el dinero depositado es una de las pocas cosas que sobrevive a un reinicio.
 
-%C La Ciénaga del Sur & el Templo de Woodfall
+%C Ciénaga del Sur & Templo Woodfall
 %P En la Ciénaga
 Ve al sur. El agua de la ciénaga está envenenada hasta que completes el templo
 de la región. De camino, un gran búho te enseña la Canción del Vuelo —
@@ -108,7 +108,7 @@ Un pez gigante que domina una arena inundada. Lucha desde la plataforma cuando
 salte, y cambia a la forma Zora con Flechas de Hielo cuando el combate vaya
 bajo el agua. Recompensa: los Restos de Gyorg.
 
-%C El Cañón de Ikana & el Templo de la Torre de Piedra
+%C Cañón Ikana & Torre de Piedra
 %P En Ikana
 Ikana es un cañón de no-muertos — las máscaras Gibdo, de Piedra y del Capitán
 son todas útiles aquí. Aprendes la Elegía del Vacío, que deja atrás una estatua

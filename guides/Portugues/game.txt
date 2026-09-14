@@ -110,7 +110,7 @@ Um peixe gigante que domina uma arena inundada. Lute da plataforma quando ele
 saltar, e mude para a forma Zora com Flechas de Gelo quando a luta for para a
 água. Recompensa: Restos de Gyorg.
 
-%C Canyon de Ikana & Templo da Torre de Pedra
+%C Canyon Ikana & Torre de Pedra
 %P Para Ikana
 Ikana é um canyon de mortos-vivos — as máscaras Gibdo, de Pedra e do Capitão
 são muito úteis aqui. Você aprende a Elegia do Vazio, que deixa para trás uma

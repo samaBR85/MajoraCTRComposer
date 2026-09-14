@@ -115,7 +115,7 @@ Un poisson géant qui règne sur une arène inondée. Combattez depuis la platef
 quand il saute, et passez en forme Zora avec des Flèches de Glace quand le
 combat se déroule sous l'eau. Récompense : les Restes de Gyorg.
 
-%C Canyon d'Ikana & Temple de la Tour de Pierre
+%C Canyon d'Ikana & Tour de Pierre
 %P Dans Ikana
 Ikana est un canyon des morts-vivants — les masques Gibdo, de Pierre et du
 Capitaine sont tous utiles ici. Vous apprenez l'Élégie du Vide, qui laisse

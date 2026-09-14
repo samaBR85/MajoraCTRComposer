@@ -39,7 +39,7 @@ e ti ricorda quando qualcuno sarà da qualche parte. Trattalo come la tua lista
 di compiti per l'intero gioco. Nel frattempo, deposita le rupie in banca — il
 denaro depositato è una delle poche cose che sopravvive all'azzeramento.
 
-%C La Palude del Sud & il Tempio di Woodfall
+%C Palude del Sud & Tempio Woodfall
 %P Nella Palude
 Vai a sud. L'acqua della palude è avvelenata finché non risolvi il tempio della
 regione. Lungo la strada, un grande gufo ti insegna la Serenata delle Acque —
@@ -111,7 +111,7 @@ Un pesce gigante che domina un'arena allagata. Combatti dalla piattaforma
 quando salta, e passa alla forma Zora con Frecce di Ghiaccio quando il combattimento
 va sott'acqua. Ricompensa: i Resti di Gyorg.
 
-%C Canyon di Ikana & il Tempio della Torre di Pietra
+%C Canyon Ikana & Torre di Pietra
 %P In Ikana
 Ikana è un canyon di non-morti — le maschere Gibdo, di Pietra e del Capitano
 sono tutte utili qui. Impari l'Elegia del Vuoto, che lascia alle spalle una
