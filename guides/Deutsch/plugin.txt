@@ -1,0 +1,64 @@
+%C MajoraCTRComposer
+%P Übersicht
+Dieses Plugin zeigt eine Überlagerung über dem laufenden Spiel an.
+
+Drücke SELECT im Spiel, um das Menü zu öffnen. Das Spiel pausiert, solange das
+Menü geöffnet ist. Drücke SELECT erneut (von beliebigem Bildschirm) um direkt
+zum Spiel zurückzukehren.
+
+Navigiere mit dem D-Pad. A öffnet einen Ordner oder aktiviert einen Cheat.
+B geht eine Ebene zurück. X zeigt Informationen zum ausgewählten Element an.
+Y fügt zu den Favoriten hinzu.
+
+%P Schnellmenü & Favoriten
+Füge deine meistgenutzten Cheats mit Y im Menü hinzu. Halte dann L+SELECT
+(oder R+SELECT), um das Schnellmenü zu öffnen: eine kompakte Liste nur deiner
+Favoriten, ohne das vollständige Menü zu öffnen.
+
+Das Tastenkürzel kann in den Einstellungen geändert werden. Favoriten,
+Benachrichtigungsstatus und das Tastenkürzel werden auf der SD-Karte
+gespeichert und überleben einen Neustart.
+
+%P Cheat-Suche
+Finde die Speicheradresse eines beliebigen Wertes und ändere ihn dann.
+
+Bekannter Wert: gib eine sichtbare Zahl ein (z.B. deine Rubine), Suchen,
+dann verfeinere die Ergebnisse, wenn sich der Wert ändert (Größer / Kleiner /
+Geändert...).
+
+Unbekannte Suche: weißt du die Zahl nicht? Mach eine Momentaufnahme, ändere
+den Wert im Spiel, dann durchsuche Erhöht / Erniedrigt / Geändert, um ihn
+zu finden.
+
+Die eigentliche Schleife: Suchen, SELECT drücken, um zum Spiel zurückzukehren,
+Wert ändern, SELECT zum Wiederöffnen (Ergebnisse werden behalten), erneut
+durchsuchen. Wiederholen, bis nur noch wenige Ergebnisse übrig sind. Drücke A
+auf einem Ergebnis, um einen neuen Wert einzugeben. L macht eine Suche rückgängig.
+
+%P RAM-Dump
+Speichert einen Block des Spielspeichers in einer .bin-Datei auf der SD-Karte.
+
+Lege eine Start-Adresse fest (oder drücke Y / Aus der Suche, um die in der
+Cheat-Suche gefundene Adresse zu verwenden) und eine Größe, dann Dump ausführen.
+Dateien werden im Plugin-Ordner auf der SD-Karte unter dumps/ geschrieben.
+
+Das Werkzeug liest nur zugänglichen Speicher, hängt sich also nie an einer
+nicht zugeordneten Adresse auf. Ideal zum Studieren der Bytes rund um einen
+gefundenen Wert.
+
+%P Hex-Editor
+Navigiere durch den Speicher wie ein Live-Hex-Raster und bearbeite beliebige Bytes.
+
+Das D-Pad bewegt den Cursor (links/rechts ein Byte, oben/unten eine Zeile). L/R
+wechselt die Seite. X springt zu einer Adresse; Y springt zum Suchergebnis.
+Drücke A, um das Byte unter dem Cursor zu bearbeiten.
+
+Schreibgeschützte Bereiche sind geschützt: Bearbeitung wird verweigert anstatt
+abzustürzen. Unleserliche Bytes erscheinen als --.
+
+%P Tipps
+- SELECT ist immer 'zurück zum Spiel', von beliebigem Bildschirm.
+- Das Menü wiederzuöffnen kehrt dorthin zurück, wo du warst, auch mitten in
+  einem Werkzeug.
+- Cheats mit Code-Modifikation werden beim Start nie automatisch aktiviert.
+- Toast-Benachrichtigungen können in den Einstellungen deaktiviert werden.

@@ -1,0 +1,178 @@
+%C Antes de Empezar
+%P El Ciclo de los Tres Días
+Una regla vale por encima de todo: Termina funciona con un reloj de 72 horas,
+y la luna cae al final del tercer día. Cuando tocas la Canción del Tiempo, el
+reloj se reinicia al primer amanecer — y eso también es tu guardado.
+
+Un reinicio conserva lo que importa (máscaras, canciones, restos de los jefes,
+y tus mejoras de espada, carcaj, bolsa de bombas y monedero, además de los
+Trozos de Corazón depositados) y borra el resto (rupias en mano, bombas,
+flechas, llaves pequeñas, progreso en mazmorra). Juega cada ciclo hacia UN
+objetivo, consigue la recompensa permanente, luego reinicia.
+
+Las estatuas de búho también guardan — pero SIN reiniciar el reloj. Es tu
+guardado de "pausa ahora, conserva este ciclo". Todo lo siguiente está escrito
+en el orden en que realmente lo harás.
+
+%C Clock Town: El Primer Ciclo
+%P Recupera Tu Ocarina
+Empiezas maldito en forma Deku, con la ocarina robada. El Link Deku se lanza
+desde flores Deku y salta sobre el agua — suficiente para moverse por la ciudad.
+Tu primer trabajo es llegar a la cima de la Torre del Reloj la tercera noche,
+enfrentarte a Skull Kid, recuperar la ocarina y aprender la Canción del Tiempo.
+
+Tócala. El ciclo se reinicia, y esta vez el Vendedor de Máscaras restaura a
+Link y le da la Máscara Deku — así que a partir de ahora puedes cambiar a la
+forma Deku cuando quieras, en vez de estar atrapado en ella.
+
+%P Dos Trucos Temporales
+Ahora que tienes la Canción del Tiempo, aprende sus dos variaciones pronto
+— las necesitarás durante todo el juego:
+- La Canción del Tiempo Invertida ralentiza el reloj a aproximadamente un tercio.
+- La Canción del Tiempo Doble avanza hasta el siguiente amanecer o anochecer.
+
+%P El Diario de los Bomberos
+Encuentra a la pandilla de los Bomberos y únete a ellos para obtener el Diario
+de los Bomberos. Registra personas, sus horarios diarios y las misiones
+relacionadas, y te recuerda cuándo alguien estará en algún lugar. Trátalo como
+tu lista de tareas para todo el juego. Además, deposita tus rupias en el banco
+— el dinero depositado es una de las pocas cosas que sobrevive a un reinicio.
+
+%C La Ciénaga del Sur & el Templo de Woodfall
+%P En la Ciénaga
+Ve al sur. El agua de la ciénaga está envenenada hasta que completes el templo
+de la región. De camino, un gran búho te enseña la Canción del Vuelo —
+teletranspórtate entre las estatuas de búho que hayas tocado. De ahora en
+adelante, activa cada estatua que encuentres; es tu viaje rápido.
+
+Sigue al mono para aprender la Sonata del Despertar. Tócala en el altar de
+Woodfall para que el templo emerja del agua, luego trepa con las flores Deku.
+
+%P Templo de Woodfall
+- Objeto del calabozo: el Arco del Héroe. Una vez que lo tengas, busca
+  interruptores de ojo y cofres que antes no podías alcanzar.
+- Mini-jefe: un Dinolfos — bloquea su espada y contraataca, o usa una bomba.
+- Cada templo esconde 15 hadas errantes; la Máscara de la Gran Hada (recompensa
+  en Clock Town) las atrae hacia ti y es con diferencia la forma más fácil
+  de reunirlas.
+
+%P Jefe: Odolwa
+Un guerrero de la jungla enmascarado que baila, blande una hoja y llama insectos.
+Desequilíbralo con una flecha o un insecto en botella, luego acércate. Recompensa:
+los Restos de Odolwa, y la ciénaga vuelve a estar limpia. Un gigante liberado
+te enseña ahora el Juramento al Orden — la canción que convoca a los gigantes
+al final.
+
+%C Las Montañas & el Templo de Snowhead
+%P Llegar a Snowhead
+Subiendo el camino de montaña, una tormenta eterna toma la región. Aquí
+encuentras el espíritu del héroe Goron Darmani; toca la Canción de la Curación
+para aliviarle y obtener la Máscara Goron. El Link Goron es un luchador cuerpo
+a cuerpo pesado — un golpe en el suelo y una carga rodante que con magia se
+convierte en una roca de espinas, la forma más rápida de cruzar terreno abierto.
+
+Calma al niño Goron que llora para completar la Nana Goron, luego despeja el
+camino bloqueado por el viento hasta el templo.
+
+%P Templo de Snowhead
+- Objeto del calabozo: Flechas de Fuego — derriten puzzles de hielo y encienden
+  antorchas lejanas.
+- El templo gira alrededor de un gran pilar central; la mayor parte del puzzle
+  consiste en decidir a qué piso ir.
+- Mini-jefe: un Wizzrobe teletransportador — golpea en cuanto reaparezca.
+
+%P Jefe: Goht
+Una bestia mecánica que carga por una pista circular. Mantente en forma Goron,
+rueda en bola de espinas, persíguelo y dispara cuando tropiece. Recompensa:
+los Restos de Goht, y la primavera regresa a las montañas.
+
+%C La Gran Bahía & el Templo Oceánico
+%P Llegar al Templo
+En la Costa de la Gran Bahía encuentras al espíritu de Mikau, un guitarrista
+Zora. La Canción de la Curación te da la Máscara Zora — el Link Zora nada
+libremente, lanza aletas como bumerán y levanta un escudo eléctrico. Ayuda al
+grupo Zora con sus problemas y reúne su canción para aprender la New Wave Bossa
+Nova, que despierta el templo. Esta es la mazmorra más difícil de las cuatro.
+
+%P Templo de la Gran Bahía
+- Objeto del calabozo: Flechas de Hielo — congelan la superficie del agua en
+  trampolines, tanto en el templo como en la arena del jefe.
+- Todo el lugar funciona con el flujo del agua; válvulas y hélices redirigen
+  corrientes que abren el paso. Si una sala parece bloqueada, un control que
+  ya pasaste generalmente hay que activarlo de nuevo.
+- Mini-jefe: Verrugas, un gran ojo flotante — explota sus burbujas, luego
+  golpea el ojo.
+
+%P Jefe: Gyorg
+Un pez gigante que domina una arena inundada. Lucha desde la plataforma cuando
+salte, y cambia a la forma Zora con Flechas de Hielo cuando el combate vaya
+bajo el agua. Recompensa: los Restos de Gyorg.
+
+%C El Cañón de Ikana & el Templo de la Torre de Piedra
+%P En Ikana
+Ikana es un cañón de no-muertos — las máscaras Gibdo, de Piedra y del Capitán
+son todas útiles aquí. Aprendes la Elegía del Vacío, que deja atrás una estatua
+de tu forma actual para mantener interruptores mientras te alejas. La usarás
+constantemente en el templo.
+
+%P Templo de la Torre de Piedra
+- Objeto del calabozo: las Flechas de Luz, encontradas en el interior.
+- Truco característico: dispara una Flecha de Luz a un bloque solar y toda la
+  mazmorra se pone patas arriba, permitiéndote revisitar salas desde una nueva
+  orientación. La mayoría de los callejones sin salida son simplemente una sala
+  esperando ser volteada — controla qué lado está arriba.
+- Mini-jefes: el Maestro Garo (un ninja rápido) y Gomess (repélelo con luz).
+
+%P Jefe: Twinmold
+Un par de serpientes de arena gigantes. La Máscara del Gigante, encontrada en
+el templo, hace a Link enorme para que puedas luchar con ellos directamente —
+la forma prevista de ganar. Recompensa: los Restos de Twinmold. Con los cuatro
+restos, se abre el camino hacia la luna.
+
+%C El Último Día & la Luna
+%P Llama a los Gigantes
+En la última noche, regresa a la cima de la Torre del Reloj y toca el Juramento
+al Orden. Los Cuatro Gigantes responden y sujetan la luna, abriendo el camino
+hacia arriba.
+
+%P En la Luna
+Si has recolectado máscaras por el camino, los niños en la luna te cambiarán
+la Máscara de la Fiera Deidad — una gran forma con una espada que dispara rayos
+de energía y atraviesa el combate final contra Majora. Esa es la recompensa por
+la caza de máscaras.
+
+%C Por el Camino
+%P Máscaras y Misiones Secundarias
+Entre los templos, pasa los ciclos libres en Clock Town y en los caminos:
+- Capucha de Conejo: gran bonificación de velocidad — úsala siempre cuando viajes.
+- Máscara de la Gran Hada: reúne las hadas errantes de un templo para ti.
+- Máscara de Piedra: te hace invisible para muchos guardias y enemigos.
+- Máscaras de misión (Máscara de la Pareja de Kafei y Anju, de Kamaro, el
+  Sombrero del Cartero y las demás) rellenan el Diario y, juntas, desbloquean
+  la Fiera Deidad.
+La mayoría de las misiones ligadas al tiempo se resuelven planificando toda la
+cadena primero, luego manipulando el día con las Canciones del Tiempo Invertido
+y Doble.
+
+%P Mejoras & Coleccionables
+- Espada: la Espada de Afeitar (se embota en cada reinicio) y la permanente
+  Espada Dorada, forjada con Polvo de Oro.
+- Mejoras de capacidad de carcaj y bolsa de bombas en tiendas y minijuegos.
+- Monedero: el Monedero Adulto y del Gigante aumentan lo que puedes llevar;
+  el banco guarda el dinero entre reinicios.
+- Seis botellas, cada una de una misión. Devuelve las hadas errantes de cada
+  región a su Gran Hada para obtener magia, un ataque giratorio más fuerte y
+  defensa extra.
+- Los Trozos de Corazón vienen en grupos de cuatro; los jefes y las misiones
+  también dan contenedores enteros.
+
+%C Consejos Rápidos
+%P Hechos Esenciales
+- Deposita las recompensas permanentes antes de reiniciar; los consumibles
+  nunca sobreviven.
+- Activa cada estatua de búho — la Canción del Vuelo teletransporta allí.
+- ¿Atascado en un templo? El objeto que acabas de encontrar es casi siempre
+  la respuesta.
+- Máscara de la Gran Hada para las 15 hadas; Capucha de Conejo para todo lo demás.
+- Planifica completamente una misión ligada al tiempo antes de comenzar el ciclo,
+  luego manipula el tiempo.

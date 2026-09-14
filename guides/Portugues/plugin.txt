@@ -1,0 +1,58 @@
+%C MajoraCTRComposer
+%P Visão Geral
+Este plugin exibe uma sobreposição por cima do jogo em execução.
+
+Pressione SELECT durante o jogo para abrir o menu. O jogo pausa enquanto o
+menu está aberto. Pressione SELECT novamente (de qualquer tela) para voltar
+diretamente ao jogo.
+
+Navegue com o D-Pad. A abre uma pasta ou ativa um cheat. B volta um nível.
+X exibe informações sobre o item selecionado. Y adiciona aos favoritos.
+
+%P Menu Rápido & Favoritos
+Adicione seus cheats mais usados com Y no menu. Depois segure L+SELECT (ou
+R+SELECT) para abrir o Menu Rápido: uma lista compacta só dos seus favoritos,
+sem abrir o menu completo.
+
+O atalho pode ser alterado em Configurações. Os favoritos, o estado das
+notificações e o atalho são salvos no cartão SD e sobrevivem a um reinício.
+
+%P Busca de Cheat
+Encontre o endereço de memória de qualquer valor e depois modifique-o.
+
+Valor Conhecido: digite um número visível (ex. suas rúpias), Pesquise, depois
+refine os resultados conforme o valor muda (Maior / Menor / Alterado...).
+
+Busca Desconhecida: não sabe o número? Tire um instantâneo, mude o valor no
+jogo, depois varra Aumentado / Diminuído / Alterado para localizar.
+
+O loop real: Pesquise, pressione SELECT para voltar ao jogo, mude o valor,
+SELECT para reabrir (os resultados são mantidos), varra novamente. Repita até
+restar poucos resultados. Pressione A em um resultado para inserir um novo
+valor. L desfaz uma varredura.
+
+%P Dump de RAM
+Salva um bloco da memória do jogo em um arquivo .bin no cartão SD.
+
+Defina um endereço Início (ou pressione Y / Da Busca para usar o endereço
+encontrado na Busca de Cheat) e um Tamanho, depois faça o Dump. Os arquivos
+são gravados na pasta do plugin no cartão SD, em dumps/.
+
+A ferramenta só lê memória acessível, portanto nunca trava em um endereço
+não mapeado. Ótima para estudar os bytes em torno de um valor encontrado.
+
+%P Editor Hex
+Navegue pela memória como uma grade hex ao vivo e edite qualquer byte.
+
+O D-Pad move o cursor (esquerda/direita um byte, cima/baixo uma linha). L/R
+muda de página. X salta para um endereço; Y salta para o resultado da Busca.
+Pressione A para editar o byte sob o cursor.
+
+Regiões somente leitura são protegidas: a edição é recusada em vez de travar.
+Bytes ilegíveis aparecem como --.
+
+%P Dicas
+- SELECT é sempre 'voltar ao jogo', de qualquer tela.
+- Reabrir o menu retorna ao lugar onde você estava, mesmo dentro de uma ferramenta.
+- Cheats com modificação de código nunca são ativados automaticamente na inicialização.
+- As notificações toast podem ser desativadas em Configurações.

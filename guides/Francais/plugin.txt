@@ -1,0 +1,65 @@
+%C MajoraCTRComposer
+%P Vue d'ensemble
+Ce plugin affiche une superposition par-dessus le jeu en cours d'exécution.
+
+Appuyez sur SELECT en jeu pour ouvrir le menu. Le jeu se met en pause pendant
+que le menu est ouvert. Appuyez de nouveau sur SELECT (depuis n'importe quel
+écran) pour revenir directement au jeu.
+
+Naviguez avec la Croix Directionnelle. A ouvre un dossier ou active un cheat.
+B remonte d'un niveau. X affiche les informations sur l'élément sélectionné.
+Y ajoute aux favoris.
+
+%P Menu Rapide & Favoris
+Ajoutez vos cheats les plus utilisés avec Y dans le menu. Ensuite maintenez
+L+SELECT (ou R+SELECT) pour ouvrir le Menu Rapide : une liste compacte de vos
+favoris uniquement, sans ouvrir le menu complet.
+
+Le raccourci peut être modifié dans les Paramètres. Les favoris, l'état des
+notifications et le raccourci sont sauvegardés sur la carte SD et survivent
+à un redémarrage.
+
+%P Recherche de Cheat
+Trouvez l'adresse mémoire de n'importe quelle valeur, puis modifiez-la.
+
+Valeur Connue : saisissez un nombre visible (ex. vos rubis), Recherchez, puis
+affinez les résultats à mesure que la valeur change (Plus grand / Plus petit /
+Modifié...).
+
+Recherche Inconnue : vous ne connaissez pas le nombre ? Prenez un instantané,
+changez la valeur dans le jeu, puis balayez Augmenté / Diminué / Modifié pour
+localiser.
+
+La boucle réelle : Recherchez, appuyez sur SELECT pour revenir au jeu, changez
+la valeur, SELECT pour rouvrir (les résultats sont conservés), balayez à nouveau.
+Répétez jusqu'à ce qu'il reste peu de résultats. Appuyez sur A sur un résultat
+pour saisir une nouvelle valeur. L annule un balayage.
+
+%P Dump RAM
+Sauvegarde un bloc de la mémoire du jeu dans un fichier .bin sur la carte SD.
+
+Définissez une adresse Début (ou appuyez sur Y / Depuis la Recherche pour
+utiliser l'adresse trouvée dans la Recherche de Cheat) et une Taille, puis
+effectuez le Dump. Les fichiers sont écrits dans le dossier du plugin sur la
+carte SD, dans dumps/.
+
+L'outil ne lit que la mémoire accessible, donc il ne se bloque jamais sur une
+adresse non mappée. Idéal pour étudier les octets autour d'une valeur trouvée.
+
+%P Éditeur Hex
+Parcourez la mémoire comme une grille hex en direct et éditez n'importe quel octet.
+
+La Croix Directionnelle déplace le curseur (gauche/droite d'un octet,
+haut/bas d'une ligne). L/R change de page. X saute à une adresse ; Y saute
+vers le résultat de la Recherche. Appuyez sur A pour éditer l'octet sous le
+curseur.
+
+Les régions en lecture seule sont protégées : l'édition est refusée plutôt
+que de provoquer un plantage. Les octets illisibles apparaissent comme --.
+
+%P Conseils
+- SELECT correspond toujours à 'retourner au jeu', depuis n'importe quel écran.
+- Rouvrir le menu revient à l'endroit où vous étiez, même dans un outil.
+- Les cheats avec modification de code ne s'activent jamais automatiquement
+  au démarrage.
+- Les notifications toast peuvent être désactivées dans les Paramètres.

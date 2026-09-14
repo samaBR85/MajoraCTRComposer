@@ -1,0 +1,63 @@
+%C MajoraCTRComposer
+%P Descripción General
+Este plugin muestra una superposición encima del juego en ejecución.
+
+Pulsa SELECT en el juego para abrir el menú. El juego se pausa mientras el
+menú está abierto. Pulsa SELECT de nuevo (desde cualquier pantalla) para
+volver directamente al juego.
+
+Navega con el D-Pad. A abre una carpeta o activa un cheat. B vuelve un nivel
+atrás. X muestra información sobre el elemento seleccionado. Y añade a favoritos.
+
+%P Menú Rápido & Favoritos
+Añade tus cheats más usados con Y en el menú. Luego mantén L+SELECT (o
+R+SELECT) para abrir el Menú Rápido: una lista compacta solo de tus favoritos,
+sin abrir el menú completo.
+
+El atajo puede cambiarse en Ajustes. Los favoritos, el estado de las
+notificaciones y el atajo se guardan en la tarjeta SD y sobreviven a un reinicio.
+
+%P Búsqueda de Cheat
+Encuentra la dirección de memoria de cualquier valor y luego modifícalo.
+
+Valor Conocido: escribe un número visible (ej. tus rupias), Busca, luego
+refina los resultados a medida que el valor cambia (Mayor / Menor /
+Modificado...).
+
+Búsqueda Desconocida: ¿no sabes el número? Toma una instantánea, cambia el
+valor en el juego, luego escanea Aumentado / Disminuido / Modificado para
+localizar.
+
+El bucle real: Busca, pulsa SELECT para volver al juego, cambia el valor,
+SELECT para reabrir (los resultados se conservan), escanea de nuevo. Repite
+hasta que queden pocos resultados. Pulsa A en un resultado para introducir un
+nuevo valor. L deshace un escaneo.
+
+%P Dump de RAM
+Guarda un bloque de la memoria del juego en un archivo .bin en la tarjeta SD.
+
+Establece una dirección de Inicio (o pulsa Y / Desde la Búsqueda para usar
+la dirección encontrada en la Búsqueda de Cheat) y un Tamaño, luego haz el
+Dump. Los archivos se escriben en la carpeta del plugin en la tarjeta SD,
+en dumps/.
+
+La herramienta solo lee memoria accesible, así que nunca se cuelga en una
+dirección no mapeada. Ideal para estudiar los bytes alrededor de un valor
+encontrado.
+
+%P Editor Hex
+Navega por la memoria como una cuadrícula hex en vivo y edita cualquier byte.
+
+El D-Pad mueve el cursor (izquierda/derecha un byte, arriba/abajo una línea).
+L/R cambia de página. X salta a una dirección; Y salta al resultado de la
+Búsqueda. Pulsa A para editar el byte bajo el cursor.
+
+Las regiones de solo lectura están protegidas: la edición se rechaza en vez
+de causar un cuelgue. Los bytes ilegibles aparecen como --.
+
+%P Consejos
+- SELECT siempre es 'volver al juego', desde cualquier pantalla.
+- Reabrir el menú vuelve a donde estabas, incluso dentro de una herramienta.
+- Los cheats con modificación de código nunca se activan automáticamente
+  al arrancar.
+- Las notificaciones toast pueden desactivarse en Ajustes.

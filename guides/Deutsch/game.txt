@@ -1,0 +1,181 @@
+%C Bevor Du Anfängst
+%P Der Dreitages-Zyklus
+Eine Regel gilt über alles: Termina läuft auf einer 72-Stunden-Uhr, und der
+Mond fällt am Ende des dritten Tages. Wenn du das Lied der Zeit spielst,
+setzt die Uhr sich auf den ersten Morgengrauen zurück — und das ist auch
+dein Speicherstand.
+
+Ein Neustart behält, was zählt (Masken, Lieder, Boss-Überreste, sowie deine
+Schwerter-, Köcher-, Bomben-Beutel- und Geldboerse-Verbesserungen, plus
+abgelegte Herzstücke) und löscht den Rest (Rubine in der Hand, Bomben, Pfeile,
+kleine Schlüssel, Kerker-Fortschritt). Spiele jeden Zyklus auf EIN Ziel hin,
+hole dir die dauerhafte Belohnung, dann starte neu.
+
+Eulen-Statuen speichern ebenfalls — aber OHNE die Uhr zurückzusetzen. Das ist
+dein "jetzt pausieren, diesen Zyklus behalten"-Speicherpunkt. Alles folgende
+ist in der Reihenfolge geschrieben, in der du es tatsächlich tun wirst.
+
+%C Clock Town: Der Erste Zyklus
+%P Hol Deine Okarina
+Du beginnst verflucht als Deku, Okarina gestohlen. Deku-Link springt von
+Deku-Blumen und hüpft über Wasser — das reicht, um sich durch die Stadt zu
+bewegen. Deine erste Aufgabe ist es, am dritten Abend den Gipfel des
+Uhrturms zu erreichen, Skull Kid zu stellen, die Okarina zurückzuholen und
+das Lied der Zeit zu lernen.
+
+Spiel es. Der Zyklus setzt zurück, und diesmal stellt der Masken-Händler
+Link wieder her und gibt ihm die Deku-Maske — ab jetzt kannst du also
+jederzeit in die Deku-Form wechseln, anstatt darin feststecken zu sein.
+
+%P Zwei Zeittricks
+Jetzt, da du das Lied der Zeit hast, lerne seine zwei Variationen früh —
+du wirst sie das ganze Spiel über brauchen:
+- Das Umgekehrte Lied der Zeit verlangsamt die Uhr auf etwa ein Drittel.
+- Das Doppelte Lied der Zeit springt zum nächsten Morgengrauen oder Einbruch
+  der Dunkelheit.
+
+%P Das Bomben-Tagebuch
+Finde die Bombinos-Bande und schließ dich ihr an, um das Bomben-Tagebuch
+zu erhalten. Es listet Personen, ihre täglichen Zeitpläne und damit
+verbundene Quests auf und erinnert dich daran, wann jemand wo sein wird.
+Behandle es als deine Aufgabenliste für das gesamte Spiel. Leg außerdem
+deine Rubine auf der Bank an — dort hinterlegtes Geld ist eines der wenigen
+Dinge, die einen Neustart überleben.
+
+%C Südliches Sumpfland & Woodfall-Tempel
+%P Im Sumpf
+Geh nach Süden. Das Sumpfwasser ist vergiftet, bis du den Tempel der Region
+gelöst hast. Unterwegs bringt dir eine große Eule das Serenade-Lied bei —
+teleportiere dich zwischen Eulen-Statuen, die du berührt hast. Aktiviere von
+nun an jede Statue, die du triffst; das ist deine Schnellreise.
+
+Folg dem Affen, um die Sonate des Erwachens zu lernen. Spiel sie am Woodfall-
+Altar, damit der Tempel aus dem Wasser steigt, dann klettere mit Deku-Blumen.
+
+%P Woodfall-Tempel
+- Kerker-Gegenstand: der Heroenbogen. Sobald du ihn hast, suche nach
+  Augenschaltern und Truhen, die du vorher nicht erreichen konntest.
+- Mini-Boss: ein Dinolfos — blockiere sein Schwert und konterschlage, oder
+  wirf eine Bombe.
+- Jeder Tempel versteckt 15 umherirrende Feen; die Große-Feen-Maske
+  (Belohnung in Clock Town) zieht sie zu dir und ist mit Abstand der
+  einfachste Weg, sie zu sammeln.
+
+%P Boss: Odolwa
+Ein maskierter Dschungel-Krieger, der tanzt, eine Klinge schwingt und Insekten
+ruft. Bring ihn mit einem Pfeil oder einem Käfer in der Flasche aus dem
+Gleichgewicht, dann nähere dich. Belohnung: Odolwas Überreste, und der Sumpf
+wird wieder sauber. Ein befreiter Riese bringt dir jetzt das Treue-Gelöbnis
+bei — das Lied, das die Riesen am Ende ruft.
+
+%C Die Berge & Snowhead-Tempel
+%P Snowhead Erreichen
+Auf dem Weg die Bergstraße hinauf erfasst ein ewiger Schneesturm die Region.
+Hier triffst du den Geist des Goron-Helden Darmani; spiel das Lied der Heilung,
+um ihm Frieden zu geben und die Goron-Maske zu erhalten. Goron-Link ist ein
+schwerer Nahkämpfer — ein Bodenstampfer und eine Rollattacke, die mit Magie
+zu einem Stachelfelsen wird, der schnellste Weg über offenes Gelände.
+
+Beruhige das weinende Goron-Kind, um die Goron-Wiegenlieder zu vervollständigen,
+dann räume den windversperrten Weg zum Tempel frei.
+
+%P Snowhead-Tempel
+- Kerker-Gegenstand: Feuer-Pfeile — sie schmelzen Eis-Rätsel und entzünden
+  entfernte Fackeln.
+- Der Tempel windet sich um einen großen zentralen Pfeiler; der größte Teil
+  des Rätsels besteht darin, zu entscheiden, welches Stockwerk man ansteuert.
+- Mini-Boss: ein teleportierender Wizzrobe — schlage zu, sobald er wieder auftaucht.
+
+%P Boss: Goht
+Eine mechanische Bestie, die auf einer kreisförmigen Strecke galoppiert. Bleib
+in Goron-Form, role im Stachel-Ball, verfolge ihn und schieß, wenn er stolpert.
+Belohnung: Gohts Überreste, und der Frühling kehrt in die Berge zurück.
+
+%C Große Bucht & der Ozean-Tempel
+%P Den Tempel Erreichen
+An der Großen-Bucht-Küste findest du den Geist von Mikau, einem Zora-Gitarristen.
+Das Lied der Heilung gibt dir die Zora-Maske — Zora-Link schwimmt frei, wirft
+Flossen-Bumerangs und errichtet einen Elektrisch-Schild. Hilf der Zora-Band
+mit ihren Problemen und sammle ihr Lied, um die New Wave Bossa Nova zu lernen,
+die den Tempel weckt. Dies ist der schwierigste der vier Kerker.
+
+%P Großer-Bucht-Tempel
+- Kerker-Gegenstand: Eis-Pfeile — frieren die Wasseroberfläche zu Trittsteinen
+  ein, sowohl im Tempel als auch in der Boss-Arena.
+- Der gesamte Ort läuft über Wasserfluss; Ventile und Propeller lenken Ströme
+  um, die Passagen öffnen. Wenn ein Raum blockiert scheint, muss normalerweise
+  ein Schalter, den du bereits passiert hast, erneut bedient werden.
+- Mini-Boss: Verruca, ein großes schwebendes Auge — platze seine Blasen, dann
+  treffe das Auge.
+
+%P Boss: Gyorg
+Ein riesiger Fisch, der über einer überfluteten Arena herrscht. Kämpfe von der
+Plattform, wenn er springt, und wechsle in die Zora-Form mit Eis-Pfeilen, wenn
+der Kampf unter Wasser stattfindet. Belohnung: Gyorgs Überreste.
+
+%C Ikana-Schlucht & Steinturm-Tempel
+%P In Ikana
+Ikana ist eine Schlucht der Untoten — die Gibdo-, Stein- und Kapitäns-Maske
+sind alle hier nützlich. Du lernst die Elegie der Leere, die eine Statue deiner
+aktuellen Form hinterlässt, um Schalter gedrückt zu halten, während du dich
+entfernst. Du wirst sie im Tempel ständig benutzen.
+
+%P Steinturm-Tempel
+- Kerker-Gegenstand: die Licht-Pfeile, im Inneren gefunden.
+- Signaturtrick: schieß einen Licht-Pfeil auf einen Sonnenblock und der gesamte
+  Kerker dreht sich auf den Kopf, sodass du Räume aus einer neuen Ausrichtung
+  besuchen kannst. Die meisten Sackgassen sind einfach ein Raum, der darauf
+  wartet, umgekehrt zu werden — behalte im Blick, welche Seite oben ist.
+- Mini-Bosse: der Meister-Garo (ein schneller Ninja) und Gomess (treibe ihn
+  mit Licht zurück).
+
+%P Boss: Twinmold
+Ein Paar riesiger Sandwürmer. Die Riesen-Maske, im Tempel gefunden, macht Link
+riesig, damit du direkt mit ihnen kämpfen kannst — der vorgesehene Weg zu
+siegen. Belohnung: Twinmolds Überreste. Mit allen vier Überresten öffnet sich
+der Weg zum Mond.
+
+%C Der Letzte Tag & der Mond
+%P Ruf Die Riesen
+Am letzten Abend kehre zum Gipfel des Uhrturms zurück und spiele das
+Treue-Gelöbnis. Die Vier Riesen antworten und halten den Mond auf, wobei sich
+der Weg nach oben öffnet.
+
+%P Auf dem Mond
+Wenn du unterwegs Masken gesammelt hast, werden dir die Kinder auf dem Mond
+die Maske der Heftigen Gottheit eintauschen — eine große Form mit einem Schwert,
+das Energiestrahlen abfeuert und den letzten Kampf gegen Majora durchschneidet.
+Das ist die Belohnung für die Maskenjagd.
+
+%C Unterwegs
+%P Masken & Nebenquests
+Verbringe zwischen den Tempeln freie Zyklen in Clock Town und auf den Straßen:
+- Hasenkappe: großer Geschwindigkeitsbonus — trage sie immer auf Reisen.
+- Große-Feen-Maske: sammelt die umherirrenden Feen eines Tempels für dich.
+- Steinmaske: macht dich für viele Wachen und Feinde unsichtbar.
+- Quest-Masken (Kafei-und-Anju-Paar-Maske, Kamaros, Briefträger-Hut und andere)
+  füllen das Tagebuch und schalten zusammen die Heftige Gottheit frei.
+Die meisten zeitgebundenen Quests lösen sich, indem man zuerst die gesamte Kette
+plant, dann den Tag mit dem Umgekehrten und Doppelten Lied der Zeit manipuliert.
+
+%P Verbesserungen & Sammelgegenstände
+- Schwert: das Rasiermesser-Schwert (stumpft bei jedem Neustart ab) und das
+  dauerhafte Goldene Schwert, aus Goldstaub geschmiedet.
+- Köcher- und Bomben-Beutel-Kapazitätsverbesserungen in Läden und Mini-Spielen.
+- Geldtasche: die Erwachsenen- und Riesen-Geldtasche erhöhen, was du tragen
+  kannst; die Bank hält Geld zwischen Neustarts bereit.
+- Sechs Flaschen, je aus einer Quest. Bringe die umherirrenden Feen jeder
+  Region zu ihrer Großen Fee für Magie, einen stärkeren Drehangiff und
+  zusätzliche Verteidigung.
+- Herzstücke kommen in Vierergruppen; Bosse und Quests geben auch ganze Container.
+
+%C Schnell-Tipps
+%P Wichtige Fakten
+- Lege dauerhafte Belohnungen ab, bevor du neu startest; Verbrauchsgüter überleben
+  nie.
+- Aktiviere jede Eulen-Statue — das Serenade-Lied teleportiert dorthin.
+- In einem Tempel stecken? Der Gegenstand, den du gerade gefunden hast, ist fast
+  immer die Antwort.
+- Große-Feen-Maske für die 15 Feen; Hasenkappe für alles andere.
+- Plane eine zeitgebundene Quest vollständig durch, bevor du den Zyklus anfängst,
+  dann manipuliere die Zeit.

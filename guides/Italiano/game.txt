@@ -1,0 +1,183 @@
+%C Prima di Iniziare
+%P Il Ciclo dei Tre Giorni
+Una regola vale su tutte: Termina gira su un orologio di 72 ore, e la luna
+cade alla fine del terzo giorno. Quando suoni la Canzone del Tempo, l'orologio
+si azzera alla prima alba — ed è anche il tuo salvataggio.
+
+Un azzeramento conserva ciò che conta (maschere, canzoni, resti dei boss, e i
+potenziamenti di spada, faretra, borsa delle bombe e borsellino, oltre ai Pezzi
+di Cuore depositati) e cancella il resto (rupie in mano, bombe, frecce, piccole
+chiavi, progresso nei dungeon). Gioca ogni ciclo verso UN obiettivo, raccogli
+la ricompensa permanente, poi azzera.
+
+Le statue del gufo salvano anche — ma SENZA azzerare l'orologio. È il tuo
+salvataggio "pausa ora, tieni questo ciclo". Tutto quello che segue è scritto
+nell'ordine in cui lo farai davvero.
+
+%C Clock Town: Il Primo Ciclo
+%P Recupera la Tua Ocarina
+Inizi maledetto nella forma Deku, con l'ocarina rubata. Il Link Deku si lancia
+dai fiori Deku e salta sull'acqua — abbastanza per muoversi in città. Il tuo
+primo compito è raggiungere la cima della Torre dell'Orologio la terza notte,
+affrontare Skull Kid, recuperare l'ocarina e imparare la Canzone del Tempo.
+
+Suonala. Il ciclo si azzera, e questa volta il Venditore di Maschere ripristina
+Link e gli dà la Maschera Deku — quindi da ora puoi passare alla forma Deku
+quando vuoi, invece di esserne bloccato.
+
+%P Due Trucchi Temporali
+Ora che hai la Canzone del Tempo, impara le sue due variazioni presto — le
+userai per tutto il gioco:
+- La Canzone del Tempo Invertita rallenta l'orologio a circa un terzo della
+  velocità.
+- La Canzone del Tempo Doppio avanza fino all'alba o al tramonto successivo.
+
+%P Il Diario dei Bombardieri
+Trova la banda dei Bombardieri e unisciti a loro per ottenere il Diario dei
+Bombardieri. Registra le persone, i loro orari quotidiani e le quest collegate,
+e ti ricorda quando qualcuno sarà da qualche parte. Trattalo come la tua lista
+di compiti per l'intero gioco. Nel frattempo, deposita le rupie in banca — il
+denaro depositato è una delle poche cose che sopravvive all'azzeramento.
+
+%C La Palude del Sud & il Tempio di Woodfall
+%P Nella Palude
+Vai a sud. L'acqua della palude è avvelenata finché non risolvi il tempio della
+regione. Lungo la strada, un grande gufo ti insegna la Serenata delle Acque —
+teletrasportati tra le statue del gufo che hai toccato. D'ora in poi, attiva
+ogni statua che incontri; è il tuo viaggio rapido.
+
+Segui la guida della scimmia per imparare la Sonata del Risveglio. Suonala
+all'altare di Woodfall per far emergere il tempio dall'acqua, poi arrampicati
+con i fiori Deku.
+
+%P Tempio di Woodfall
+- Oggetto del dungeon: l'Arco dell'Eroe. Una volta ottenuto, cerca interruttori
+  a occhio e forzieri che prima non riuscivi a raggiungere.
+- Mini-boss: un Dinolfos — blocca la sua spada e contrattacca, o usa una bomba.
+- Ogni tempio nasconde 15 fate vaganti; la Maschera della Grande Fata (ricompensa
+  a Clock Town) le attira verso di te ed è di gran lunga il modo più facile per
+  raccoglierle.
+
+%P Boss: Odolwa
+Un guerriero della giungla mascherato che danza, brandisce una lama e chiama
+insetti. Destabilizzalo con una freccia o un insetto in bottiglia, poi avvicinati.
+Ricompensa: i Resti di Odolwa, e la palude torna pulita. Un gigante liberato ti
+insegna ora il Giuramento all'Ordine — la canzone che convoca i giganti alla fine.
+
+%C Le Montagne & il Tempio di Snowhead
+%P Raggiungere Snowhead
+Salendo la strada di montagna, una tempesta eterna si abbatte sulla regione. Qui
+incontri lo spirito dell'eroe Goron Darmani; suona la Canzone della Guarigione
+per alleviarlo e ottenere la Maschera Goron. Il Link Goron è un combattente
+corpo a corpo pesante — un colpo di piedi e una carica rotolante che con la
+magia diventa una roccia di spine, il modo più veloce di attraversare terreno
+aperto.
+
+Calma il bambino Goron che piange per completare la Ninna Nanna Goron, poi sgombra
+il percorso bloccato dal vento fino al tempio.
+
+%P Tempio di Snowhead
+- Oggetto del dungeon: Frecce di Fuoco — sciolgono puzzle di ghiaccio e accendono
+  torce lontane.
+- Il tempio si avvolge attorno a un grande pilastro centrale; la maggior parte
+  del puzzle consiste nel decidere a quale piano andare.
+- Mini-boss: un Wizzrobe teleportante — colpisci appena ricompare.
+
+%P Boss: Goht
+Una bestia meccanica che carica su una pista circolare. Rimani in forma Goron,
+rotola a palla di spine, inseguilo e spara quando inciampa. Ricompensa: i Resti
+di Goht, e la primavera torna sulle montagne.
+
+%C Grande Baia & il Tempio Oceanico
+%P Raggiungere il Tempio
+Sulla Costa della Grande Baia trovi lo spirito di Mikau, un chitarrista Zora.
+La Canzone della Guarigione ti dà la Maschera Zora — il Link Zora nuota
+liberamente, lancia pinne come boomerang e alza uno scudo elettrico. Aiuta il
+gruppo Zora con i suoi problemi e raccogli la loro canzone per imparare la
+New Wave Bossa Nova, che risveglia il tempio. Questo è il dungeon più difficile
+dei quattro.
+
+%P Tempio della Grande Baia
+- Oggetto del dungeon: Frecce di Ghiaccio — congelano la superficie dell'acqua
+  in trampolini, sia nel tempio che nell'arena del boss.
+- L'intero posto funziona con il flusso d'acqua; valvole e eliche reindirizzano
+  correnti che aprono i passaggi. Se una stanza sembra bloccata, un controllo
+  già passato di solito deve essere ripetuto.
+- Mini-boss: Verruca, un grande occhio fluttuante — fai scoppiare le sue bolle,
+  poi colpisci l'occhio.
+
+%P Boss: Gyorg
+Un pesce gigante che domina un'arena allagata. Combatti dalla piattaforma
+quando salta, e passa alla forma Zora con Frecce di Ghiaccio quando il combattimento
+va sott'acqua. Ricompensa: i Resti di Gyorg.
+
+%C Canyon di Ikana & il Tempio della Torre di Pietra
+%P In Ikana
+Ikana è un canyon di non-morti — le maschere Gibdo, di Pietra e del Capitano
+sono tutte utili qui. Impari l'Elegia del Vuoto, che lascia alle spalle una
+statua della tua forma attuale per tenere gli interruttori mentre ti allontani.
+La userai costantemente nel tempio.
+
+%P Tempio della Torre di Pietra
+- Oggetto del dungeon: le Frecce di Luce, trovate all'interno.
+- Il trucco caratteristico: spara una Freccia di Luce su un blocco solare e
+  l'intero dungeon si capovolge, permettendoti di rivisitare le stanze da un
+  nuovo orientamento. La maggior parte dei vicoli ciechi è semplicemente una
+  stanza che aspetta di essere capovolta — tieni traccia di quale lato è in
+  alto.
+- Mini-boss: il Maestro Garo (un ninja veloce) e Gomess (respingilo con la luce).
+
+%P Boss: Twinmold
+Una coppia di serpenti di sabbia giganti. La Maschera del Gigante, trovata nel
+tempio, rende Link enorme così puoi combatterli direttamente — il modo previsto
+per vincere. Ricompensa: i Resti di Twinmold. Con tutti e quattro i resti, si
+apre il cammino verso la luna.
+
+%C L'Ultimo Giorno & la Luna
+%P Chiama i Giganti
+Nell'ultima notte, torna in cima alla Torre dell'Orologio e suona il Giuramento
+all'Ordine. I Quattro Giganti rispondono e trattengono la luna, aprendo il
+cammino verso l'alto.
+
+%P Sulla Luna
+Se hai raccolto maschere lungo la strada, i bambini sulla luna ti scambieranno
+la Maschera della Feroce Divinità — una grande forma con una spada che spara
+raggi di energia e taglia il combattimento finale contro Majora. Questo è il
+premio per la caccia alle maschere.
+
+%C Lungo la Strada
+%P Maschere e Quest Secondarie
+Tra i templi, trascorri i cicli liberi a Clock Town e sulle strade:
+- Cappuccio da Coniglio: grande bonus di velocità — indossalo sempre quando viaggi.
+- Maschera della Grande Fata: raccoglie le fate vaganti di un tempio per te.
+- Maschera di Pietra: ti rende invisibile a molte guardie e nemici.
+- Maschere quest (Maschera della Coppia di Kafei e Anju, di Kamaro, il Cappello
+  del Postino e le altre) riempiono il Diario e, insieme, sbloccano la Feroce
+  Divinità.
+La maggior parte delle quest legate al tempo si risolvono pianificando prima
+l'intera catena, poi manipolando il giorno con le Canzoni del Tempo Invertito
+e Doppio.
+
+%P Potenziamenti & Collezionabili
+- Spada: la Spada Rasoio (si opacizza a ogni azzeramento) e la permanente Spada
+  d'Oro, forgiata con Polvere d'Oro.
+- Potenziamenti di capacità di faretra e borsa delle bombe nei negozi e
+  mini-giochi.
+- Borsellino: il Borsellino Adulto e del Gigante aumentano quanto puoi portare;
+  la banca conserva il denaro tra gli azzeramenti.
+- Sei bottiglie, ognuna da una quest. Riporta le fate vaganti di ogni regione
+  alla sua Grande Fata per magia, un attacco rotante più forte e difesa extra.
+- I Pezzi di Cuore arrivano in gruppi di quattro; anche i boss e le quest danno
+  contenitori interi.
+
+%C Consigli Veloci
+%P Fatti Essenziali
+- Deposita le ricompense permanenti prima di azzerare; i consumabili non
+  sopravvivono mai.
+- Attiva ogni statua del gufo — la Serenata delle Acque teletrasporta lì.
+- Bloccato in un tempio? L'oggetto che hai appena trovato è quasi sempre
+  la risposta.
+- Maschera della Grande Fata per le 15 fate; Cappuccio da Coniglio per tutto
+  il resto.
+- Pianifica completamente una quest legata al tempo prima di iniziare il ciclo,
+  poi manipola il tempo.

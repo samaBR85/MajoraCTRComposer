@@ -1,0 +1,175 @@
+%C Antes de Começar
+%P O Ciclo dos Três Dias
+Uma regra vale acima de tudo: Termina funciona em um relógio de 72 horas, e a
+lua cai no fim do terceiro dia. Ao tocar a Canção do Tempo, o relógio reinicia
+para o primeiro amanhecer — e esse também é o seu save.
+
+Um reinício guarda o que importa (máscaras, canções, restos dos chefes, e as
+melhorias de espada, aljava, bolsa de bombas e carteira, além dos pedaços de
+coração guardados) e apaga o resto (rúpias na mão, bombas, flechas, chaves
+pequenas, progresso de dungeon). Jogue cada ciclo com UM objetivo, colete a
+recompensa permanente e então reinicie.
+
+As estátuas de coruja também salvam — mas SEM reiniciar o relógio. Esse é o
+save "pause por agora, guarda este ciclo". Tudo abaixo está escrito na ordem
+em que você realmente vai fazer.
+
+%C Clock Town: O Primeiro Ciclo
+%P Recupere sua Ocarina
+Você começa amaldiçoado na forma Deku, com a ocarina roubada. O Link Deku
+salta de flores Deku e pula sobre a água — suficiente para se mover pela cidade.
+Seu primeiro objetivo é chegar ao topo da Torre do Relógio na terceira noite,
+enfrentar o Skull Kid, recuperar a ocarina e aprender a Canção do Tempo.
+
+Toque-a. O ciclo reinicia, e desta vez o Vendedor de Máscaras restaura o Link
+e lhe dá a Máscara Deku — então a partir de agora você pode entrar na forma
+Deku quando quiser, em vez de ficar preso nela.
+
+%P Dois Truques de Tempo
+Agora que você tem a Canção do Tempo, aprenda suas duas variações logo cedo —
+você vai depender delas o jogo todo:
+- A Canção do Tempo Invertida desacelera o relógio para cerca de um terço.
+- A Canção do Tempo Duplo avança para o próximo amanhecer ou anoitecer.
+
+%P O Diário dos Bombardeiros
+Procure a turma dos Bombardeiros e entre no grupo para ganhar o Diário dos
+Bombardeiros. Ele registra pessoas, seus horários diários e as missões ligadas
+a elas, e avisa quando alguém estará em algum lugar. Trate-o como sua lista de
+tarefas para o jogo inteiro. Enquanto estiver aqui, deposite as rúpias extras
+no banco — o dinheiro depositado é uma das poucas coisas que sobrevive ao
+reinício.
+
+%C Pântano do Sul & Templo de Woodfall
+%P Para o Pântano
+Vá para o sul. A água do pântano está envenenada até você limpar o templo da
+região. No caminho, uma grande coruja ensina a Canção do Voo — teletransporte
+entre qualquer estátua de coruja que você tenha tocado. A partir de agora,
+acenda cada estátua que passar; é o seu deslocamento rápido.
+
+Siga a liderança do macaco para aprender a Sonata do Despertar. Toque-a no
+altar de Woodfall para erguer o templo da água, depois suba usando as flores
+Deku.
+
+%P Templo de Woodfall
+- Item do dungeon: o Arco do Herói. Depois de obtê-lo, procure interruptores
+  de olho e baús que não alcançava antes.
+- Mini-chefe: um Dinolfos — bloqueie sua espada e contra-ataque, ou use uma bomba.
+- Cada templo esconde 15 fadas perdidas; a Máscara da Grande Fada (recompensa
+  de Clock Town) as atrai para você e é, de longe, a forma mais fácil de
+  coletá-las.
+
+%P Chefe: Odolwa
+Um guerreiro mascarado que dança, balança uma lâmina e chama insetos. Desestabilize-o
+com uma flecha ou um inseto engarrafado, depois feche a distância. Recompensa:
+Restos de Odolwa, e o pântano fica limpo novamente. Um gigante libertado agora
+lhe ensina o Juramento à Ordem — a canção que convoca os gigantes no final.
+
+%C As Montanhas & Templo de Snowhead
+%P Chegando a Snowhead
+Subindo a estrada da montanha, uma tempestade eterna domina a região. Aqui você
+encontra o espírito do herói Goron Darmani; toque a Canção da Cura para aliviar
+seu sofrimento e ganhar a Máscara Goron. O Link Goron é corpo a corpo pesado —
+um golpe no chão e uma investida rolante que vira uma pedra com espinhos com
+magia, o jeito mais rápido de cruzar terreno aberto.
+
+Acalme o filho Goron que chora para completar a Cantiga Goron, depois abra o
+caminho bloqueado pelo vento até o templo.
+
+%P Templo de Snowhead
+- Item do dungeon: Flechas de Fogo — derretem puzzles de gelo e acendem
+  archotes distantes.
+- O templo se enrola em torno de um pilar central alto; a maior parte do puzzle
+  é decidir em qual andar avançar.
+- Mini-chefe: um Wizzrobe teletransportador — ataque no instante em que ele
+  reaparece.
+
+%P Chefe: Goht
+Uma besta mecânica que carga por uma pista circular. Fique na forma Goron, role
+em bola com espinhos, persiga-o e atire quando ele tropeçar. Recompensa: Restos
+de Goht, e a primavera volta às montanhas.
+
+%C Grande Baía & o Templo do Oceano
+%P Chegando ao Templo
+Na Costa da Grande Baía você encontra o espírito de Mikau, um guitarrista Zora.
+A Canção da Cura lhe dá a Máscara Zora — o Link Zora nada livremente, arremessa
+nadadeiras como bumerangue e levanta uma barreira elétrica. Resolva os problemas
+da banda Zora e reúna a canção deles para aprender a Nova Bossa Nova, que
+desperta o templo. Este é o dungeon mais complicado dos quatro.
+
+%P Templo da Grande Baía
+- Item do dungeon: Flechas de Gelo — congela a superfície da água em trampolins,
+  tanto no templo quanto na arena do chefe.
+- O lugar inteiro funciona com fluxo de água; válvulas e hélices redirecionam
+  correntes que abrem o caminho. Se uma sala parece travada, algum controle que
+  você já passou geralmente precisa ser acionado de novo.
+- Mini-chefe: Wart, um grande olho flutuante — estoure suas bolhas, depois
+  acerte o olho.
+
+%P Chefe: Gyorg
+Um peixe gigante que domina uma arena inundada. Lute da plataforma quando ele
+saltar, e mude para a forma Zora com Flechas de Gelo quando a luta for para a
+água. Recompensa: Restos de Gyorg.
+
+%C Canyon de Ikana & Templo da Torre de Pedra
+%P Para Ikana
+Ikana é um canyon de mortos-vivos — as máscaras Gibdo, de Pedra e do Capitão
+são muito úteis aqui. Você aprende a Elegia do Vazio, que deixa para trás uma
+estátua da sua forma atual para segurar interruptores enquanto você se afasta.
+Você vai usá-la constantemente no templo.
+
+%P Templo da Torre de Pedra
+- Item do dungeon: as Flechas de Luz, encontradas lá dentro.
+- Truque especial: atire uma Flecha de Luz em um bloco solar e o dungeon inteiro
+  fica de cabeça para baixo, então você revisita salas de uma nova orientação.
+  A maioria dos becos sem saída é simplesmente uma sala esperando ser invertida
+  — mantenha o controle de qual lado está em cima.
+- Mini-chefes: o Mestre Garo (um ninja veloz) e Gomess (afaste-o com luz).
+
+%P Chefe: Twinmold
+Um par de serpentes de areia gigantes. A Máscara do Gigante, encontrada dentro
+do templo, torna o Link enorme para que você possa lutar com elas diretamente —
+o jeito previsto de vencer. Recompensa: Restos de Twinmold. Com os quatro
+restos, o caminho para a lua se abre.
+
+%C O Último Dia & a Lua
+%P Convoque os Gigantes
+Na última noite, volte ao topo da Torre do Relógio e toque o Juramento à Ordem.
+Os Quatro Gigantes respondem e seguram a lua, abrindo o caminho para cima.
+
+%P Na Lua
+Se você coletou máscaras pelo caminho, as crianças na lua vão trocar por você
+a Máscara da Divindade Feroz — uma forma alta com espada que dispara raios de
+energia e atravessa a batalha final contra Majora. Este é o prêmio pela caça
+às máscaras.
+
+%C Pelo Caminho
+%P Máscaras e Missões Secundárias
+Entre os templos, gaste ciclos extras em Clock Town e nas estradas:
+- Capuz de Coelho: grande aumento de velocidade — use sempre que estiver viajando.
+- Máscara da Grande Fada: reúne as fadas perdidas de um templo para você.
+- Máscara de Pedra: torna você invisível para muitos guardas e inimigos.
+- Máscaras de missão (Máscara do Casal de Kafei e Anju, de Kamaro, Chapéu do
+  Carteiro e outras) preenchem o Diário e, juntas, desbloqueiam a Divindade Feroz.
+A maioria das missões ligadas ao relógio se resolve planejando toda a cadeia
+primeiro, depois dobrando o dia com as canções do Tempo Invertido e Duplo.
+
+%P Melhorias & Colecionáveis
+- Espada: a Espada Navalha (embota ao reiniciar) e a permanente Espada Dourada,
+  forjada com Pó de Ouro.
+- Melhorias de capacidade de aljava e bolsa de bombas em lojas e mini-games.
+- Carteira: as Carteiras Adulta e do Gigante aumentam o quanto você pode carregar;
+  o banco guarda dinheiro entre reinícios.
+- Seis garrafas, cada uma de uma missão. Devolva as fadas perdidas de cada
+  região à sua Grande Fada para ganhar magia, ataque giratório mais forte e
+  defesa extra.
+- Pedaços de Coração vêm em grupos de quatro; chefes e missões também dão
+  recipientes inteiros.
+
+%C Dicas Rápidas
+%P Fatos Importantes
+- Guarde recompensas permanentes antes de reiniciar; consumíveis nunca sobrevivem.
+- Acenda cada estátua de coruja — a Canção do Voo teletransporta para elas.
+- Preso num templo? O item que você acabou de encontrar é quase sempre a resposta.
+- Máscara da Grande Fada para as 15 fadas; Capuz de Coelho para todo o resto.
+- Planeje uma missão ligada ao relógio completamente antes de começar o ciclo,
+  depois dobre o tempo.

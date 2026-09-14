@@ -1,0 +1,60 @@
+%C MajoraCTRComposer
+%P Panoramica
+Questo plugin mostra una sovrapposizione sopra il gioco in esecuzione.
+
+Premi SELECT nel gioco per aprire il menu. Il gioco si mette in pausa mentre
+il menu è aperto. Premi di nuovo SELECT (da qualsiasi schermata) per tornare
+direttamente al gioco.
+
+Naviga con il D-Pad. A apre una cartella o attiva un cheat. B torna un livello
+indietro. X mostra informazioni sull'elemento selezionato. Y aggiunge ai preferiti.
+
+%P Menu Rapido & Preferiti
+Aggiungi i tuoi cheat più usati con Y nel menu. Poi tieni premuto L+SELECT
+(o R+SELECT) per aprire il Menu Rapido: un elenco compatto solo dei tuoi
+preferiti, senza aprire il menu completo.
+
+La scorciatoia può essere cambiata nelle Impostazioni. I preferiti, lo stato
+delle notifiche e la scorciatoia sono salvati sulla scheda SD e sopravvivono
+a un riavvio.
+
+%P Ricerca di Cheat
+Trova l'indirizzo di memoria di qualsiasi valore, poi modificalo.
+
+Valore Noto: inserisci un numero visibile (es. le tue rupie), Cerca, poi
+affina i risultati man mano che il valore cambia (Maggiore / Minore / Modificato...).
+
+Ricerca Sconosciuta: non conosci il numero? Fai un'istantanea, cambia il valore
+nel gioco, poi scorri Aumentato / Diminuito / Modificato per localizzare.
+
+Il ciclo reale: Cerca, premi SELECT per tornare al gioco, cambia il valore,
+SELECT per riaprire (i risultati vengono mantenuti), scorri di nuovo. Ripeti
+finché rimangono pochi risultati. Premi A su un risultato per inserire un nuovo
+valore. L annulla una scansione.
+
+%P Dump RAM
+Salva un blocco della memoria del gioco in un file .bin sulla scheda SD.
+
+Imposta un indirizzo Inizio (o premi Y / Dalla Ricerca per usare l'indirizzo
+trovato nella Ricerca di Cheat) e una Dimensione, poi esegui il Dump. I file
+vengono scritti nella cartella del plugin sulla scheda SD, in dumps/.
+
+Lo strumento legge solo la memoria accessibile, quindi non si blocca mai su
+un indirizzo non mappato. Ottimo per studiare i byte attorno a un valore trovato.
+
+%P Editor Hex
+Naviga nella memoria come una griglia hex dal vivo e modifica qualsiasi byte.
+
+Il D-Pad sposta il cursore (sinistra/destra un byte, su/giù una riga). L/R
+cambia pagina. X salta a un indirizzo; Y salta al risultato della Ricerca.
+Premi A per modificare il byte sotto il cursore.
+
+Le regioni di sola lettura sono protette: la modifica viene rifiutata invece
+di causare un crash. I byte illeggibili appaiono come --.
+
+%P Suggerimenti
+- SELECT è sempre 'torna al gioco', da qualsiasi schermata.
+- Riaprire il menu torna dove eri, anche dentro uno strumento.
+- I cheat con modifica del codice non vengono mai attivati automaticamente
+  all'avvio.
+- Le notifiche toast possono essere disabilitate nelle Impostazioni.
