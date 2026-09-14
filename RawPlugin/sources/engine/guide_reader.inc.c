@@ -1,32 +1,50 @@
 // ======================= Game Guide / Plugin Guide =======================
 // Reader: word-wrap a body into visual lines, then scroll through them.
 #define GR_MAXLINES 2000
-static u16 g_glOff[GR_MAXLINES];
-static u16 g_glLen[GR_MAXLINES];
-static int g_glN;
+#define GR_NORM_BUF 32768
+static u16  g_glOff[GR_MAXLINES];
+static u16  g_glLen[GR_MAXLINES];
+static int  g_glN;
+static char g_glNorm[GR_NORM_BUF]; // normalized body (soft \n→space, \n\n→\n)
 static void GuideWrap(const char *s, int maxW)
 {
-    g_glN = 0;
-    int len = 0; while (s[len]) len++;
-    int i = 0;
-    char buf[64];
-    while (i < len && g_glN < GR_MAXLINES)
+    // Guide files use \n at ~80-char column for editor readability. Single \n
+    // is a soft line ending (treat as space); \n\n marks a paragraph break.
     {
-        int start = i, lastSpace = -1;
-        while (i < len && s[i] != '\n')
+        int si = 0, di = 0;
+        while (s[si] && di < GR_NORM_BUF - 1)
         {
-            if (s[i] == ' ') lastSpace = i;
+            if (s[si] == '\n') {
+                if (s[si+1] == '\n') { g_glNorm[di++] = '\n'; while (s[si] == '\n') si++; }
+                else                 { g_glNorm[di++] = ' ';  si++; }
+            } else g_glNorm[di++] = s[si++];
+        }
+        g_glNorm[di] = 0;
+    }
+    const char *t = g_glNorm;
+    g_glN = 0;
+    char buf[128];
+    int i = 0;
+    while (t[i] && g_glN < GR_MAXLINES)
+    {
+        while (t[i] == ' ') i++;
+        if (!t[i]) break;
+        if (t[i] == '\n') { g_glOff[g_glN] = (u16)i; g_glLen[g_glN] = 0; g_glN++; i++; continue; }
+        int start = i, lastSpace = -1;
+        while (t[i] && t[i] != '\n')
+        {
+            if (t[i] == ' ') lastSpace = i;
             int lineLen = i - start + 1;
-            if (lineLen > 62) break;
-            memcpy(buf, s + start, (size_t)lineLen); buf[lineLen] = 0;
+            if (lineLen > 126) break;
+            memcpy(buf, t + start, (size_t)lineLen); buf[lineLen] = 0;
             if (CTextWidth(buf) > maxW) break;
             i++;
         }
         int end;
-        if (i < len && s[i] == '\n')              { end = i; i++; }
-        else if (i >= len)                        { end = i; }
-        else if (lastSpace > start)               { end = lastSpace; i = lastSpace + 1; }
-        else                                      { end = i; }
+        if (!t[i] || t[i] == '\n')    { end = i; }
+        else if (lastSpace > start)    { end = lastSpace; i = lastSpace + 1; }
+        else                           { end = i; }
+        while (end > start && t[end-1] == ' ') end--;
         g_glOff[g_glN] = (u16)start; g_glLen[g_glN] = (u16)(end - start); g_glN++;
     }
 }
@@ -92,9 +110,9 @@ static int GuideReader(const char *title, const char *body, int *scrollIO)
             {
                 int li = scroll + r;
                 if (li >= g_glN) break;
-                char buf[64];
-                int len = g_glLen[li]; if (len > 63) len = 63;
-                memcpy(buf, body + g_glOff[li], (size_t)len); buf[len] = 0;
+                char buf[128];
+                int len = g_glLen[li]; if (len > 127) len = 127;
+                memcpy(buf, g_glNorm + g_glOff[li], (size_t)len); buf[len] = 0;
                 CText(WIN_X + 14, WIN_Y + 28 + r * 18, buf, INK, 0);
             }
             if (g_glN > rows)
