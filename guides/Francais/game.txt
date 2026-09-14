@@ -15,7 +15,7 @@ Les statues de hibou sauvegardent aussi — mais SANS réinitialiser l'horloge.
 C'est votre sauvegarde "pause maintenant, garder ce cycle". Tout ce qui suit
 est écrit dans l'ordre où vous le ferez vraiment.
 
-%C Clock Town : Le Premier Cycle
+%C Clock Town : 1er Cycle
 %P Récupérez votre Ocarina
 Vous commencez maudit en forme Deku, ocarina volée. Link Deku s'élance depuis
 des fleurs Deku et saute sur l'eau — c'est suffisant pour se déplacer en ville.
@@ -41,7 +41,7 @@ ce carnet comme votre liste de tâches pour tout le jeu. Pendant que vous êtes
 là, déposez vos rubis à la banque — l'argent déposé est l'une des rares choses
 qui survivent à une réinitialisation.
 
-%C Marais du Sud & Temple de Woodfall
+%C Marais du Sud & Woodfall
 %P Dans le Marais
 Dirigez-vous vers le sud. L'eau du marais est empoisonnée jusqu'à ce que vous
 ayez terminé le temple de la région. En chemin, un grand hibou vous enseigne la
@@ -68,7 +68,7 @@ rapprochez-vous. Récompense : les Restes d'Odolwa, et le marais redevient
 propre. Un géant libéré vous enseigne maintenant le Serment à l'Ordre — la
 chanson qui convoque les géants à la toute fin.
 
-%C Les Montagnes & Temple de Snowhead
+%C Les Montagnes & Snowhead
 %P Atteindre Snowhead
 En montant la route de montagne, une tempête éternelle saisit la région. Vous
 rencontrez ici l'esprit du héros Goron Darmani ; jouez la Chanson de la Guérison
@@ -92,7 +92,7 @@ Une bête mécanique qui charge sur une piste circulaire. Restez en forme Goron,
 enroulez-vous en roulade épineuse, poursuivez-le et tirez quand il trébuche.
 Récompense : les Restes de Goht, et le printemps revient sur les montagnes.
 
-%C Grande Baie & le Temple de l'Océan
+%C Grande Baie & Temple Océan
 %P Atteindre le Temple
 Sur la Côte de la Grande Baie, vous trouvez l'esprit de Mikau, un guitariste
 Zora. La Chanson de la Guérison vous donne le Masque Zora — Link Zora nage
@@ -115,7 +115,7 @@ Un poisson géant qui règne sur une arène inondée. Combattez depuis la platef
 quand il saute, et passez en forme Zora avec des Flèches de Glace quand le
 combat se déroule sous l'eau. Récompense : les Restes de Gyorg.
 
-%C Canyon d'Ikana & Tour de Pierre
+%C Canyon Ikana & Tour de Pierre
 %P Dans Ikana
 Ikana est un canyon des morts-vivants — les masques Gibdo, de Pierre et du
 Capitaine sont tous utiles ici. Vous apprenez l'Élégie du Vide, qui laisse

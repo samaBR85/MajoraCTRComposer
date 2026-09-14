@@ -14,7 +14,7 @@ Le statue del gufo salvano anche — ma SENZA azzerare l'orologio. È il tuo
 salvataggio "pausa ora, tieni questo ciclo". Tutto quello che segue è scritto
 nell'ordine in cui lo farai davvero.
 
-%C Clock Town: Il Primo Ciclo
+%C Clock Town: 1° Ciclo
 %P Recupera la Tua Ocarina
 Inizi maledetto nella forma Deku, con l'ocarina rubata. Il Link Deku si lancia
 dai fiori Deku e salta sull'acqua — abbastanza per muoversi in città. Il tuo
@@ -39,7 +39,7 @@ e ti ricorda quando qualcuno sarà da qualche parte. Trattalo come la tua lista
 di compiti per l'intero gioco. Nel frattempo, deposita le rupie in banca — il
 denaro depositato è una delle poche cose che sopravvive all'azzeramento.
 
-%C Palude del Sud & Tempio Woodfall
+%C Palude del Sud & Woodfall
 %P Nella Palude
 Vai a sud. L'acqua della palude è avvelenata finché non risolvi il tempio della
 regione. Lungo la strada, un grande gufo ti insegna la Serenata delle Acque —
@@ -64,7 +64,7 @@ insetti. Destabilizzalo con una freccia o un insetto in bottiglia, poi avvicinat
 Ricompensa: i Resti di Odolwa, e la palude torna pulita. Un gigante liberato ti
 insegna ora il Giuramento all'Ordine — la canzone che convoca i giganti alla fine.
 
-%C Le Montagne & il Tempio di Snowhead
+%C Le Montagne & Snowhead
 %P Raggiungere Snowhead
 Salendo la strada di montagna, una tempesta eterna si abbatte sulla regione. Qui
 incontri lo spirito dell'eroe Goron Darmani; suona la Canzone della Guarigione
@@ -88,7 +88,7 @@ Una bestia meccanica che carica su una pista circolare. Rimani in forma Goron,
 rotola a palla di spine, inseguilo e spara quando inciampa. Ricompensa: i Resti
 di Goht, e la primavera torna sulle montagne.
 
-%C Grande Baia & il Tempio Oceanico
+%C Grande Baia & Tempio Oceano
 %P Raggiungere il Tempio
 Sulla Costa della Grande Baia trovi lo spirito di Mikau, un chitarrista Zora.
 La Canzone della Guarigione ti dà la Maschera Zora — il Link Zora nuota

@@ -34,7 +34,7 @@ Select Language=Seleccionar idioma
 # --- Filtros Teletransporte ---
 Overworld=Mundo exterior
 Dungeons=Mazmorras
-Owl Statues=Estatuas de búho
+Owl Statues=Estatuas Búho
 All=Todos
 Filter=Filtro
 
@@ -144,9 +144,9 @@ RANCH / MOON=RANCHO / LUNA
 LOCATIONS=LUGARES
 
 # --- Nombres de trucos ---
-Set Day 1=Establecer Día 1
-Set Day 2=Establecer Día 2
-Set Day 3=Establecer Día 3
+Set Day 1=Día 1
+Set Day 2=Día 2
+Set Day 3=Día 3
 Time 6AM=Hora 6:00
 Time 10AM=Hora 10:00
 Time 6PM=Hora 18:00
@@ -343,3 +343,15 @@ Sets what Bottle #4 holds.=Establece el contenido de la Botella n.º 4.
 Sets what Bottle #5 holds.=Establece el contenido de la Botella n.º 5.
 Sets what Bottle #6 holds.=Establece el contenido de la Botella n.º 6.
 Sets what Bottle #7 holds.=Establece el contenido de la Botella n.º 7.
+
+# --- Tracker / Checklist ---
+Masks=Máscaras
+Heart Pieces=Trozos Corazón
+Songs=Canciones
+Bosses=Jefes
+Stray Fairies=Hadas Perdidas
+Bomber's Notebook=Cuaderno Bombers
+you=tú
+todo=hacer
+cleared=hecho
+Total=Total

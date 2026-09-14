@@ -144,9 +144,9 @@ RANCH / MOON=RANCH / MOND
 LOCATIONS=ORTE
 
 # --- Cheat-Namen ---
-Set Day 1=Tag 1 setzen
-Set Day 2=Tag 2 setzen
-Set Day 3=Tag 3 setzen
+Set Day 1=Tag 1
+Set Day 2=Tag 2
+Set Day 3=Tag 3
 Time 6AM=Zeit 6 Uhr
 Time 10AM=Zeit 10 Uhr
 Time 6PM=Zeit 18 Uhr
@@ -343,3 +343,15 @@ Sets what Bottle #4 holds.=Legt Inhalt von Flasche Nr. 4 fest.
 Sets what Bottle #5 holds.=Legt Inhalt von Flasche Nr. 5 fest.
 Sets what Bottle #6 holds.=Legt Inhalt von Flasche Nr. 6 fest.
 Sets what Bottle #7 holds.=Legt Inhalt von Flasche Nr. 7 fest.
+
+# --- Tracker / Checklist ---
+Masks=Masken
+Heart Pieces=Herzstüke
+Songs=Lieder
+Bosses=Bosse
+Stray Fairies=Irrlichter
+Bomber's Notebook=Bomber-Buch
+you=du
+todo=offen
+cleared=fertig
+Total=Gesamt

@@ -14,7 +14,7 @@ Las estatuas de búho también guardan — pero SIN reiniciar el reloj. Es tu
 guardado de "pausa ahora, conserva este ciclo". Todo lo siguiente está escrito
 en el orden en que realmente lo harás.
 
-%C Clock Town: El Primer Ciclo
+%C Clock Town: 1er Ciclo
 %P Recupera Tu Ocarina
 Empiezas maldito en forma Deku, con la ocarina robada. El Link Deku se lanza
 desde flores Deku y salta sobre el agua — suficiente para moverse por la ciudad.
@@ -38,7 +38,7 @@ relacionadas, y te recuerda cuándo alguien estará en algún lugar. Trátalo co
 tu lista de tareas para todo el juego. Además, deposita tus rupias en el banco
 — el dinero depositado es una de las pocas cosas que sobrevive a un reinicio.
 
-%C Ciénaga del Sur & Templo Woodfall
+%C Ciénaga del Sur & Woodfall
 %P En la Ciénaga
 Ve al sur. El agua de la ciénaga está envenenada hasta que completes el templo
 de la región. De camino, un gran búho te enseña la Canción del Vuelo —
@@ -63,7 +63,7 @@ los Restos de Odolwa, y la ciénaga vuelve a estar limpia. Un gigante liberado
 te enseña ahora el Juramento al Orden — la canción que convoca a los gigantes
 al final.
 
-%C Las Montañas & el Templo de Snowhead
+%C Las Montañas & Snowhead
 %P Llegar a Snowhead
 Subiendo el camino de montaña, una tormenta eterna toma la región. Aquí
 encuentras el espíritu del héroe Goron Darmani; toca la Canción de la Curación
@@ -86,7 +86,7 @@ Una bestia mecánica que carga por una pista circular. Mantente en forma Goron,
 rueda en bola de espinas, persíguelo y dispara cuando tropiece. Recompensa:
 los Restos de Goht, y la primavera regresa a las montañas.
 
-%C La Gran Bahía & el Templo Oceánico
+%C Gran Bahía & Templo Océánico
 %P Llegar al Templo
 En la Costa de la Gran Bahía encuentras al espíritu de Mikau, un guitarrista
 Zora. La Canción de la Curación te da la Máscara Zora — el Link Zora nada

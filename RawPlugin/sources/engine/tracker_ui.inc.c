@@ -543,12 +543,12 @@ static void ToolChecklist(void)
                 char frac[16]; siprintf(frac, "%d/%d", done, CHK_CATS[c].count);
                 int fw = C6Width(frac);
                 int nameW = colW - fw - 16;
-                CTextWrap2(x, y, nameW, rowH, CHK_CATS[c].name, nc[0], nc[1], nc[2]);
+                CTextWrap2(x, y, nameW, rowH, T(CHK_CATS[c].name), nc[0], nc[1], nc[2]);
                 CText6(x + colW - 12 - fw, y + (rowH - FONT_HEIGHT) / 2, frac, nc[0], nc[1], nc[2]);
             }
             int ty = gridY + HUB_ROWS * (rowH + rowGap) + 4;
             CFill(WIN_X + 12, ty, WIN_W - 24, 1, GOLD);
-            CText6(WIN_X + 12, ty + 8, "Total", INK);
+            CText6(WIN_X + 12, ty + 8, T("Total"), INK);
             char totFrac[24]; int pct = totalAll > 0 ? totalDone * 100 / totalAll : 0;
             siprintf(totFrac, "%d/%d (%d%%)", totalDone, totalAll, pct);
             CText6(WIN_X + WIN_W - 12 - C6Width(totFrac), ty + 8, totFrac, GREEN_ON);
@@ -556,7 +556,7 @@ static void ToolChecklist(void)
             int barw = totalAll > 0 ? (WIN_W - 24) * totalDone / totalAll : 0;
             CFill(WIN_X + 12, ty + 20, barw, 5, GREEN_ON);
             int lx = WIN_X + 12, ly = ty + 31;
-            const char *chips[4] = { "auto", "you", "todo", "cleared" };
+            const char *chips[4] = { T("auto"), T("you"), T("todo"), T("cleared") };
             const u8 *chipc[4] = { CGREEN, CGOLD, CDIM, CDIM };
             for (int i = 0; i < 4; ++i)
             {
@@ -593,7 +593,7 @@ static void ToolChecklist(void)
                 if (sel) CFill(bx, by, 4, CHKB_BTN_H, 255, 255, 255); // bright left bar - unmistakably "selected"
                 // No fraction here - the top screen already shows X/Y per category, repeating it
                 // on the touch buttons just stole width from the name and forced truncation.
-                CTextWrap2CenterBox(bx + 6, by, CHKB_COLW - 12, CHKB_BTN_H, CHK_CATS[i].name, bc[0], bc[1], bc[2]);
+                CTextWrap2CenterBox(bx + 6, by, CHKB_COLW - 12, CHKB_BTN_H, T(CHK_CATS[i].name), bc[0], bc[1], bc[2]);
             }
             int gridBottom = CHKB_TOP + HUB_ROWS * CHKB_STRIDE - (CHKB_STRIDE - CHKB_BTN_H);
             // above the Auto-fill box: navigation hints, horizontally centered

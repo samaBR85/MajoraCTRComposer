@@ -34,7 +34,7 @@ Select Language=Seleziona lingua
 # --- Filtri Teletrasporto ---
 Overworld=Mondo esterno
 Dungeons=Dungeon
-Owl Statues=Statue dei gufi
+Owl Statues=Statue Gufo
 All=Tutti
 Filter=Filtro
 
@@ -144,9 +144,9 @@ RANCH / MOON=RANCH / LUNA
 LOCATIONS=LUOGHI
 
 # --- Nomi cheat ---
-Set Day 1=Imposta Giorno 1
-Set Day 2=Imposta Giorno 2
-Set Day 3=Imposta Giorno 3
+Set Day 1=Giorno 1
+Set Day 2=Giorno 2
+Set Day 3=Giorno 3
 Time 6AM=Ore 6:00
 Time 10AM=Ore 10:00
 Time 6PM=Ore 18:00
@@ -343,3 +343,15 @@ Sets what Bottle #4 holds.=Imposta il contenuto della Bottiglia n. 4.
 Sets what Bottle #5 holds.=Imposta il contenuto della Bottiglia n. 5.
 Sets what Bottle #6 holds.=Imposta il contenuto della Bottiglia n. 6.
 Sets what Bottle #7 holds.=Imposta il contenuto della Bottiglia n. 7.
+
+# --- Tracker / Checklist ---
+Masks=Maschere
+Heart Pieces=Pezzi Cuore
+Songs=Canzoni
+Bosses=Boss
+Stray Fairies=Fate Erranti
+Bomber's Notebook=Diario Bombers
+you=tu
+todo=da fare
+cleared=fatto
+Total=Totale
