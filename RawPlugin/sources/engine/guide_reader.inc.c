@@ -67,9 +67,9 @@ static void GuideBackdrop(void)
 // Scrollable reader. Returns 1 on B (back); sets g_quitToGame and returns 0 on SELECT.
 static int GuideReader(const char *title, const char *body, int *scrollIO)
 {
-    int cols = (WIN_W - 30) / 7;   // chars/line at 7px advance (~41)
+    int cols = (WIN_W - 30) / 12;  // chars/line for system font (~24)
     GuideWrap(body, cols);
-    int rows = 12, redraw = 1;
+    int rows = 8, redraw = 1;
     int scroll = scrollIO ? *scrollIO : 0;
     if (scroll > g_glN) scroll = 0;
     u32 prev = HID_PAD;
@@ -91,11 +91,11 @@ static int GuideReader(const char *title, const char *body, int *scrollIO)
                 char buf[64];
                 int len = g_glLen[li]; if (len > 63) len = 63;
                 memcpy(buf, body + g_glOff[li], (size_t)len); buf[len] = 0;
-                CText6(WIN_X + 14, WIN_Y + 28 + r * 13, buf, INK);
+                CText(WIN_X + 14, WIN_Y + 28 + r * 18, buf, INK, 0);
             }
             if (g_glN > rows)
             {
-                int trackH = rows * 13;
+                int trackH = rows * 18;
                 int barH = trackH * rows / g_glN; if (barH < 8) barH = 8;
                 int barY = WIN_Y + 28 + (trackH - barH) * scroll / maxScroll;
                 CFillInset(WIN_X + WIN_W - 15, WIN_Y + 28, 3, trackH, 1);
